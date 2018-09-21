@@ -1,0 +1,10 @@
+{
+  "//-": "Changes to this file will be overwritten.",
+  "//--": "Modify it's template in the app-template directory.",
+  "name": "gamegoldwallet",
+  "app_id": "com.bookman.ggwallet",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

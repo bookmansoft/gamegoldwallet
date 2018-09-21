@@ -1,0 +1,12 @@
+page-packsack {
+  color: #fff;
+  background: transparent none;
+  & > ion-content.content {
+    background: transparent none;
+  }
+  .navbar-transparent,
+  .toolbar-background {
+    background: $toolbar-scanner;
+  }
+
+}

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Receive'|translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only *ngIf="showShareButton">
+        <ion-icon ios="ios-share-outline" md="md-share"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <div *ngIf="wallet" class="qr-container">
+    <div *ngIf="loading" class="loading-address spinner">
+      <ion-spinner></ion-spinner>
+    </div>
+    <ngx-qrcode *ngIf="!loading && address" copy-to-clipboard="{{ address }}" qrc-value="{{qrAddress}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
+    <div>
+      <div *ngIf="!loading" class="text-address ellipsis" copy-to-clipboard="{{ address }}">
+        <img src="assets/img/icon-bitcoin.svg" alt="BTC" width="18" /> {{ address }}
+      </div>
+      <div *ngIf="loading" class="text-address">...</div>
+      <div class="btn-container">
+        <button ion-button clear [hidden]="!address" (click)="requestSpecificAmount()">
+          <span translate>Request Specific amount</span>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </div>
+      <div class="btn-container">
+        <button ion-button clear small [hidden]="!address" (click)="setAddress(true)">
+          <span translate>Generate new address</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!wallet" class="no-wallet-message">
+    <span translate>No wallet</span>
+  </div>
+</ion-content>

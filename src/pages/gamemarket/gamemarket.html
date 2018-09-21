@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar class="navbar-transparent">
+    <ion-title>{{'Packsack' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let prop of propList">
+      {{prop.cid}} + {{prop.pid}} + {{prop.gold}}
+      <button (click)="showFound(prop)">
+        <ion-icon item-start>
+          <img src="assets/img/icon-card.svg" class="icon-wallet" />
+        </ion-icon>
+        <h2>
+          Found it
+        </h2>
+      </button>
+      <button (click)="showSale(prop)">
+        <ion-icon item-start>
+          <img src="assets/img/icon-wallet.svg" class="icon-wallet" />
+        </ion-icon>
+        <h2>
+          Sale it
+        </h2>
+      </button>
+    </ion-item>
+  </ion-list>
+</ion-content>

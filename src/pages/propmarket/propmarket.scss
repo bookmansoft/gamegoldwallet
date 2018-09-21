@@ -1,0 +1,18 @@
+page-propmarket {
+  color: #fff;
+  background: transparent none;
+  & > ion-content.content {
+    background: transparent none;
+  }
+  .toolbar .searchbar-ios .searchbar-input {
+    background: #fff;
+  }
+  .navbar-transparent,
+  .toolbar-background {
+    background: $toolbar-scanner;
+  }
+  img.auto-image {
+    width: 100%;
+    padding: 10%;
+  }
+}

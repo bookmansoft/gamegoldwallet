@@ -1,0 +1,44 @@
+[
+  {
+    "propid": "123456",
+    "img": "assets/img/prop/deadboy.jpg",
+    "name": "蜃气妖",
+    "subtitle": "柳林破里来无踪去无影，飘渺虚幻的一缕蜃气",
+    "price": 1.0
+  },
+  {
+    "propid": "234567",
+    "img": "assets/img/prop/monkey.jpg",
+    "name": "巨力神猿",
+    "subtitle": "生作勇武态，坦荡如英豪，天神巨力如神助，搬山裂石皆为能",
+    "price": 3.0
+  },
+  {
+    "propid": "345678",
+    "img": "assets/img/prop/nightman.jpg",
+    "name": "混沌兽",
+    "subtitle": "长着一双小翅膀的可爱上古神兽，圆滚滚的身体让人忍俊不禁",
+    "price": 5.0
+  },
+  {
+    "propid": "456789",
+    "img": "assets/img/prop/solider.jpg",
+    "name": "猫灵",
+    "subtitle": "猫妖的真身，原本在天庭为女仙将，跟随在星官奎木狼的左右",
+    "price": 2.0
+  },
+  {
+    "propid": "8877784",
+    "img": "assets/img/prop/nightman.jpg",
+    "name": "混沌兽",
+    "subtitle": "长着一双小翅膀的可爱上古神兽，圆滚滚的身体让人忍俊不禁",
+    "price": 5.0
+  },
+  {
+    "cpid": "567890",
+    "img": "assets/img/prop/monkey.jpg",
+    "name": "巨力神猿",
+    "subtitle": "生作勇武态，坦荡如英豪，天神巨力如神助，搬山裂石皆为能",
+    "price": 3.0
+  }
+]

@@ -1,0 +1,203 @@
+<ion-header>
+  <ion-navbar class="navbar-transparent">
+    <ion-title>{{'me' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce #scrollArea [ios-scroll-bg-color]="'#647ce8'">
+  <!-- 基本钱包功能部分-1 余额显示 -->
+  <expandable-header class="balance-card" [scrollArea]="scrollArea" [ngStyle]="{'background': '#647ce8'}">
+    <expandable-header-primary class="balance-header">
+      <div (longPress)="toggleBalance()">
+        <div (tap)="updateAll(true)" *ngIf="!updateStatusError && walletBalance">
+          <div class="balance-str">{{walletBalance.unconfirmed}}</div>
+          <div class="balance-alt-str">
+            GAGE
+          </div>
+        </div>
+      </div>
+
+      <div class="balance-scanning" *ngIf="!updateStatusError && scanning">
+        <span class="title" translate>[Scanning Funds]</span>
+        <div translate>
+          Please wait...
+        </div>
+      </div>
+    </expandable-header-primary>
+    <!-- 判断是什么网络的钱包,进行图标转换 -->
+    <expandable-header-footer class="wallet-info">
+      <ion-spinner *ngIf="!walletNotRegistered && !updateStatusError && !updateTxHistoryError && scanning"></ion-spinner>
+
+      <!-- <img class="testnet" *ngIf="true" src="assets/img/icon-wallet-testnet.svg">
+      <img class="testnet-text" *ngIf="true" src="assets/img/icon-text-testnet.svg"> -->
+      <!-- <img class="read-only" *ngIf="!wallet.canSign()" src="assets/img/icon-read-only.svg">
+      <img class="read-only-text" *ngIf="!wallet.canSign()" src="assets/img/icon-text-read-only.svg">
+      <img class="auditable-text" *ngIf="wallet.status && wallet.status.wallet.singleAddress" src="assets/img/icon-text-auditable.svg">
+      <img class="custom-bws" *ngIf="wallet.usingCustomBWS" src="assets/img/icon-bws-white.svg">
+      <img class="encrypted" *ngIf="wallet.isPrivKeyEncrypted()" src="assets/img/icon-lock-white.svg"> -->
+
+    </expandable-header-footer>
+
+  </expandable-header>
+
+  <!-- 基本钱包功能部分-2 快捷按钮-->
+  <ion-row align-items-center>
+    <ion-col col-md-4 align-self-center>
+      <button (click)="openReceivePage()">
+        <ion-thumbnail>
+          <img src="assets/img/mine/ico-receive.svg" class="auto-image" />
+        </ion-thumbnail>
+        <p>接收</p>
+      </button>
+    </ion-col>
+    <ion-col col-md-4 align-self-center>
+      <button (click)="openScanPage()">
+        <ion-thumbnail>
+          <img src="assets/img/mine/ico-scan.svg" class="auto-image" [ngStyle]="{'width': 50}" />
+        </ion-thumbnail>
+        <p>扫描</p>
+      </button>
+    </ion-col>
+    <ion-col col-md-4 align-self-center>
+      <button (click)="openSendPage()">
+        <ion-thumbnail>
+          <img src="assets/img/mine/ico-send.svg" class="auto-image" />
+        </ion-thumbnail>
+        <p>发送</p>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <!-- 设置部分 -->
+  <ion-list>
+    <ion-item-divider></ion-item-divider>
+    <button ion-item (click)="openAddressBookPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-address-book.svg" width="22">
+      </ion-icon>
+      <span translate>Address book</span>
+    </button>
+
+    <button ion-item (click)="openHelpExternalLink()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-help-support.svg" width="22">
+      </ion-icon>
+      <span translate>Help &amp; support</span>
+    </button>
+
+    <button ion-item (click)="openSendFeedbackPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-send-feedback.svg" width="22">
+      </ion-icon>
+      <span translate>Send feedback</span>
+    </button>
+
+    <button ion-item *ngIf="isCordova" (click)="openFeedbackCompletePage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-heart.svg" width="22">
+      </ion-icon>
+      <span translate>Share</span> {{ appName }}
+    </button>
+
+    <ion-item-divider>{{'Preferences' | translate}}</ion-item-divider>
+
+    <button ion-item (click)="openNotificationsPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-notifications.svg" width="22">
+      </ion-icon>
+      <span translate>Notifications</span>
+    </button>
+
+    <button ion-item (click)="openLanguagePage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-language.svg" width="22">
+      </ion-icon>
+      <ion-label>
+        <span translate>Language</span>
+      </ion-label>
+      <ion-note *ngIf="currentLanguageName" item-end>
+        {{ currentLanguageName }}
+      </ion-note>
+    </button>
+
+    <button ion-item (click)="openAltCurrencyPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-alternative-currency.svg" width="22">
+      </ion-icon>
+      <ion-label>
+        {{'Alternative currency' | translate}}
+      </ion-label>
+      <ion-note *ngIf="selectedAlternative" item-end>
+        {{ selectedAlternative.name }}
+      </ion-note>
+    </button>
+
+    <button ion-item (click)="openFeePolicyPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-network.svg" width="22">
+      </ion-icon>
+      <ion-label>
+        {{'Bitcoin network fee policy' | translate}}
+      </ion-label>
+    </button>
+
+    <button ion-item *ngIf="isCordova" (click)="openLockPage()">
+      <ion-icon class="custom-icon item-img" *ngIf="lockMethod != 'disabled'" name="ios-lock-outline" item-start></ion-icon>
+      <ion-icon class="custom-icon item-img" *ngIf="lockMethod == 'disabled'" name="ios-unlock-outline" item-start></ion-icon>
+      <ion-label>
+        {{'Lock' | translate}}
+      </ion-label>
+      <ion-note *ngIf="lockMethod === 'disabled'" item-end>
+        {{'Disabled' | translate}}
+      </ion-note>
+      <ion-note *ngIf="lockMethod === 'pin'" item-end>
+        {{'PIN' | translate}}
+      </ion-note>
+      <ion-note *ngIf="lockMethod === 'fingerprint'" item-end>
+        {{'Fingerprint' | translate}}
+      </ion-note>
+    </button>
+
+    <!-- 钱包备份-TODO:应该放上面 -->
+    <ion-item-divider *ngIf="walletsBtc.length">{{'Bitcoin Wallets' | translate}}</ion-item-divider>
+
+    <button ion-item *ngFor="let wallet of walletsBtc" (click)="openWalletSettingsPage(wallet.credentials.walletId)">
+      <ion-icon class="item-img" item-start>
+        <img *ngIf="wallet.network == 'testnet'" [ngStyle]="{'background-color': wallet.color}" src="assets/img/icon-wallet-testnet.svg"
+          class="icon-wallet" />
+        <img *ngIf="wallet.network != 'testnet'" [ngStyle]="{'background-color': wallet.color}" src="assets/img/icon-wallet.svg"
+          class="icon-wallet" />
+      </ion-icon>
+      <div class="item-title">{{wallet.name}}</div>
+      <div class="item-subtitle">
+        <span class="wallet-warning" *ngIf="!wallet.isComplete()" translate>
+          Incomplete
+        </span>
+        <span class="wallet-warning" *ngIf="wallet.isComplete() && wallet.needsBackup" translate>
+          Needs backup
+        </span>
+      </div>
+      <ion-note *ngIf="wallet.credentials.m > 1 && wallet.isComplete() && !wallet.needsBackup" item-end>
+        {{wallet.credentials.m}}-{{wallet.credentials.n}}
+      </ion-note>
+    </button>
+
+    <ion-item-divider>{{'More' | translate}}</ion-item-divider>
+
+    <button ion-item (click)="openAdvancedPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-advanced.svg" width="22">
+      </ion-icon>
+      <span translate>Advanced</span>
+    </button>
+
+    <button ion-item (click)="openAboutPage()">
+      <ion-icon class="item-img" item-start>
+        <img src="assets/img/settings-icons/icon-about.svg" width="22">
+      </ion-icon>
+      <span translate>About</span> {{appName}}
+    </button>
+    <ion-item-divider></ion-item-divider>
+  </ion-list>
+
+</ion-content>

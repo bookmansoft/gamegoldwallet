@@ -1,0 +1,53 @@
+[
+  {
+    "cpid": "123456",
+    "img": "http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png",
+    "title": "穿越火线：枪战王者",
+    "subtitle":
+      "以两大国际佣兵组织为背景，节奏快，爽快的打击感，具有战略性的高水平设计",
+    "version": "1.0.40.240"
+  },
+  {
+    "cpid": "234567",
+    "img": "https://img.d.cn/be/image/1807/i6447jjqi34tj.png",
+    "title": "妖神记",
+    "subtitle": "人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记",
+    "version": "3.1.1"
+  },
+  {
+    "cpid": "345678",
+    "img": "https://img.d.cn/be/image/1807/7244wjjgj7wgu.png",
+    "title": "梦幻西游3D",
+    "subtitle": "由网易梦幻西游金牌团队研发的次世代3D即时制角色扮演手游",
+    "version": "1.0.1"
+  },
+  {
+    "cpid": "456789",
+    "img": "http://img.d.cn/netgame/hdlogo/8157_1512371049509_XwNtyIdB.png",
+    "title": "绝地求生 全军出击",
+    "subtitle": "天美工作室与PUBG公司联合出品的正版绝地求生手游",
+    "version": "1.0.11.1.0"
+  },
+  {
+    "cpid": "867890",
+    "img": "https://img.d.cn/be/image/1807/fw44njjiar7r2.png",
+    "title": "炉石传说",
+    "subtitle": "探索科学的奥妙,丢下你的化学用具，加入砰砰博士的秘密实验室吧",
+    "version": "1.0.40.240"
+  },
+  {
+    "cpid": "567890",
+    "img": "http://img.d.cn/netgame/hdlogo/8647_1524019164646_WNrhlHus.png",
+    "title": "武林外传",
+    "subtitle": "“笑闹武林嗨一夏”！四大新场景齐上阵，多款夏日时装上线",
+    "version": "1.33.16"
+  },
+  {
+    "cpid": "6789012",
+    "img": "https://img.d.cn/be/image/1806/wk44ijiceijlv.png",
+    "title": "魔力宝贝",
+    "subtitle":
+      "SE正版日系回合手游，1亿玩家的回合梦想！正统日式回合，完美还原经典魔力",
+    "version": "2.0.4.6"
+  }
+]

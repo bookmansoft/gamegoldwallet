@@ -1,0 +1,25 @@
+page-propdetail {
+  color: #fff;
+  
+  .navbar-transparent,
+  .toolbar-background {
+    background: $toolbar-scanner;
+  }
+  ion-select {
+    max-width: 100%;
+  }
+  select.button {
+    font-size: 0.5em;
+  }
+
+  ion-footer  {
+   > ion-toolbar {
+      .toolbar-title-ios{
+        color: black;
+      }
+      .ion-button{
+        width: 100%;
+      }
+    }
+}
+}
