@@ -75,3 +75,4 @@ Session.vim
 .netrwhist
 *~
 package-lock.json
+.vscode/plugins.json
