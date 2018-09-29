@@ -85,7 +85,7 @@ export class PropListPage {
           this.logger.info(response);
           let gameProps: any = JSON.parse(strings);
           this.orderList = this.tranformOrderList(gameProps.data);
-          this.logger.info("orderlist" + JSON.stringify(this.orderList));
+          // this.logger.info("orderlist" + JSON.stringify(this.orderList));
         }
       },
       err => {
@@ -125,18 +125,18 @@ export class PropListPage {
   }
 
   foundProp(prop) {
-    // let wdb = this.spvNodeProvider.getWdb();
-    // wdb.rpc
-    //   .execute({
-    //     method: 'order.pay',
-    //     params: [prop.cid, this.userid, prop.propid, prop.price]
-    //   })
-    //   .then(tx => {
-    //     this.logger.info(tx);
-    //   })
-    //   .catch(err => {
-    //     this.logger.info("bugPropErr:" + err);
-    //   });
+    let wdb = this.spvNodeProvider.getWdb();
+    wdb.rpc
+      .execute({
+        method: 'prop.found',
+        params: [prop.current.rev, prop.current.index]
+      })
+      .then(tx => {
+        this.logger.info(tx);
+      })
+      .catch(err => {
+        this.logger.info("found PropErr:" + err);
+      });
   }
 
   saleProp(prop) {
@@ -154,23 +154,23 @@ export class PropListPage {
     //   });
   }
 
-  private tranformOrderList(props) {
+  private tranformOrderList(orders) {
     let orderList = [];
-    props.forEach(prop => {
+    orders.forEach(order => {
       // TODO:应该根据URL从游戏服务器获取.
       // /{"cid":"a6589120-c2ed-11e8-a66f-7b3ab06b2b56","uid":"10000009",
       // "sn":"e1b61920-c2ef-11e8-ae5e-ef505d8de521","pid":"3",
       // "content":"3|3001|20000|区块剑","price":20000,"confirm":100
-      if (prop.uid == this.userid && prop.confirm < 6) {
+      if (order.uid == this.userid && order.confirm < 6) {
         orderList.push({
-          "propid": prop.sn,
-          "cid": prop.cid,
+          "propid": order.sn,
+          "cid": order.cid,
           "img": "assets/img/prop/monkey.jpg",
           "name": "巨力神猿",
-          "content": prop.content,
-          "price": prop.price,
-          "confirm": prop.confirm,
-          "pid": prop.pid
+          "content": order.content,
+          "price": order.price,
+          "confirm": order.confirm,
+          "pid": order.pid
         });
       }
     });
@@ -188,7 +188,8 @@ export class PropListPage {
         "name": "区块剑",
         "price": prop.gold,
         "status": prop.status,
-        "cp": prop.cp
+        "cp": prop.cp,
+        "current": prop.current
       });
     });
     return propList;
@@ -206,7 +207,7 @@ export class PropListPage {
   private listenForEvents() {
     this.events.subscribe('prop.list', props => {
       this.proplist = this.tranformPropList(props);
-      // this.logger.info("get props " + JSON.stringify(this.proplist));
+      this.logger.info("get props " + JSON.stringify(this.proplist));
     });
   }
 

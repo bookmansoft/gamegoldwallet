@@ -33,7 +33,8 @@
   </ion-row>
 
   <ion-list>
-    <!-- <p>{{orderList.length}}</p> -->
+    <!-- 翻译 -->
+    <ion-item-divider *ngIf="orderList && orderList.length>0">我的订单:</ion-item-divider>
     <div *ngFor="let order of orderList">
       <button ion-item>
         <!-- 只显示自己的订单 -->
@@ -57,7 +58,7 @@
         </ion-buttons>
       </button>
     </div>
-    <ion-item-divider></ion-item-divider>
+    <ion-item-divider>我的道具:</ion-item-divider>
     <div *ngFor="let prop of proplist">
       <button ion-item>
         <ion-icon class="item-img" item-start>
@@ -65,17 +66,17 @@
         </ion-icon>
         <div class="item-title">{{prop.propid}} </div>
         <div class="item-subtitle">
-          {{prop.status}}
+          状态: {{prop.status}}
         </div>
         <div class="item-gamemoney">
           {{prop.price}} Gold
         </div>
         <ion-buttons item-end>
           <button ion-button (click)="foundProp(prop)">
-            {{foundButtonText}}
+            熔铸
           </button>
           <button ion-button (click)="saleProp(prop)">
-            {{saleButtonText}}
+            出售
           </button>
         </ion-buttons>
       </button>
