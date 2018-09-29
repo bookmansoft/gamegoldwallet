@@ -95,7 +95,7 @@ export class PropMarketPage {
     // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
     this.navCtrl.push(PropListPage, {
       game: gameinfo,
-      userId: "10000007"
+      userId: "10000009"
     });
     this.logger.info("gotoList" + gameinfo);
   }

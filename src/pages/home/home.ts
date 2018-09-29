@@ -262,14 +262,14 @@ export class HomePage {
     this.homeTip = false;
   }
 
-  private async checkAnnouncement() {}
+  private async checkAnnouncement() { }
 
   public hideAnnouncement(): void {
     this.persistenceProvider.setShowAmazonJapanAnnouncement('hide');
     this.showAnnouncement = false;
   }
 
-  public openAnnouncement(): void {}
+  public openAnnouncement(): void { }
 
   private checkFeedbackInfo() {
     this.persistenceProvider.getFeedbackInfo().then(info => {
@@ -606,7 +606,7 @@ export class HomePage {
         .execute({
           method: 'token.user',
           params: [
-            'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx', // 游戏编号-从cplist获得
+            'a6589120-c2ed-11e8-a66f-7b3ab06b2b56', // 游戏编号-从cplist获得
             '10000009' // 游戏内玩家编号
           ]
         })

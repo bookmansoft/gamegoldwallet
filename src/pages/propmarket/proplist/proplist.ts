@@ -39,7 +39,10 @@ export class PropListPage {
   public advance: string;
   public showButtonText: string;
   public buyButtonText: string;
+  public foundButtonText: string;
+  public saleButtonText: string;
   public proplist: any;
+  public orderList: any;
 
   constructor(
     private navCtrl: NavController,
@@ -64,6 +67,8 @@ export class PropListPage {
     // TODO:翻译
     this.buyButtonText = '购买';
     this.showButtonText = '查看';
+    this.foundButtonText = '熔铸';
+    this.saleButtonText = "出售";
     // 获取游戏列表数据,目前为json
     // this.api
     //   .get('assets/mock/proplist.json')
@@ -79,14 +84,15 @@ export class PropListPage {
           let strings = JSON.stringify(response);
           this.logger.info(response);
           let gameProps: any = JSON.parse(strings);
-          this.proplist = this.tranformPropList(gameProps.data);
-          this.logger.info("proplist" + JSON.stringify(this.proplist));
+          this.orderList = this.tranformOrderList(gameProps.data);
+          this.logger.info("orderlist" + JSON.stringify(this.orderList));
         }
       },
       err => {
         this.logger.info(err);
       }
     );
+    this.listenForEvents();
   }
 
   // 滚动到最下面时候加载新的
@@ -108,7 +114,7 @@ export class PropListPage {
     wdb.rpc
       .execute({
         method: 'order.pay',
-        params: [prop.cid, prop.uid, prop.sn, prop.price]
+        params: [prop.cid, this.userid, prop.propid, prop.price]
       })
       .then(tx => {
         this.logger.info(tx);
@@ -118,27 +124,94 @@ export class PropListPage {
       });
   }
 
-  private tranformPropList(props) {
-    let propList = [];
+  foundProp(prop) {
+    // let wdb = this.spvNodeProvider.getWdb();
+    // wdb.rpc
+    //   .execute({
+    //     method: 'order.pay',
+    //     params: [prop.cid, this.userid, prop.propid, prop.price]
+    //   })
+    //   .then(tx => {
+    //     this.logger.info(tx);
+    //   })
+    //   .catch(err => {
+    //     this.logger.info("bugPropErr:" + err);
+    //   });
+  }
+
+  saleProp(prop) {
+    // let wdb = this.spvNodeProvider.getWdb();
+    // wdb.rpc
+    //   .execute({
+    //     method: 'order.pay',
+    //     params: [prop.cid, this.userid, prop.propid, prop.price]
+    //   })
+    //   .then(tx => {
+    //     this.logger.info(tx);
+    //   })
+    //   .catch(err => {
+    //     this.logger.info("bugPropErr:" + err);
+    //   });
+  }
+
+  private tranformOrderList(props) {
+    let orderList = [];
     props.forEach(prop => {
       // TODO:应该根据URL从游戏服务器获取.
-      // /{"cid":"a6589120-c2ed-11e8-a66f-7b3ab06b2b56","uid":"10000007",
+      // /{"cid":"a6589120-c2ed-11e8-a66f-7b3ab06b2b56","uid":"10000009",
       // "sn":"e1b61920-c2ef-11e8-ae5e-ef505d8de521","pid":"3",
       // "content":"3|3001|20000|区块剑","price":20000,"confirm":100
       if (prop.uid == this.userid && prop.confirm < 6) {
-        let nowProp = {
+        orderList.push({
           "propid": prop.sn,
+          "cid": prop.cid,
           "img": "assets/img/prop/monkey.jpg",
           "name": "巨力神猿",
           "content": prop.content,
           "price": prop.price,
           "confirm": prop.confirm,
           "pid": prop.pid
-        };
-        propList.push(nowProp);
+        });
       }
     });
+    return orderList;
+  }
+
+  private tranformPropList(props) {
+    let propList = [];
+    props.forEach(prop => {
+      propList.push({
+        "propid": prop.pid,
+        "cid": prop.cid,
+        "oid": prop.oid,
+        "img": "assets/img/prop/nightman.jpg",
+        "name": "区块剑",
+        "price": prop.gold,
+        "status": prop.status,
+        "cp": prop.cp
+      });
+    });
     return propList;
+  }
+
+  ionViewWillEnter() {
+    this.logger.info("ionViewWillEnter");
+    this.spvNodeProvider.getPropList();
+  }
+
+  ngOnDestroy() {
+    this.unListenForEvents();
+  }
+
+  private listenForEvents() {
+    this.events.subscribe('prop.list', props => {
+      this.proplist = this.tranformPropList(props);
+      // this.logger.info("get props " + JSON.stringify(this.proplist));
+    });
+  }
+
+  private unListenForEvents() {
+    this.events.unsubscribe('prop.list');
   }
 }
 
