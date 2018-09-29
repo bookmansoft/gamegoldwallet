@@ -34,7 +34,7 @@
 
   <ion-list>
     <div *ngFor="let prop of proplist">
-      <button ion-item *ngIf="prop.uid == '10000009'" (click)="buyProp(prop)">
+      <button ion-item>
         <!-- 只显示自己的订单 -->
         <ion-icon class="item-img" item-start>
           <img src={{prop.img}} class="icon-game" />
@@ -47,7 +47,10 @@
           {{prop.price}} Gold
         </div>
         <ion-buttons item-end>
-          <button ion-button>
+          <button ion-button *ngIf="prop.confirm <= -1" (click)="buyProp(prop)">
+            {{buyButtonText}}
+          </button>
+          <button ion-button *ngIf="prop.confirm >= 0" (click)="buyProp(prop)">
             {{showButtonText}}
           </button>
         </ion-buttons>

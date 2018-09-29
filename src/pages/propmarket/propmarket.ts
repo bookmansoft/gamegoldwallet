@@ -53,14 +53,20 @@ export class PropMarketPage {
     // TODO:翻译
     this.searchButtonText = '搜索';
     this.showButtonText = '查看';
-    // 获取游戏列表数据,目前为json
-    this.api
-      .get('assets/mock/gamelist.json')
-      .toPromise()
-      .then(data => {
-        this.gamelist = data;
-      })
-      .catch(e => this.logger.info(e));
+    // // 获取游戏列表数据,目前为json
+    // this.api
+    //   .get('assets/mock/gamelist.json')
+    //   .toPromise()
+    //   .then(data => {
+    //     this.gamelist = data;
+    //   })
+    //   .catch(e => this.logger.info(e));
+    // this.spvNodeProvider.getCpList().then(cps => {
+    //   this.gamelist = cps;
+    //   this.logger.info(this.gamelist);
+    // });
+    // 进行事件监听
+    this.listenForEvents();
   }
   // 用于实时搜索,提示
   onInput(inputEvent: Event) {
@@ -86,9 +92,52 @@ export class PropMarketPage {
 
   // 用于跳转到道具页面
   gotoPropList(gameinfo) {
+    // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
     this.navCtrl.push(PropListPage, {
-      game: gameinfo
+      game: gameinfo,
+      userId: "10000007"
     });
-    this.logger.info('gotoProp');
+    this.logger.info("gotoList" + gameinfo);
+  }
+
+  ionViewWillEnter() {
+    this.logger.info("ionViewWillEnter");
+    this.spvNodeProvider.getCpList();
+  }
+
+  ngOnDestroy() {
+    this.unListenForEvents();
+  }
+
+  private listenForEvents() {
+    this.events.subscribe('node:cplist', cps => {
+      this.gamelist = this.tranformGameList(cps);
+    });
+  }
+
+  private unListenForEvents() {
+    this.events.unsubscribe('node:cplist');
+  }
+
+  // 转换返回的cp为可显示的gamelist
+  // TODO:cplist的modal.
+  private tranformGameList(cplist) {
+    let gameList = [];
+    cplist.forEach(cp => {
+      // TODO:应该根据URL从游戏服务器获取.
+      // boss特殊处理,不显示
+      // this.logger.info(cp);
+      if (cp.cid != "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx") {
+        let nowGame = {
+          "cpid": cp.cid,
+          "img": "https://img.d.cn/be/image/1807/i6447jjqi34tj.png",
+          "title": cp.name,
+          "subtitle": "人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记",
+          "version": "3.1.1"
+        };
+        gameList.push(nowGame);
+      }
+    });
+    return gameList;
   }
 }
