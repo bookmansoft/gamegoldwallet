@@ -140,18 +140,19 @@ export class PropListPage {
   }
 
   saleProp(prop) {
-    // let wdb = this.spvNodeProvider.getWdb();
-    // wdb.rpc
-    //   .execute({
-    //     method: 'order.pay',
-    //     params: [prop.cid, this.userid, prop.propid, prop.price]
-    //   })
-    //   .then(tx => {
-    //     this.logger.info(tx);
-    //   })
-    //   .catch(err => {
-    //     this.logger.info("bugPropErr:" + err);
-    //   });
+    let wdb = this.spvNodeProvider.getWdb();
+    let price = prop.price * 2;
+    wdb.rpc
+      .execute({
+        method: 'prop.sale',
+        params: [prop.current.rev, price]
+      })
+      .then(tx => {
+        this.logger.info(tx);
+      })
+      .catch(err => {
+        this.logger.info("bugPropErr:" + err);
+      });
   }
 
   private tranformOrderList(orders) {
