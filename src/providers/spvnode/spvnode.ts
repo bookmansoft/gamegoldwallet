@@ -379,9 +379,9 @@ export class SpvNodeProvider {
           cp.cid // 厂商编码
         ]
       })
-      .then(orders => {
-        this.events.publish('prop.list.market', orders);
-        return orders;
+      .then(props => {
+        this.events.publish('prop.list.market', props);
+        return props;
       });
   }
 

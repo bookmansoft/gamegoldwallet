@@ -17,9 +17,7 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 // pages
-import { PaperWalletPage } from '../paper-wallet/paper-wallet';
-import { AmountPage } from '../send/amount/amount';
-import { AddressbookAddPage } from '../settings/addressbook/add/add';
+import { MarketListPage } from './market-list/market-list';
 
 import env from '../../environments';
 
@@ -30,10 +28,8 @@ import env from '../../environments';
 export class GameMarketPage {
   ngVersion = VERSION.full;
   public isCordova: boolean;
-  // 背包中道具列表
-  propList: any;
-  // 厂商列表
-  cpList: any;
+  public showButtonText: string;
+  public gamelist: any;
 
   constructor(
     private navCtrl: NavController,
@@ -50,61 +46,37 @@ export class GameMarketPage {
     private spvNodeProvider: SpvNodeProvider
   ) {
     this.isCordova = this.platform.isCordova;
-  }
-
-  ionViewDidLoad() {
-    this.logger.info('ionViewDidLoad PacksackPage');
+    this.showButtonText = '查看';
+    this.logger.info("ionViewWillEnter" + '221');
+    // 进行事件监听
+    this.listenForEvents();
   }
 
   ionViewWillEnter() {
-    // 订阅产品列表数据
-    this.events.subscribe('prop.list', propList => {
-      this.propList = propList;
-      this.logger.info(propList);
-      // for test -- prop 本身是一个特殊的tx.
-      let prop1 = {
-        cid: 34343,
-        pid: '23l423',
-        gold: 2000,
-        current: {
-          rev:
-            '3b837cf4ca6d53c4fccaae22b58d49c16a7f6a17589e2ff73c03f1b3f84da039',
-          index: 3
-        }
-      };
-      let prop2 = {
-        cid: 1114343,
-        pid: '2223l423',
-        gold: 4000,
-        current: {
-          rev:
-            '3b837cf4ca6d53c4fccaae22b58d49c16a7f6a17589e2ff73c03f1b3f84da039',
-          index: 3
-        }
-      };
-      // this.propList = new Array();
-      this.propList.push(prop1);
-      this.propList.push(prop2);
-    });
-    // 订阅熔铸结果
-    this.events.subscribe('prop.found', tx => {});
-    // 订阅厂商列表
-    this.events.subscribe('node:cplist', cpList => {
-      this.cpList = cpList;
-    });
-    // 订阅厂商列表
-    this.events.subscribe('prop.sale', tx => {});
-
-    // 查询道具
-    // this.spvNodeProvider.getPropList();
+    this.logger.info("ionViewWillEnter" + '221');
+    this.spvNodeProvider.getCpList();
   }
 
-  ionViewWillLeave() {
-    // 取消订阅
-    this.events.unsubscribe('prop.list');
-    this.events.unsubscribe('prop.found');
+  ngOnDestroy() {
+    this.unListenForEvents();
+  }
+
+  private listenForEvents() {
+    this.events.subscribe('node:cplist', cps => {
+      this.gamelist = this.tranformGameList(cps);
+      this.logger.info("cs" + this.gamelist);
+    });
+  }
+
+  private unListenForEvents() {
     this.events.unsubscribe('node:cplist');
-    this.events.unsubscribe('prop.sale');
+  }
+
+  // 用于跳转到道具市场页面
+  gotoMaketList(gameinfo) {
+    this.navCtrl.push(MarketListPage, {
+      game: gameinfo
+    });
   }
 
   // 显示熔铸的确认窗
@@ -116,7 +88,7 @@ export class GameMarketPage {
       buttons: [
         {
           text: this.translate.instant('Cancel'),
-          handler: data => {}
+          handler: data => { }
         },
         {
           text: this.translate.instant('Ok'),
@@ -156,7 +128,7 @@ export class GameMarketPage {
       buttons: [
         {
           text: this.translate.instant('Cancel'),
-          handler: data => {}
+          handler: data => { }
         },
         {
           text: this.translate.instant('Ok'),
@@ -170,5 +142,27 @@ export class GameMarketPage {
       ]
     });
     foundPrompt.present();
+  }
+
+  // 转换返回的cp为可显示的gamelist
+  // TODO:cplist的modal.
+  private tranformGameList(cplist) {
+    let gameList = [];
+    cplist.forEach(cp => {
+      // TODO:应该根据URL从游戏服务器获取.
+      // boss特殊处理,不显示
+      // this.logger.info(cp);
+      if (cp.cid != "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx") {
+        let nowGame = {
+          "cpid": cp.cid,
+          "img": "http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png",
+          "title": cp.name,
+          "subtitle": "人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记",
+          "version": "3.1.1"
+        };
+        gameList.push(nowGame);
+      }
+    });
+    return gameList;
   }
 }

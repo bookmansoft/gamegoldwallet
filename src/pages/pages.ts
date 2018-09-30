@@ -94,6 +94,10 @@ import { CustomAmountPage } from '../pages/receive/custom-amount/custom-amount';
 /* PropMarket */
 import { PropDetailPage } from '../pages/propmarket/propdetail/propdetail';
 import { PropListPage } from '../pages/propmarket/proplist/proplist';
+
+/* game */
+import { MarketListPage } from '../pages/gamemarket/market-list/market-list';
+
 export const PAGES = [
   ActivityPage,
   AddPage,
@@ -135,6 +139,7 @@ export const PAGES = [
   ...PIN_COMPONENTS,
   ProposalsPage,
   GameMarketPage,
+  MarketListPage,
   GoldMarketPage,
   PropMarketPage,
   PropListPage,
