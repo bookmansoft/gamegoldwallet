@@ -62,4 +62,8 @@ export class GoldMarketPage {
   switchType(value) {
     this.logger.info("changed: " + value);
   }
+  // 跳转到新增交易对页面
+  createContract() {
+    this.navCtrl.push("");
+  }
 }

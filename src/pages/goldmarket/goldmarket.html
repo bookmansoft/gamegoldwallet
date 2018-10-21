@@ -12,7 +12,8 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <div padding>
+  <!-- 原先交易市场的设计,目前仅实现单向兑换 -->
+  <!-- <div padding>
     <ion-segment [(ngModel)]="sellSwitch">
       <ion-segment-button value="buy">
         买
@@ -21,74 +22,78 @@
         卖
       </ion-segment-button>
     </ion-segment>
-  </div>
+  </div> -->
 
-  <div [ngSwitch]="sellSwitch">
-    <ion-list *ngSwitchCase="'buy'">
-      <ion-card>
-        <ion-card-header>
-          <ion-icon class="item-img" item-start>
-            <img src="assets/img/change/bitcoin.png">
-          </ion-icon>
-          <div class="item-title"> 数量:0.1 BTC </div>
-          <div class="item-subtitle">
-            单价: 500GOLD/BTC
-          </div>
-        </ion-card-header>
-        <ion-card-title class="change-price">
-          价格: 50 GOLD
-        </ion-card-title>
-        <ion-card-content>
-          <button ion-button full>确定购买</button>
-        </ion-card-content>
-      </ion-card>
+  <!-- <div [ngSwitch]="sellSwitch"> -->
+  <!-- </div> -->
+  <button ion-button full (click)="createContract()">
+    我要发布
+  </button>
+  <ion-list>
+    <ion-card>
+      <ion-card-header>
+        <ion-icon class="item-img" item-start>
+          <img src="assets/img/change/bitcoin.png">
+        </ion-icon>
+        <div class="item-title"> 数量:0.1 BTC </div>
+        <div class="item-subtitle">
+          单价: 500GOLD/BTC
+        </div>
+      </ion-card-header>
+      <ion-card-title class="change-price">
+        价格: 50 GOLD
+      </ion-card-title>
+      <ion-card-content>
+        <button ion-button full>确定购买</button>
+      </ion-card-content>
+    </ion-card>
 
-      <ion-card>
-        <ion-card-header>
-          <ion-icon class="item-img" item-start>
-            <img src="assets/img/change/bitcoin.png">
-          </ion-icon>
-          <div class="item-title"> 数量:0.2 BTC </div>
-          <div class="item-subtitle">
-            单价: 600GOLD/BTC
-          </div>
-        </ion-card-header>
-        <ion-card-title class="change-price">
-          价格: 120 GOLD
-        </ion-card-title>
-        <ion-card-content>
-          <button ion-button full>确定购买</button>
-        </ion-card-content>
-      </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-icon class="item-img" item-start>
+          <img src="assets/img/change/bitcoin.png">
+        </ion-icon>
+        <div class="item-title"> 数量:0.2 BTC </div>
+        <div class="item-subtitle">
+          单价: 600GOLD/BTC
+        </div>
+      </ion-card-header>
+      <ion-card-title class="change-price">
+        价格: 120 GOLD
+      </ion-card-title>
+      <ion-card-content>
+        <button ion-button full>确定购买</button>
+      </ion-card-content>
+    </ion-card>
 
-      <ion-card>
-        <ion-card-header>
-          <ion-icon class="item-img" item-start>
-            <img src="assets/img/change/bitcoin.png">
-          </ion-icon>
-          <div class="item-title"> 数量:0.4 BTC </div>
-          <div class="item-subtitle">
-            单价: 400GOLD/BTC
-          </div>
-        </ion-card-header>
-        <ion-card-title class="change-price">
-          价格: 160 GOLD
-        </ion-card-title>
-        <ion-card-content>
-          <button ion-button full>确定购买</button>
-        </ion-card-content>
-      </ion-card>
-    </ion-list>
+    <ion-card>
+      <ion-card-header>
+        <ion-icon class="item-img" item-start>
+          <img src="assets/img/change/bitcoin.png">
+        </ion-icon>
+        <div class="item-title"> 数量:0.4 BTC </div>
+        <div class="item-subtitle">
+          单价: 400GOLD/BTC
+        </div>
+      </ion-card-header>
+      <ion-card-title class="change-price">
+        价格: 160 GOLD
+      </ion-card-title>
+      <ion-card-content>
+        <button ion-button full>确定购买</button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 
-    <ion-list *ngSwitchCase="'sell'">
+  <!-- <ion-list *ngSwitchCase="'sell'">
       <ion-item>
         <ion-thumbnail item-start>
           <img src="assets/img/prop/solider.jpg">
         </ion-thumbnail>
         <h2>Luna</h2>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
 
-  </div>
+
 
 </ion-content>

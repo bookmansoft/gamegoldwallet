@@ -15,22 +15,11 @@ page-goldmarket {
     height: 40px !important;
     width: 40px !important;
     background-size: 40px 40px !important;
-    background-repeat: no-repeat;
-    background-image: url('assets/img/prop/monkey.jpg') !important;
+    background-repeat: no-repeat;   
   }
   .change-price {
     text-align: center;
     font: 1.4em sans-serif;
-  }
-  // [id^='alert-input-'][id$='-0'] .alert-radio-label {
-  //   background-image: url('../assets/images/menu/flag_ni.png') !important;
-  // }
-  // [id^='alert-input-'][id$='-1'] .alert-radio-label {
-  //   background-image: url('../assets/images/menu/flag_gt.png') !important;
-  // }
-  .popover-content {
-    background-image: url('assets/img/prop/monkey.jpg') !important;
-    background-color: transparent !important;
   }
 
   .alert-radio-inner {
