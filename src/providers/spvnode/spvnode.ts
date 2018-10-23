@@ -412,12 +412,11 @@ export class SpvNodeProvider {
   }
 
   // 承诺兑换交易对-目前仅btc,type默认1
-  promiseContract(btcAddress, type = 1): any {
-    let id = type.toString() + btcAddress;
+  promiseContract(contractId): any {
     this.wdb.rpc
       .execute({
         method: 'contract.promise',
-        params: [id]
+        params: [contractId]
       })
       .then(contract => {
         this.events.publish('contract.promise', contract);
@@ -426,13 +425,16 @@ export class SpvNodeProvider {
   }
 
   // 查询交易对
-  listContract(): any {
-    this.wdb.rpc
+  listContract(type = 1): any {
+    this.node.rpc
       .execute({
         method: 'contract.list',
+        params: [type]
       })
       .then(contracts => {
-        this.events.publish('contract.list', contracts);
+        // TODO:出错怎么办?
+        if (typeof contracts != 'string')
+          this.events.publish('contract.list', contracts);
         return contracts;
       });
   }
