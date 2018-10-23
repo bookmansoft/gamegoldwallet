@@ -19,7 +19,7 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 // pages
 import { PaperWalletPage } from '../paper-wallet/paper-wallet';
 import { AmountPage } from '../send/amount/amount';
-import { AddressbookAddPage } from '../settings/addressbook/add/add';
+import { ContractDetailPage } from './contract-detail/contract-detail';
 
 import env from '../../environments';
 
@@ -35,9 +35,8 @@ export class GoldMarketPage {
   // 买卖开关
   sellSwitch: string;
   // 买单列表
-  buylist: any;
-  // 卖单列表
-  selllist: any;
+  contracts: any;
+
 
   constructor(
     private navCtrl: NavController,
@@ -56,14 +55,43 @@ export class GoldMarketPage {
     this.isCordova = this.platform.isCordova;
     this.sellSwitch = 'buy';
     this.changeType = 'BTC';
-
+    // 进行事件监听
+    this.listenForEvents();
   }
+
+  ionViewDidEnter() {
+    this.spvNodeProvider.listContract();
+  }
+
+  ngOnDestroy() {
+    this.unListenForEvents();
+  }
+
+  private listenForEvents() {
+    this.events.subscribe('contract.list', contracts => {
+      this.logger.info(JSON.stringify(contracts));
+      this.contracts = contracts;
+    });
+  }
+
+  private unListenForEvents() {
+    this.events.unsubscribe('contract.list');
+  }
+
   // 选择币种时候,重新加载买卖列表
   switchType(value) {
     this.logger.info("changed: " + value);
   }
+
   // 跳转到新增交易对页面
   createContract() {
-    this.navCtrl.push("");
+    this.navCtrl.push(ContractDetailPage);
+  }
+
+  promiseContract(contract) {
+    this.logger.info("承诺交易对");
+    this.spvNodeProvider.promiseContract(contract.id);
+    // 刷新列表
+    this.spvNodeProvider.listContract();
   }
 }

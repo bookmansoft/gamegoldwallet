@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar class="navbar-transparent">
+    <!-- TODO:翻译 -->
+    <ion-title>创建交易对</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-row>
+      <ion-col col-4>
+        出售数量
+      </ion-col>
+      <ion-col col-8>
+        <input [(ngModel)]="ggAmount" placeholder="请输入要兑换的游戏金数量">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        当前余额(已确认)
+      </ion-col>
+      <ion-col col-8 *ngIf="balance">
+        {{balance.confirmed}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        兑换BTC
+      </ion-col>
+      <ion-col col-8>
+        <input [(ngModel)]="btcAmount" placeholder="请输入要兑换的比特币数量">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        单价:
+      </ion-col>
+      <ion-col col-8 *ngIf="btcAmount>0">
+        {{ggAmount/btcAmount}} GGD/BTC
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        转入地址:
+      </ion-col>
+      <ion-col col-8>
+        <input [(ngModel)]="btcAddress" placeholder="请输入要兑换的比特币入账地址">
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button full (click)="createContract()">
+      点击兑换
+    </button>
+  </ion-toolbar>
+</ion-footer>

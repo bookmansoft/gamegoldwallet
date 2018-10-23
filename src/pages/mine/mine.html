@@ -10,7 +10,7 @@
     <expandable-header-primary class="balance-header">
       <div (longPress)="toggleBalance()">
         <div (tap)="updateAll(true)" *ngIf="!updateStatusError && walletBalance">
-          <div class="balance-str">{{walletBalance.unconfirmed}}</div>
+          <div class="balance-str">钱包余额(未确认): {{walletBalance.unconfirmed}}</div>
           <div class="balance-alt-str">
             GAGE
           </div>

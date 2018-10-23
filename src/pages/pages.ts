@@ -9,6 +9,7 @@ import { FeedbackCompletePage } from '../pages/feedback/feedback-complete/feedba
 import { FeedbackPage } from '../pages/feedback/feedback/feedback';
 import { SendFeedbackPage } from '../pages/feedback/send-feedback/send-feedback';
 import { FinishModalPage } from '../pages/finish/finish';
+import { ContractDetailPage } from '../pages/goldmarket/contract-detail/contract-detail';
 import { BackupRequestPage } from '../pages/onboarding/backup-request/backup-request';
 import { CollectEmailPage } from '../pages/onboarding/collect-email/collect-email';
 import { DisclaimerPage } from '../pages/onboarding/disclaimer/disclaimer';
@@ -23,6 +24,7 @@ import { TxpDetailsPage } from '../pages/txp-details/txp-details';
 import { SearchTxModalPage } from '../pages/wallet-details/search-tx-modal/search-tx-modal';
 import { WalletBalancePage } from '../pages/wallet-details/wallet-balance/wallet-balance';
 import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
+
 
 /*Includes */
 import { CardItemPage } from '../pages/includes/card-item/card-item';
@@ -176,5 +178,6 @@ export const PAGES = [
   WalletActivityPage,
   WalletSelectorPage,
   CardItemPage,
-  SlideToAcceptPage
+  SlideToAcceptPage,
+  ContractDetailPage
 ];
