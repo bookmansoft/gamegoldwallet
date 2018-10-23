@@ -155,7 +155,7 @@ export class SpvNodeProvider {
     });
     await this.getBalance();
     // getCplist必须在getBalance后调用
-    this.getCpList();
+    // this.getCpList();
   }
 
   // 根据配置创建一个钱包
@@ -395,6 +395,57 @@ export class SpvNodeProvider {
       .then(tx => {
         this.events.publish('order.pay', tx);
         return tx;
+      });
+  }
+
+  // 创建交易对-目前仅btc,type默认1
+  createContract(ggAmount, btcAmount, btcAddress, type = 1): any {
+    this.wdb.rpc
+      .execute({
+        method: 'contract.create',
+        params: [type, ggAmount, btcAmount, btcAddress]
+      })
+      .then(contract => {
+        this.events.publish('contract.create', contract);
+        return contract;
+      });
+  }
+
+  // 承诺兑换交易对-目前仅btc,type默认1
+  promiseContract(btcAddress, type = 1): any {
+    let id = type.toString() + btcAddress;
+    this.wdb.rpc
+      .execute({
+        method: 'contract.promise',
+        params: [id]
+      })
+      .then(contract => {
+        this.events.publish('contract.promise', contract);
+        return contract;
+      });
+  }
+
+  // 查询交易对
+  listContract(): any {
+    this.wdb.rpc
+      .execute({
+        method: 'contract.list',
+      })
+      .then(contracts => {
+        this.events.publish('contract.list', contracts);
+        return contracts;
+      });
+  }
+
+  // 查询我参与的交易对
+  listMineContract(): any {
+    this.wdb.rpc
+      .execute({
+        method: 'contract.list.mine',
+      })
+      .then(myContracts => {
+        this.events.publish('contract.list.mine', myContracts);
+        return myContracts;
       });
   }
 }
