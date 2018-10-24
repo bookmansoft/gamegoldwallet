@@ -5,6 +5,7 @@ import { ImportWalletPage } from '../pages/add/import-wallet/import-wallet';
 import { JoinWalletPage } from '../pages/add/join-wallet/join-wallet';
 import { BackupGamePage } from '../pages/backup/backup-game/backup-game';
 import { BackupWarningPage } from '../pages/backup/backup-warning/backup-warning';
+import { ContractPage } from '../pages/contract/contract';
 import { FeedbackCompletePage } from '../pages/feedback/feedback-complete/feedback-complete';
 import { FeedbackPage } from '../pages/feedback/feedback/feedback';
 import { SendFeedbackPage } from '../pages/feedback/send-feedback/send-feedback';
@@ -24,7 +25,6 @@ import { TxpDetailsPage } from '../pages/txp-details/txp-details';
 import { SearchTxModalPage } from '../pages/wallet-details/search-tx-modal/search-tx-modal';
 import { WalletBalancePage } from '../pages/wallet-details/wallet-balance/wallet-balance';
 import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
-
 
 /*Includes */
 import { CardItemPage } from '../pages/includes/card-item/card-item';
@@ -179,5 +179,6 @@ export const PAGES = [
   WalletSelectorPage,
   CardItemPage,
   SlideToAcceptPage,
-  ContractDetailPage
+  ContractDetailPage,
+  ContractPage
 ];

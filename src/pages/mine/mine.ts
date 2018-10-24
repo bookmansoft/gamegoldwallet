@@ -16,6 +16,7 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { TouchIdProvider } from '../../providers/touchid/touchid';
 
 // pages
+import { ContractPage } from '../contract/contract';
 import { FeedbackCompletePage } from '../feedback/feedback-complete/feedback-complete';
 import { SendFeedbackPage } from '../feedback/send-feedback/send-feedback';
 import { PinModalPage } from '../pin/pin-modal/pin-modal';
@@ -252,5 +253,9 @@ export class MinePage {
   }
   public openSendPage(): void {
     this.navCtrl.push(SendPage);
+  }
+
+  public openContractPage(): void {
+    this.navCtrl.push(ContractPage);
   }
 }

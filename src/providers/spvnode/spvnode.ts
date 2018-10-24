@@ -443,10 +443,10 @@ export class SpvNodeProvider {
   listMineContract(): any {
     this.wdb.rpc
       .execute({
-        method: 'contract.list.mine',
+        method: 'contract.mine',
       })
       .then(myContracts => {
-        this.events.publish('contract.list.mine', myContracts);
+        this.events.publish('contract.mine', myContracts);
         return myContracts;
       });
   }
