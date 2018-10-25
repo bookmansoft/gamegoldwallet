@@ -115,9 +115,10 @@ export class PropListPage {
       .execute({
         method: 'order.pay',
         params: [prop.cid, this.userid, prop.propid, prop.price]
+        // params: ["4e2eee20-d84d-11e8-8f4f-554ee13bb529", "10008", "asdasgasdgasd", 30000]
       })
       .then(tx => {
-        this.logger.info(tx);
+        this.navCtrl.pop();
       })
       .catch(err => {
         this.logger.info("bugPropErr:" + err);
@@ -145,13 +146,13 @@ export class PropListPage {
     wdb.rpc
       .execute({
         method: 'prop.sale',
-        params: [prop.current.rev, price]
+        params: [prop.current.rev, prop.current.index, price]
       })
       .then(tx => {
         this.logger.info(tx);
       })
       .catch(err => {
-        this.logger.info("bugPropErr:" + err);
+        this.logger.info("salePropErr:" + err);
       });
   }
 

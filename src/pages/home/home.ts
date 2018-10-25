@@ -76,6 +76,7 @@ export class HomePage {
   private onPauseSubscription: Subscription;
 
   public gameServer: string;
+  public firstAddress: string;
 
   constructor(
     private plt: Platform,
@@ -109,7 +110,7 @@ export class HomePage {
     this.showReorderBch = false;
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.spvNodeProvider.open();
-    this.gameServer = 'http://127.0.0.1:/8080';
+    this.gameServer = 'http://40.73.119.183:7555';
   }
 
   ionViewWillEnter() {
@@ -588,15 +589,16 @@ export class HomePage {
       // this.balance = balance;
     });
 
-    this.events.subscribe('node:cplist', cps => {
-      // this.cpList = cps;
+    // 用地址簿的第一个地址作为游戏内ID
+    this.events.subscribe('address.first', address => {
+      this.firstAddress = address;
     });
   }
 
   private unListenForEvents() {
     this.events.unsubscribe('node:open');
     this.events.unsubscribe('node:balance');
-    this.events.unsubscribe('node:cplist');
+    this.events.unsubscribe('address.first');
   }
 
   public goGame() {
@@ -607,7 +609,7 @@ export class HomePage {
           method: 'token.user',
           params: [
             'a6589120-c2ed-11e8-a66f-7b3ab06b2b56', // 游戏编号-从cplist获得
-            '10000009' // 游戏内玩家编号
+            this.firstAddress // 游戏内玩家编号
           ]
         })
         .then(token => {
@@ -615,7 +617,7 @@ export class HomePage {
           this.logger.info(token);
           var ts = encodeURIComponent(JSON.stringify(token));
           setTimeout(() => {
-            let href = `http://localhost:7330/game/${ts}`;
+            let href = `${this.gameServer}/game/${ts}`;
             this.externalLinkProvider.open(
               href,
               true,

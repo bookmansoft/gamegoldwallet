@@ -88,8 +88,8 @@ export class SpvNodeProvider {
       // logger: nodeLogger,
       logger: null,
       // 为当前的Cordava SPV节点传入seeds列表，当前节点在连接具体的seed时，将首先连接到其WS桥接端口上，透过该端口桥接其socket端口，进而实现数据交换
-      seeds: [`127.0.0.1:17333`],
-      'node-uri': 'http://127.0.0.1:17332',
+      seeds: [`40.73.119.183:17333`],
+      'node-uri': 'http://40.73.119.183:17332',
       'api-key': 'bookmansoft',
       // 钱包的默认语言版本
       'wallet-language': 'simplified chinese',
@@ -156,6 +156,7 @@ export class SpvNodeProvider {
     await this.getBalance();
     // getCplist必须在getBalance后调用
     // this.getCpList();
+    this.getFirstAddress();
   }
 
   // 根据配置创建一个钱包
@@ -334,7 +335,7 @@ export class SpvNodeProvider {
     this.wdb.rpc
       .execute({
         method: 'prop.sale',
-        params: [prop.current.rev, np]
+        params: [prop.current.rev, prop.current.index, np]
       })
       .then(tx => {
         this.events.publish('prop.sale', tx);
@@ -448,6 +449,21 @@ export class SpvNodeProvider {
       .then(myContracts => {
         this.events.publish('contract.mine', myContracts);
         return myContracts;
+      });
+  }
+
+  // 获取第一个地址
+  getFirstAddress(): any {
+    this.wdb.rpc
+      .execute({
+        method: 'address.list',
+      })
+      .then(addresses => {
+        if (!!addresses && addresses.length > 0) {
+          let firstAddress = addresses[0][0];
+          this.events.publish('address.first', firstAddress);
+          return firstAddress;
+        }
       });
   }
 }
