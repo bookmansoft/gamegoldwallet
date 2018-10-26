@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class Api {
   public static API_URL: string = 'http://localhost:8100';
-  public static Game_API_URL: string = 'http://localhost:8100/mock';
+  public static Game_API_URL: string = 'http://40.73.119.183:7555';
   constructor(public http: HttpClient) { }
 
   get<T>(endpoint: string, params?: any, reqOpts?: any, gameOpt = false) {

@@ -608,7 +608,7 @@ export class HomePage {
         .execute({
           method: 'token.user',
           params: [
-            'a6589120-c2ed-11e8-a66f-7b3ab06b2b56', // 游戏编号-从cplist获得
+            'ca644ae0-d86f-11e8-af65-032906485980', // 游戏编号-从cplist获得
             this.firstAddress // 游戏内玩家编号
           ]
         })

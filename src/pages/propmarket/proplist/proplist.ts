@@ -138,6 +138,7 @@ export class PropListPage {
       .catch(err => {
         this.logger.info("found PropErr:" + err);
       });
+    this.navCtrl.pop();
   }
 
   saleProp(prop) {
@@ -154,6 +155,7 @@ export class PropListPage {
       .catch(err => {
         this.logger.info("salePropErr:" + err);
       });
+    this.navCtrl.pop();
   }
 
   private tranformOrderList(orders) {
@@ -163,6 +165,7 @@ export class PropListPage {
       // /{"cid":"a6589120-c2ed-11e8-a66f-7b3ab06b2b56","uid":"10000009",
       // "sn":"e1b61920-c2ef-11e8-ae5e-ef505d8de521","pid":"3",
       // "content":"3|3001|20000|区块剑","price":20000,"confirm":100
+      this.logger.info("order" + JSON.stringify(order));
       if (order.uid == this.userid && order.confirm < 6) {
         orderList.push({
           "propid": order.sn,

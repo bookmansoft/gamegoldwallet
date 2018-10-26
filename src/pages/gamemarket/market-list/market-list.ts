@@ -86,6 +86,7 @@ export class MarketListPage {
       .catch(err => {
         this.logger.info("bugPropErr:" + err);
       });
+    this.navCtrl.pop();
   }
 
 
