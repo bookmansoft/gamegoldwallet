@@ -34,6 +34,7 @@ export class PropMarketPage {
   public searchButtonText: string;
   public showButtonText: string;
   public gamelist: any;
+  public firstAddress: any;
 
   constructor(
     private navCtrl: NavController,
@@ -95,7 +96,7 @@ export class PropMarketPage {
     // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
     this.navCtrl.push(PropListPage, {
       game: gameinfo,
-      userId: "10000009"
+      userId: this.firstAddress
     });
     this.logger.info("gotoList" + gameinfo);
   }
@@ -103,6 +104,7 @@ export class PropMarketPage {
   ionViewWillEnter() {
     this.logger.info("ionViewWillEnter");
     this.spvNodeProvider.getCpList();
+    this.spvNodeProvider.getFirstAddress();
   }
 
   ngOnDestroy() {
@@ -113,10 +115,15 @@ export class PropMarketPage {
     this.events.subscribe('node:cplist', cps => {
       this.gamelist = this.tranformGameList(cps);
     });
+    // 用地址簿的第一个地址作为游戏内ID
+    this.events.subscribe('address.first', address => {
+      this.firstAddress = address;
+    });
   }
 
   private unListenForEvents() {
     this.events.unsubscribe('node:cplist');
+    this.events.unsubscribe('address.first');
   }
 
   // 转换返回的cp为可显示的gamelist

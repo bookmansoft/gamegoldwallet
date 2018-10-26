@@ -6,5 +6,11 @@
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "proxies": [
+    {
+      "path": "/mock",
+      "proxyUrl": "http://40.73.119.183:7555"
+    }
+  ]
 }
