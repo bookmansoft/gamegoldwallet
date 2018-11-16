@@ -98,11 +98,11 @@ export class PropMarketPage {
       game: gameinfo,
       userId: this.firstAddress
     });
-    this.logger.info("gotoList" + gameinfo);
+    this.logger.info('gotoList' + gameinfo);
   }
 
   ionViewWillEnter() {
-    this.logger.info("ionViewWillEnter");
+    this.logger.info('ionViewWillEnter');
     this.spvNodeProvider.getCpList();
     this.spvNodeProvider.getFirstAddress();
   }
@@ -135,13 +135,14 @@ export class PropMarketPage {
         // TODO:应该根据URL从游戏服务器获取.
         // boss特殊处理,不显示
         // this.logger.info(cp);
-        if (cp.cid != "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx") {
+        if (cp.cid != 'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx') {
           let nowGame = {
-            "cpid": cp.cid,
-            "img": "http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png",
-            "title": cp.name,
-            "subtitle": "人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记",
-            "version": "3.1.1"
+            cpid: cp.cid,
+            img:
+              'http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png',
+            title: cp.name,
+            subtitle: '人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记',
+            version: '3.1.1'
           };
           gameList.push(nowGame);
         }

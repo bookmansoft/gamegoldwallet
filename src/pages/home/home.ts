@@ -42,7 +42,11 @@ import { WalletProvider } from '../../providers/wallet/wallet';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild('showCard') showCard;
+  public searchInput: string;
+  index: number = 1;
+
+  @ViewChild('showCard')
+  showCard;
   public ggWallet: any;
   public wallets: any;
   public walletsBtc: any;
@@ -111,6 +115,24 @@ export class HomePage {
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.spvNodeProvider.open();
     this.gameServer = 'http://40.73.119.183:7555';
+  }
+  // 用于实时搜索,提示
+  onInput(inputEvent: Event) {
+    this.logger.info('input21111 !' + this.searchInput);
+  }
+  // 用于确认搜索
+  onSearch() {
+    // this.myInput有值时候,进行搜索
+    this.logger.info('搜索 !' + this.searchInput);
+  }
+  // 用于聚焦切换
+  onFocusInput() {
+    this.logger.info('focusInput !');
+  }
+  // 选项卡切换
+  onSelect(index) {
+    this.logger.info('点击 !' + index);
+    this.index = index;
   }
 
   ionViewWillEnter() {
@@ -263,14 +285,14 @@ export class HomePage {
     this.homeTip = false;
   }
 
-  private async checkAnnouncement() { }
+  private async checkAnnouncement() {}
 
   public hideAnnouncement(): void {
     this.persistenceProvider.setShowAmazonJapanAnnouncement('hide');
     this.showAnnouncement = false;
   }
 
-  public openAnnouncement(): void { }
+  public openAnnouncement(): void {}
 
   private checkFeedbackInfo() {
     this.persistenceProvider.getFeedbackInfo().then(info => {

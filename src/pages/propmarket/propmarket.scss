@@ -1,18 +1,54 @@
 page-propmarket {
-  color: #fff;
-  background: transparent none;
-  & > ion-content.content {
     background: transparent none;
-  }
-  .toolbar .searchbar-ios .searchbar-input {
-    background: #fff;
-  }
-  .navbar-transparent,
-  .toolbar-background {
-    background: $toolbar-scanner;
-  }
-  img.auto-image {
-    width: 100%;
-    padding: 10%;
-  }
+    &>ion-content.content {
+        background: #fff;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        padding: 0px;
+    }
+    .item-search {
+        display: flex;
+        height: 45px;
+        flex-direction: row;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0px;
+        margin: 0px;
+        border-bottom: 3px #f5f5f9 solid;
+    }
+    .toolbar .searchbar-ios .searchbar-input {
+        border-radius: 15px;
+    }
+    .search-img {
+        width: 24px;
+        height: 24px;
+    }
+    img.auto-image {
+        width: 100%;
+        padding: 10%;
+    }
+    .title {
+        font-size: 15px;
+        color: #000000;
+    }
+    .test {
+        height: 40px;
+        border-left: 3px #f5f5f9 solid;
+    }
+    .game-img {
+        width: 75px;
+        height: 75px;
+    }
+    .game-img img {
+        width: 75px;
+        height: 75px;
+        border-radius: 0;
+    }
+    .btn {
+        border-radius: 15px;
+        width: 17.73%;
+        min-width: 17.73%;
+    }
 }
