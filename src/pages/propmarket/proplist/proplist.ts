@@ -68,7 +68,7 @@ export class PropListPage {
     this.buyButtonText = '购买';
     this.showButtonText = '查看';
     this.foundButtonText = '熔铸';
-    this.saleButtonText = "出售";
+    this.saleButtonText = '出售';
     // 获取游戏列表数据,目前为json
     // this.api
     //   .get('assets/mock/proplist.json')
@@ -121,7 +121,7 @@ export class PropListPage {
         this.navCtrl.pop();
       })
       .catch(err => {
-        this.logger.info("bugPropErr:" + err);
+        this.logger.info('bugPropErr:' + err);
       });
   }
 
@@ -136,7 +136,7 @@ export class PropListPage {
         this.logger.info(tx);
       })
       .catch(err => {
-        this.logger.info("found PropErr:" + err);
+        this.logger.info('found PropErr:' + err);
       });
     this.navCtrl.pop();
   }
@@ -153,7 +153,7 @@ export class PropListPage {
         this.logger.info(tx);
       })
       .catch(err => {
-        this.logger.info("salePropErr:" + err);
+        this.logger.info('salePropErr:' + err);
       });
     this.navCtrl.pop();
   }
@@ -165,17 +165,17 @@ export class PropListPage {
       // /{"cid":"a6589120-c2ed-11e8-a66f-7b3ab06b2b56","uid":"10000009",
       // "sn":"e1b61920-c2ef-11e8-ae5e-ef505d8de521","pid":"3",
       // "content":"3|3001|20000|区块剑","price":20000,"confirm":100
-      this.logger.info("order" + JSON.stringify(order));
+      this.logger.info('order' + JSON.stringify(order));
       if (order.uid == this.userid && order.confirm < 6) {
         orderList.push({
-          "propid": order.sn,
-          "cid": order.cid,
-          "img": "assets/img/prop/monkey.jpg",
-          "name": "巨力神猿",
-          "content": order.content,
-          "price": order.price,
-          "confirm": order.confirm,
-          "pid": order.pid
+          propid: order.sn,
+          cid: order.cid,
+          img: 'assets/img/prop/monkey.jpg',
+          name: '巨力神猿',
+          content: order.content,
+          price: order.price,
+          confirm: order.confirm,
+          pid: order.pid
         });
       }
     });
@@ -186,22 +186,22 @@ export class PropListPage {
     let propList = [];
     props.forEach(prop => {
       propList.push({
-        "propid": prop.pid,
-        "cid": prop.cid,
-        "oid": prop.oid,
-        "img": "assets/img/prop/nightman.jpg",
-        "name": "区块剑",
-        "price": prop.gold,
-        "status": prop.status,
-        "cp": prop.cp,
-        "current": prop.current
+        propid: prop.pid,
+        cid: prop.cid,
+        oid: prop.oid,
+        img: 'assets/img/prop/nightman.jpg',
+        name: '区块剑',
+        price: prop.gold,
+        status: prop.status,
+        cp: prop.cp,
+        current: prop.current
       });
     });
     return propList;
   }
 
   ionViewWillEnter() {
-    this.logger.info("ionViewWillEnter");
+    this.logger.info('ionViewWillEnter');
     this.spvNodeProvider.getPropList();
   }
 
@@ -212,12 +212,30 @@ export class PropListPage {
   private listenForEvents() {
     this.events.subscribe('prop.list', props => {
       this.proplist = this.tranformPropList(props);
-      this.logger.info("get props " + JSON.stringify(this.proplist));
+      this.logger.info('get props ' + JSON.stringify(this.proplist));
     });
   }
 
   private unListenForEvents() {
     this.events.unsubscribe('prop.list');
+  }
+
+  showConfirm() {
+    const confirm = this.alertCtrl.create({
+      title: '提示',
+      message: '确定以0.05游戏金购买此道具吗？',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {}
+        },
+        {
+          text: '确定',
+          handler: () => {}
+        }
+      ]
+    });
+    confirm.present();
   }
 }
 

@@ -21,7 +21,7 @@ $app-direction: ltr;
 @import 'modals';
 @import 'my';
 // Colors
-$colors: ( primary: $color-primary, secondary: $color-secondary, warning: #ffa500, danger: #ef473a, success: #01d1a2, light: #f4f4f4, blank: #fff, dark: #424242, grey: #667, light-grey: #9b9bab);
+$colors: ( primary: $color-primary, secondary: $color-secondary, warning: #ffa500, danger: #ef473a, success: #01d1a2, light: #f4f4f4, blank: #fff, dark: #424242, grey: #667, light-grey: #9b9bab, btn:#1abb9b, black:#000000);
 // App background color
 $background-color: #f5f5f5;
 // Item list background color
@@ -51,7 +51,7 @@ $tabs-ios-border-color: rgba(0, 0, 0, 0.1);
 $item-ios-divider-background: $background-color;
 $item-ios-divider-color: color($colors, grey);
 $item-ios-padding-top: 16px;
-$item-ios-padding-bottom: 16px;
+$item-ios-padding-bottom: 10px;
 $label-ios-margin-top: 14px;
 $label-ios-margin-bottom: 14px;
 $list-ios-border-color: color($colors, light);

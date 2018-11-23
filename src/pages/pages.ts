@@ -96,14 +96,15 @@ import { CustomAmountPage } from '../pages/receive/custom-amount/custom-amount';
 /* PropMarket */
 import { PropDetailPage } from '../pages/propmarket/propdetail/propdetail';
 import { PropListPage } from '../pages/propmarket/proplist/proplist';
+import { PropReleasePage } from '../pages/propmarket/propsrelease/proprelease';
 
 /* game */
 import { MarketListPage } from '../pages/gamemarket/market-list/market-list';
+import { SellingDetailsPage } from '../pages/gamemarket/sellingdetails/sellingdetails';
 
 export const PAGES = [
   ActivityPage,
   AddPage,
-
   AmountPage,
   AddressbookPage,
   AddressbookAddPage,
@@ -142,10 +143,12 @@ export const PAGES = [
   ProposalsPage,
   GameMarketPage,
   MarketListPage,
+  SellingDetailsPage,
   GoldMarketPage,
   PropMarketPage,
   PropListPage,
   PropDetailPage,
+  PropReleasePage,
   SettingsPage,
   NotificationsPage,
   FeePolicyPage,

@@ -18,6 +18,7 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 
 // pages
 import { MarketListPage } from './market-list/market-list';
+import { SellingDetailsPage } from './sellingdetails/sellingdetails';
 
 import env from '../../environments';
 
@@ -47,13 +48,13 @@ export class GameMarketPage {
   ) {
     this.isCordova = this.platform.isCordova;
     this.showButtonText = '查看';
-    this.logger.info("ionViewWillEnter" + '221');
+    this.logger.info('ionViewWillEnter' + '221');
     // 进行事件监听
     this.listenForEvents();
   }
 
   ionViewWillEnter() {
-    this.logger.info("ionViewWillEnter" + '221');
+    this.logger.info('ionViewWillEnter' + '221');
     this.spvNodeProvider.getCpList();
   }
 
@@ -77,6 +78,12 @@ export class GameMarketPage {
       game: gameinfo
     });
   }
+  // 用于跳转到出售详情页面
+  gotoSellingDetails(gameinfo) {
+    this.navCtrl.push(SellingDetailsPage, {
+      game: gameinfo
+    });
+  }
 
   // 显示熔铸的确认窗
   showFound(prop: any) {
@@ -87,7 +94,7 @@ export class GameMarketPage {
       buttons: [
         {
           text: this.translate.instant('Cancel'),
-          handler: data => { }
+          handler: data => {}
         },
         {
           text: this.translate.instant('Ok'),
@@ -127,7 +134,7 @@ export class GameMarketPage {
       buttons: [
         {
           text: this.translate.instant('Cancel'),
-          handler: data => { }
+          handler: data => {}
         },
         {
           text: this.translate.instant('Ok'),
@@ -152,13 +159,14 @@ export class GameMarketPage {
         // TODO:应该根据URL从游戏服务器获取.
         // boss特殊处理,不显示
         // this.logger.info(cp);
-        if (cp.cid != "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx") {
+        if (cp.cid != 'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx') {
           let nowGame = {
-            "cpid": cp.cid,
-            "img": "http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png",
-            "title": cp.name,
-            "subtitle": "人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记",
-            "version": "3.1.1"
+            cpid: cp.cid,
+            img:
+              'http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png',
+            title: cp.name,
+            subtitle: '人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记',
+            version: '3.1.1'
           };
           gameList.push(nowGame);
         }

@@ -20,6 +20,7 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 import { AmountPage } from '../send/amount/amount';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
 import { PropListPage } from './proplist/proplist';
+import { PropReleasePage } from './propsrelease/proprelease';
 
 import env from '../../environments';
 
@@ -90,7 +91,15 @@ export class PropMarketPage {
       infiniteScroll.complete();
     }, 2000);
   }
-
+  // 用于跳转到道具发布页面
+  gotoPropRelease(gameinfo) {
+    // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
+    this.navCtrl.push(PropReleasePage, {
+      game: gameinfo,
+      userId: this.firstAddress
+    });
+    this.logger.info('页面跳转gotoList' + gameinfo);
+  }
   // 用于跳转到道具页面
   gotoPropList(gameinfo) {
     // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
@@ -98,7 +107,7 @@ export class PropMarketPage {
       game: gameinfo,
       userId: this.firstAddress
     });
-    this.logger.info('gotoList' + gameinfo);
+    this.logger.info('页面跳转gotoList' + gameinfo);
   }
 
   ionViewWillEnter() {

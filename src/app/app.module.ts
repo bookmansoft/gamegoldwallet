@@ -66,7 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
       animate: env.enableAnimations,
       tabsHideOnSubPages: true,
       tabsPlacement: 'bottom',
-      backButtonIcon: 'arrow-round-back',
+      backButtonIcon: 'ios-arrow-back',
       backButtonText: ''
     }),
     BrowserModule,

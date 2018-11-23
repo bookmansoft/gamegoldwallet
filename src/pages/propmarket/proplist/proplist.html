@@ -1,90 +1,62 @@
 <ion-header>
-  <ion-navbar class="navbar-transparent">
-    <!-- TODO:动态 -->
-    <ion-title>梦幻西游专区</ion-title>
-  </ion-navbar>
+    <ion-navbar class="navbar-transparent">
+        <ion-title>
+            <div class="title">商品详情</div>
+        </ion-title>
+        <ion-buttons end>
+            <img end src="assets/img/u369.png" class="search-img" />
+        </ion-buttons>
+
+        <!-- TODO:动态 -->
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-row>
-    <!-- TODO: 下拉翻译 -->
-    <ion-col col-4>
-      <ion-select [(ngModel)]="propType" placeholder="商品类型" interface="popover">
-        <ion-option value="all">全部</ion-option>
-        <ion-option value="coin">游戏币</ion-option>
-        <ion-option value="prop">道具</ion-option>
-        <ion-option value="present">礼包</ion-option>
-      </ion-select>
-    </ion-col>
-    <ion-col col-4>
-      <ion-select [(ngModel)]="platformType" placeholder="游戏平台" interface="popover">
-        <ion-option value="android">安卓</ion-option>
-        <ion-option value="ios">苹果</ion-option>
-      </ion-select>
-    </ion-col>
-    <!-- TODO:这里需要根据游戏,动态生成 -->
-    <ion-col col-4>
-      <ion-select [(ngModel)]="server" placeholder="服务器" interface="popover">
-        <ion-option value="one">一区</ion-option>
-        <ion-option value="two">二区</ion-option>
-      </ion-select>
-    </ion-col>
-    <!-- TODO:游戏猫这里是一个模态框,可以输入关键字和价格范围 -->
-  </ion-row>
+    <ion-item style="background:#ffffff !important;" no-lines (click)="gotoPropList(game)">
+        <ion-avatar item-start class="game-img" style="margin-right:40px;">
+            <img src="assets/img/test6.png">
+        </ion-avatar>
 
-  <ion-row>游戏内地址:{{userid}}</ion-row>
-  <ion-list>
-    <!-- 翻译 -->
-    <ion-item-divider *ngIf="orderList && orderList.length>0">我的订单:</ion-item-divider>
-    <div *ngFor="let order of orderList">
-      <button ion-item>
-        <!-- 只显示自己的订单 -->
-        <ion-icon class="item-img" item-start>
-          <img src={{order.img}} class="icon-game" />
-        </ion-icon>
-        <div class="item-title">{{order.propid}} </div>
-        <div class="item-subtitle">
-          {{order.content}}
+        <h1 style="font-size: 14px;">冰霜大剑</h1>
+        <div class="btn-view">
+            <p class="item-btn">魔兽世界</p>
         </div>
-        <div class="item-gamemoney">
-          {{order.price}} Gold
-        </div>
-        <ion-buttons item-end>
-          <button ion-button *ngIf="order.confirm <= -1" (click)="buyProp(order)">
-            {{buyButtonText}}
-          </button>
-          <button ion-button *ngIf="order.confirm >= 0">
-            {{showButtonText}}
-          </button>
-        </ion-buttons>
-      </button>
-    </div>
-    <ion-item-divider>我的道具:</ion-item-divider>
-    <div *ngFor="let prop of proplist">
-      <button ion-item>
-        <ion-icon class="item-img" item-start>
-          <img src={{prop.img}} class="icon-game" />
-        </ion-icon>
-        <div class="item-title">{{prop.propid}} </div>
-        <div class="item-subtitle">
-          状态: {{prop.status}}
-        </div>
-        <div class="item-gamemoney">
-          {{prop.price}} Gold
-        </div>
-        <ion-buttons item-end>
-          <button ion-button (click)="foundProp(prop)">
-            熔铸
-          </button>
-          <button ion-button (click)="saleProp(prop)">
-            出售
-          </button>
-        </ion-buttons>
-      </button>
-    </div>
-  </ion-list>
-
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+        <div style="color: red;font-size: 14px;height: 20px;margin-top: 8px;">10 游戏金</div>
+    </ion-item>
+    <ion-item no-lines style="background:#ffffff !important;">
+        <ion-row>
+            <p style="width:22%;">道具类型</p>
+            <p style="width:78%;">装备</p>
+        </ion-row>
+        <ion-row style="margin-top:8px;">
+            <p style="width:22%;">道具说明</p>
+            <p style="width:78%;">显示完整道具说明，支持换行。显示完整道具说明，支持换行。显示完整道具说明，支持换行。</p>
+        </ion-row>
+    </ion-item>
+    <ion-item no-lines style='text-align:center;align-items: center;min-height: 35px !important;height: 35px !important;'>
+        <ion-row style='align-items: center;'>
+            <img src="assets/img/u816.png" style="width:35%;height: 2px;">
+            <p style="width:30%;">道具信息</p>
+            <img src="assets/img/u816.png" style="width:35%;height: 2px;">
+        </ion-row>
+    </ion-item>
+    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
+        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+    </ion-row>
+    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
+        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+    </ion-row>
+    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
+        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+    </ion-row>
+    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
+        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+    </ion-row>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-title>
+            <button ion-button class="btn" (click)="showConfirm()">立即购买</button>
+        </ion-title>
+    </ion-toolbar>
+</ion-footer>

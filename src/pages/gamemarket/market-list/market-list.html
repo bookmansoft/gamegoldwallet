@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-navbar class="navbar-transparent">
-    <!-- TODO:动态 -->
-    <ion-title>梦幻西游专区市场</ion-title>
-  </ion-navbar>
+    <ion-navbar class="navbar-transparent">
+        <!-- TODO:动态 -->
+        <ion-title>梦幻西游专区市场</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <!-- 翻译 -->
-    <ion-item-divider>竞拍道具:</ion-item-divider>
-    <div *ngFor="let prop of proplist">
-      <button ion-item>
+    <ion-list>
+        <!-- 翻译 -->
+        <ion-item-divider>竞拍道具:</ion-item-divider>
+        <div *ngFor="let prop of proplist">
+            <button ion-item>
         <ion-icon class="item-img" item-start>
           <img src={{prop.img}} class="icon-game" />
         </ion-icon>
@@ -25,12 +25,12 @@
           <button ion-button (click)="buySaleProp(prop)">
             购买
           </button>
-        </ion-buttons>
-      </button>
-    </div>
-  </ion-list>
+            </ion-buttons>
+            </button>
+        </div>
+    </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

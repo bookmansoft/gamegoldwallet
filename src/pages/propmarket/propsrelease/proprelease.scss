@@ -1,0 +1,62 @@
+page-proprelease {
+    background: transparent none;
+    &>ion-content.content {
+        background: #f5f5f9;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    .title {
+        font-size: 15px;
+        color: #000000;
+    }
+    .bottom-btn {
+        height: 32px;
+        border-radius: 20px;
+        width: 180px;
+        background: #1abb9b;
+        margin-bottom: 5px;
+        line-height: 32px;
+        font-size: 15px;
+    }
+    .game-img {
+        width: 65px;
+        height: 65px;
+    }
+    .game-img img {
+        width: 65px;
+        height: 65px;
+        border-radius: 0;
+    }
+    .item-btn {
+        border-radius: 8px;
+        max-width: 60px;
+        min-width: 30px;
+        color: #888888;
+        font-size: 12px;
+        padding: 2px 5px 2px 5px;
+        background: #f4f4f4;
+        margin-right: 10px;
+        text-align: center;
+    }
+    .btn-view {
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
+    }
+    ion-toolbar {
+        background: #ffffff;
+        border-top: 1px #e2e2e2 solid;
+    }
+    .btn {
+        border-radius: 15px;
+        width: 90.73%;
+        min-width: 90.73%;
+        height: 30px;
+        margin-bottom: 6px;
+    }
+}
