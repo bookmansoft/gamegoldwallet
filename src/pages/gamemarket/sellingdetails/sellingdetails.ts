@@ -20,6 +20,7 @@ import { WalletProvider } from '../../../providers/wallet/wallet';
 // pages
 import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
+import { BuysuccessPage } from '../buysuccess/buysuccess';
 
 import env from '../../../environments';
 import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
@@ -27,4 +28,28 @@ import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
   selector: 'page-sellingdetails',
   templateUrl: './sellingdetails.html'
 })
-export class SellingDetailsPage {}
+export class SellingDetailsPage {
+  constructor(
+    private alertCtrl: AlertController,
+    private navCtrl: NavController
+  ) {}
+  showConfirm() {
+    const confirm = this.alertCtrl.create({
+      title: '提示',
+      message: '确定购买吗？',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {}
+        },
+        {
+          text: '确定',
+          handler: () => {
+            this.navCtrl.push(BuysuccessPage, {});
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+}
