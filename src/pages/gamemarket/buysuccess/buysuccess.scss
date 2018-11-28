@@ -45,4 +45,21 @@ page-buysuccess {
         margin: -4px 0px 0px 0px;
         padding: 0px;
     }
+    .div {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        position: absolute;
+        left: 20%;
+        top: 72%;
+        color: #000000;
+        font-size: 18px;
+    }
+    .btn {
+        border-radius: 22px;
+        width: 120px;
+        min-width: 120px;
+        height: 38px !important;
+        font-size: 16px !important;
+    }
 }
