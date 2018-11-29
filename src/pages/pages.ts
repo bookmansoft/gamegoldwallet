@@ -101,6 +101,7 @@ import { PropReleasePage } from '../pages/propmarket/propsrelease/proprelease';
 /* game */
 import { BuysuccessPage } from '../pages/gamemarket/buysuccess/buysuccess';
 import { MarketListPage } from '../pages/gamemarket/market-list/market-list';
+import { SalePage } from '../pages/gamemarket/sale/sale';
 import { SellingDetailsPage } from '../pages/gamemarket/sellingdetails/sellingdetails';
 
 export const PAGES = [
@@ -145,6 +146,7 @@ export const PAGES = [
   GameMarketPage,
   MarketListPage,
   SellingDetailsPage,
+  SalePage,
   BuysuccessPage,
   GoldMarketPage,
   PropMarketPage,

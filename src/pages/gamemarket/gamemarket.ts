@@ -18,6 +18,7 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 
 // pages
 import { MarketListPage } from './market-list/market-list';
+import { SalePage } from './sale/sale';
 import { SellingDetailsPage } from './sellingdetails/sellingdetails';
 
 import env from '../../environments';
@@ -81,6 +82,12 @@ export class GameMarketPage {
   // 用于跳转到出售详情页面
   gotoSellingDetails(gameinfo) {
     this.navCtrl.push(SellingDetailsPage, {
+      game: gameinfo
+    });
+  }
+  // 跳转到发布
+  gotoSale(gameinfo) {
+    this.navCtrl.push(SalePage, {
       game: gameinfo
     });
   }

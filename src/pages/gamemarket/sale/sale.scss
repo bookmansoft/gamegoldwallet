@@ -1,0 +1,23 @@
+page-sale {
+    background: #f5f5f9;
+    &>ion-content.content {
+        background: #f5f5f9;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    .title {
+        font-size: 15px;
+        color: #000000;
+    }
+    ion-input {
+        border-radius: 15px;
+        background: #f5f5f9 !important;
+        height: 30px !important;
+        width: 200px !important;
+    }
+}
