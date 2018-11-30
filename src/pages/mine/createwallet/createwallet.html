@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar class="navbar-transparent">
+    <ion-title> <div class="title">新钱包</div> </ion-title>
+    <!-- TODO:动态 -->
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item
+    no-lines
+    detail-push
+    style="margin-top:10px;background: #ffffff !important;"
+  >
+    <img item-start class="icon-img" src="assets/img/createwallet.png" />
+    <ion-row style="font-size:16px;" (click)="gotoSetPassword()">
+      创建新钱包
+    </ion-row>
+  </ion-item>
+  <ion-item
+    no-lines
+    detail-push
+    style="margin-top:10px;background: #ffffff !important;"
+  >
+    <img item-start class="icon-img" src="assets/img/import.png" />
+    <ion-row style="font-size:16px;"> 导入已有钱包 </ion-row>
+  </ion-item>
+</ion-content>

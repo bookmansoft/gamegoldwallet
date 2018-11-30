@@ -1,31 +1,60 @@
 <ion-header>
-    <ion-navbar class="navbar-transparent">
-        <ion-title>
-            <div class="title">{{content.headertitle}}</div>
-        </ion-title>
-        <!-- TODO:动态 -->
-    </ion-navbar>
+  <ion-navbar class="navbar-transparent">
+    <ion-title>
+      <div class="title">{{ content.headertitle }}</div>
+    </ion-title>
+    <!-- TODO:动态 -->
+  </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-item no-lines style="margin:15px 30px 0px 30px !important; padding-bottom: 30px !important;">
-        <ion-col style="align-items: center;text-align: center;position: relative;">
-            <ion-avatar item-start style="margin: 0px;">
-                <img class="success" src="assets/img/success.png">
-            </ion-avatar>
-            <img class="vertical" src="assets/img/vertical.png">
-            <p class="round">2</p>
-            <img class="vertical" src="assets/img/vertical.png">
-            <p class="round">3</p>
-        </ion-col>
-        <p style="position: absolute;left: 20%;top:13%;color:#1abb9b;font-size: 17px;">{{content.title}}</p>
-        <p style="width:60%;position: absolute;left: 20%;top:38%;color:#000000;font-size: 17px;">{{content.contentone}}</p>
-        <div style="display: flex;flex-direction: column;width:60%;position: absolute;left: 20%;color:#000000;font-size: 17px;" [ngStyle]="{'top':data == 1 ? '66%':'70.5%'}">
-            <div>{{content.contenttwo}}</div>
-            <div style="color:#999999;margin-top: 10px;">{{content.lable}}</div>
-        </div>
-    </ion-item>
-    <ion-item no-lines style="margin-top:60px !important;">
-        <button item-start ion-button class="btn" style="background: #fff !important;border: 1px #1abb9b solid !important;color:#1abb9b;margin-left: 30px !important;" (click)="gotoGamemarket()">返回市场</button>
-        <button item-end ion-button class="btn" style="margin-right: 30px !important;">{{content.btn}}</button>
-    </ion-item>
+  <ion-item
+    no-lines
+    style="margin:15px 30px 0px 30px !important; padding-bottom: 30px !important;"
+  >
+    <ion-col style="align-items: center;text-align: center;position: relative;">
+      <ion-avatar item-start style="margin: 0px;">
+        <img class="success" src="assets/img/success.png" />
+      </ion-avatar>
+      <img class="vertical" src="assets/img/vertical.png" />
+      <p class="round">2</p>
+      <img class="vertical" src="assets/img/vertical.png" />
+      <p class="round">3</p>
+    </ion-col>
+    <p
+      style="position: absolute;left: 20%;top:13%;color:#1abb9b;font-size: 17px;"
+    >
+      {{ content.title }}
+    </p>
+    <p
+      style="width:60%;position: absolute;left: 20%;top:38%;color:#000000;font-size: 17px;"
+    >
+      {{ content.contentone }}
+    </p>
+    <div
+      style="display: flex;flex-direction: column;width:60%;position: absolute;left: 20%;color:#000000;font-size: 17px;"
+      [ngStyle]="{ top: data == 1 ? '66%' : '70.5%' }"
+    >
+      <div>{{ content.contenttwo }}</div>
+      <div style="color:#999999;margin-top: 10px;">{{ content.lable }}</div>
+    </div>
+  </ion-item>
+  <ion-item no-lines style="margin-top:60px !important;">
+    <button
+      item-start
+      ion-button
+      class="btn"
+      style="background: #fff !important;border: 1px #1abb9b solid !important;color:#1abb9b;margin-left: 30px !important;"
+      (click)="gotoGamemarket()"
+    >
+      返回市场
+    </button>
+    <button
+      item-end
+      ion-button
+      class="btn"
+      style="margin-right: 30px !important;"
+    >
+      {{ content.btn }}
+    </button>
+  </ion-item>
 </ion-content>

@@ -19,6 +19,7 @@ import { TouchIdProvider } from '../../providers/touchid/touchid';
 import { ContractPage } from '../contract/contract';
 import { FeedbackCompletePage } from '../feedback/feedback-complete/feedback-complete';
 import { SendFeedbackPage } from '../feedback/send-feedback/send-feedback';
+import { CreateWalletPage } from '../mine/createwallet/createwallet';
 import { PinModalPage } from '../pin/pin-modal/pin-modal';
 import { ReceivePage } from '../receive/receive';
 import { ScanPage } from '../scan/scan';
@@ -101,6 +102,10 @@ export class MinePage {
         ? this.config.lock.method.toLowerCase()
         : null;
     this.listenForEvents();
+  }
+  // 跳转新建钱包
+  gotoCreatewallet() {
+    this.navCtrl.push(CreateWalletPage, {});
   }
 
   ionViewDidEnter() {

@@ -1,6 +1,6 @@
 /* Pages */
 import { AddPage } from '../pages/add/add';
-import { CreateWalletPage } from '../pages/add/create-wallet/create-wallet';
+/* import { CreateWalletPage } from '../pages/add/create-wallet/create-wallet';*/
 import { ImportWalletPage } from '../pages/add/import-wallet/import-wallet';
 import { JoinWalletPage } from '../pages/add/join-wallet/join-wallet';
 import { BackupGamePage } from '../pages/backup/backup-game/backup-game';
@@ -66,7 +66,9 @@ import { LanguagePage } from '../pages/settings/language/language';
 import { NotificationsPage } from '../pages/settings/notifications/notifications';
 
 /* Mine */
+import { CreateWalletPage } from '../pages/mine/createwallet/createwallet';
 import { MinePage } from '../pages/mine/mine';
+import { SetPasswordPage } from '../pages/mine/setpassword/setpassword';
 
 /* Wallet Settings */
 import { WalletColorPage } from '../pages/settings/wallet-settings/wallet-color/wallet-color';
@@ -136,6 +138,7 @@ export const PAGES = [
   GravatarPage,
   FingerprintModalPage,
   MinePage,
+  SetPasswordPage,
   HomePage,
   LanguagePage,
   OnboardingPage,
