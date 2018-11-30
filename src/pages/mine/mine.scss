@@ -1,29 +1,26 @@
 page-mine {
-  color: #fff;
-  background: transparent none;
-  & > ion-content.content {
     background: transparent none;
-  }
-  .wallet-warning {
-    ion-label {
-      white-space: inherit;
+    &>ion-content.content {
+        background: #f5f5f9;
     }
-  }
-  .icon-wallet,
-  .icon-services {
-    width: 25px;
-    height: 25px;
-  }
-  .icon-card {
-    width: 25px;
-    height: 25px;
-  }
-  .icon-services {
-    box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.2);
-    padding: 0rem;
-  }
-  img.auto-image {
-    width: 100%;
-    padding: 10%;
-  }
+    .ion-item {
+        background: #f5f5f9;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        padding: 0px;
+    }
+    .search-img {
+        width: 24px;
+        height: 24px;
+    }
+    .title {
+        font-size: 15px;
+        color: #000000;
+    }
+    .icon-img {
+        width: 40px;
+        height: 40px;
+    }
 }

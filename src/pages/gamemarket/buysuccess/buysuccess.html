@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar class="navbar-transparent">
         <ion-title>
-            <div class="title">购买成功</div>
+            <div class="title">{{content.headertitle}}</div>
         </ion-title>
         <!-- TODO:动态 -->
     </ion-navbar>
@@ -17,15 +17,15 @@
             <img class="vertical" src="assets/img/vertical.png">
             <p class="round">3</p>
         </ion-col>
-        <p style="position: absolute;left: 20%;top:13%;color:#1abb9b;font-size: 17px;">已锁定订单</p>
-        <p style="width:60%;position: absolute;left: 20%;top:38%;color:#000000;font-size: 17px;">向对方BTC钱包转账相应数量的BTC</p>
-        <div style="display: flex;flex-direction: column;width:60%;position: absolute;left: 20%;top:66%;color:#000000;font-size: 17px;">
-            <div>转账完成后Gamegold将自动到账</div>
-            <div style="color:#999999;margin-top: 10px;">请及时完成转账，长时间未完成转账，订单将自动取消</div>
+        <p style="position: absolute;left: 20%;top:13%;color:#1abb9b;font-size: 17px;">{{content.title}}</p>
+        <p style="width:60%;position: absolute;left: 20%;top:38%;color:#000000;font-size: 17px;">{{content.contentone}}</p>
+        <div style="display: flex;flex-direction: column;width:60%;position: absolute;left: 20%;color:#000000;font-size: 17px;" [ngStyle]="{'top':data == 1 ? '66%':'70.5%'}">
+            <div>{{content.contenttwo}}</div>
+            <div style="color:#999999;margin-top: 10px;">{{content.lable}}</div>
         </div>
     </ion-item>
     <ion-item no-lines style="margin-top:60px !important;">
-        <button item-start ion-button class="btn" style="background: #fff !important;border: 1px #1abb9b solid !important;color:#1abb9b;margin-left: 30px !important;">返回市场</button>
-        <button item-end ion-button class="btn" style="margin-right: 30px !important;">查看订单</button>
+        <button item-start ion-button class="btn" style="background: #fff !important;border: 1px #1abb9b solid !important;color:#1abb9b;margin-left: 30px !important;" (click)="gotoGamemarket()">返回市场</button>
+        <button item-end ion-button class="btn" style="margin-right: 30px !important;">{{content.btn}}</button>
     </ion-item>
 </ion-content>

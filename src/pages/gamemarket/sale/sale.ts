@@ -20,6 +20,7 @@ import { WalletProvider } from '../../../providers/wallet/wallet';
 // pages
 import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
+import { BuysuccessPage } from '../buysuccess/buysuccess';
 
 import env from '../../../environments';
 import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
@@ -28,7 +29,10 @@ import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
   templateUrl: './sale.html'
 })
 export class SalePage {
-  constructor(private alertCtrl: AlertController) {}
+  constructor(
+    private alertCtrl: AlertController,
+    private navCtrl: NavController
+  ) {}
   showConfirm() {
     const confirm = this.alertCtrl.create({
       title: '提示',
@@ -45,5 +49,11 @@ export class SalePage {
       ]
     });
     confirm.present();
+  }
+  // 跳转到发布
+  gotoBuysuccess() {
+    this.navCtrl.push(BuysuccessPage, {
+      lable: '2'
+    });
   }
 }

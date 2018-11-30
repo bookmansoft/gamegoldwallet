@@ -45,7 +45,9 @@ export class SellingDetailsPage {
         {
           text: '确定',
           handler: () => {
-            this.navCtrl.push(BuysuccessPage, {});
+            this.navCtrl.push(BuysuccessPage, {
+              lable: '1'
+            });
           }
         }
       ]

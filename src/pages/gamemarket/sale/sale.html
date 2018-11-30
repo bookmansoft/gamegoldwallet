@@ -7,15 +7,59 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-item style="background:#ffffff !important;">
-        出售数量
-    </ion-item>
-    <ion-item style="background:#ffffff !important;">
-        <ion-label item-start style="color:red;width: 20px !important;">*</ion-label>
-        <ion-item>
-            <ion-input type="text" value="请输入"></ion-input>
-            <ion-label fixed>GGD</ion-label>
+    <ion-row style="background:#ffffff !important;">
+        <ion-item no-lines>
+            出售数量
         </ion-item>
+        <ion-item no-lines style="margin: 5px !important;height: 40px !important;">
+            <p item-start style="color:red;font-size: 18px;">*</p>
+            <ion-item class="ion-item">
+                <ion-input type="text" style="font-size:15px;" placeholder="请输入"></ion-input>
+                <p item-end style="color:#2b2b2b;">GGD</p>
+            </ion-item>
+        </ion-item>
+        <ion-item style="padding:0px 15px 0px 50px !important;vertical-align: middle;height: 30px !important;">
+            <ion-row item-start style="font-size: 15px;color: #999999;">
+                当前余额 5.5659个
+            </ion-row>
+            <ion-row item-end style="font-size: 15px;color: #1a72f7;">
+                出售全部
+            </ion-row>
+        </ion-item>
+    </ion-row>
+    <ion-row style="background:#ffffff !important;margin-top: 3px;">
+        <ion-item no-lines>
+            单个Gamegold兑换BTC数量
+        </ion-item>
+        <ion-item no-lines style="margin: 5px !important;height: 40px !important;">
+            <p item-start style="color:red;font-size: 18px;">*</p>
+            <ion-item class="ion-item">
+                <ion-input type="text" style="font-size:15px;" placeholder="请输入"></ion-input>
+                <p item-end style="color:#2b2b2b;">BTC</p>
+            </ion-item>
+        </ion-item>
+        <ion-item style="padding:0px 15px 0px 50px !important;vertical-align: middle;height: 30px !important;">
+            <ion-row item-start style="font-size: 15px;">
+                <div>当前余额
+                    <span style="color:coral;margin-left: 5px;">0.00</span> BTC
+                </div>
+            </ion-row>
+        </ion-item>
+    </ion-row>
+    <ion-row style="background:#ffffff !important;margin-top: 3px;">
+        <ion-item no-lines>
+            您的BTC钱包地址(用于接收BTC)
+        </ion-item>
+        <ion-item no-lines style="margin: 5px !important;">
+            <p item-start style="color:red;font-size: 18px;">*</p>
+            <ion-item class="ion-item">
+                <ion-input type="text" style="font-size:15px;word-break:break-al;" placeholder="请输入Bitcoin钱包地址，请务必核对正确"></ion-input>
+            </ion-item>
+        </ion-item>
+    </ion-row>
 
-    </ion-item>
+    <ion-row style="padding:50px 33px 0px 33px;">
+        <button item-end ion-button class="btn" (click)="gotoBuysuccess()">发布</button>
+    </ion-row>
+
 </ion-content>
