@@ -1,6 +1,11 @@
 import { Component, VERSION, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Events, ModalController, NavController } from 'ionic-angular';
+import {
+  Events,
+  ModalController,
+  NavController,
+  ToastController
+} from 'ionic-angular';
 import { Logger } from '../../../providers/logger/logger';
 
 // providers
@@ -21,4 +26,17 @@ import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
   selector: 'page-setpassword',
   templateUrl: './setpassword.html'
 })
-export class SetPasswordPage {}
+export class SetPasswordPage {
+  constructor(
+    private spvNodeProvider: SpvNodeProvider,
+    public toastCtrl: ToastController
+  ) {}
+  ionViewDidEnter(password: HTMLInputElement, password1: HTMLInputElement) {
+    /** this.spvNodeProvider.createWallet(opt); */
+    const toast = this.toastCtrl.create({
+      message: password.value,
+      duration: 3000
+    });
+    toast.present();
+  }
+}
