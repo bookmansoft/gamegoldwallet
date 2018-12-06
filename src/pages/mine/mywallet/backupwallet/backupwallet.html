@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>备份钱包</ion-title>
+        <!-- TODO:动态 -->
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-row *ngIf="index==0">
+        <ion-item no-lines>
+            为什么要备份钱包？
+        </ion-item>
+        <ion-item no-lines>
+            游戏金钱包基于区块链技术，是完全属于您个人的去中心化钱包，钱包备份是您恢复钱包的唯一途径，因此强烈建议您立即备份钱包，并妥善保管好您的备份，切勿丢失或告知他人。
+        </ion-item>
+        <ion-item no-lines>
+            如何备份钱包？
+        </ion-item>
+        <ion-item no-lines>
+            点击备份钱包，屏幕上会出现12个汉字作为助记词，您务必将12个汉字助记词用纸笔抄写下来，这是您将来恢复钱包的重要凭证。请勿将助记词告知他人或使用不安全的方式保存。
+        </ion-item>
+        <ion-item no-lines>
+            如何恢复钱包？
+        </ion-item>
+        <ion-item no-lines>
+            恢复钱包时，按顺序输入您备份时产生的12个汉字助记词，即可恢复钱包。
+        </ion-item>
+    </ion-row>
+    <ion-row *ngIf="index==1">
+        <ion-item no-lines>
+            请仔细记下这些助记词
+        </ion-item>
+        <ion-item no-lines>
+            <div class="mnemonic-div">{{mnemonic}}</div>
+        </ion-item>
+        <ion-item no-lines>
+            <div class="lable-div">请注意：截图保存是不安全的，建议用纸笔将助记词抄写下来</div>
+        </ion-item>
+    </ion-row>
+    <ion-row *ngIf="index==2">
+        <ion-item no-lines>
+            请按顺序点击助记词，确认助记词备份正常
+        </ion-item>
+        <ion-item no-lines>
+            <div class="mnemonic-div">{{mnemonic}}</div>
+        </ion-item>
+    </ion-row>
+
+    <div padding style="margin-top:50px;">
+        <button ion-button class="btn" color="primary" (click)="controlPage()">{{indexstr}}</button>
+    </div>
+</ion-content>

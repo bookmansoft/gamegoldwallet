@@ -12,7 +12,7 @@
         钱包资产
     </ion-item>
     <ion-item no-lines detail-push style="background: #ffffff !important;">
-        <div item-start style="font-size:16px;">0 GDD</div>
+        <div item-start *ngIf="walletBalance" style="font-size:16px;">{{walletBalance.confirmed}} GDD</div>
         <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
             创建钱包
         </div>

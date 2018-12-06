@@ -17,6 +17,7 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 
 // pages
+import { MyWalletPage } from '../../mine/mywallet/mywallet';
 import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
 
@@ -29,14 +30,17 @@ import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
 export class SetPasswordPage {
   constructor(
     private spvNodeProvider: SpvNodeProvider,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private navCtrl: NavController
   ) {}
   ionViewDidEnter(password: HTMLInputElement, password1: HTMLInputElement) {
     /** this.spvNodeProvider.createWallet(opt); */
-    const toast = this.toastCtrl.create({
-      message: password.value,
-      duration: 3000
-    });
-    toast.present();
+    if (password != null && password1 != null) {
+      this.gotoMyWallet();
+    }
+  }
+  // 跳转我的钱包
+  gotoMyWallet() {
+    this.navCtrl.push(MyWalletPage, {});
   }
 }

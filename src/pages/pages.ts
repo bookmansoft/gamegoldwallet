@@ -68,6 +68,8 @@ import { NotificationsPage } from '../pages/settings/notifications/notifications
 /* Mine */
 import { CreateWalletPage } from '../pages/mine/createwallet/createwallet';
 import { MinePage } from '../pages/mine/mine';
+import { BackupWalletPage } from '../pages/mine/mywallet/backupwallet/backupwallet';
+import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
 import { SetPasswordPage } from '../pages/mine/setpassword/setpassword';
 
 /* Wallet Settings */
@@ -139,6 +141,8 @@ export const PAGES = [
   FingerprintModalPage,
   MinePage,
   SetPasswordPage,
+  BackupWalletPage,
+  MyWalletPage,
   HomePage,
   LanguagePage,
   OnboardingPage,
