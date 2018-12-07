@@ -31,4 +31,25 @@ page-backupwallet {
         padding-right: 10px;
         padding-top: 5px;
     }
+    .input-div {
+        display: flex;
+        height: 120px;
+        border: 1px #000000 solid;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        color: #888888;
+    }
+    .ion-col-div {
+        width: 40px;
+        height: 40px;
+        border: 1px #666666 solid;
+        line-height: 40px;
+        text-align: center;
+    }
+    .clear-div {
+        font-size: 15px;
+        text-align: center;
+        color: #888888;
+    }
 }
