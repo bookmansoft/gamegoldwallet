@@ -69,7 +69,7 @@
     <div padding style="margin-top:50px;">
         <button [disabled]="status" ion-button class="btn" color="primary" (click)="controlPage()">{{indexstr}}</button>
     </div>
-    <div *ngIf="index==2" padding class="clear-div" (click)="onClearItems()">
-        清空
+    <div *ngIf="index==2" padding class="clear-div">
+        <p (click)="onClearItems()" style="padding-top:5px;padding-bottom:5px;">清空</p>
     </div>
 </ion-content>
