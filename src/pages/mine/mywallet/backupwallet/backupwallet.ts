@@ -7,6 +7,7 @@ import {
   ToastController
 } from 'ionic-angular';
 import { Logger } from '../../../../providers/logger/logger';
+import { SpvNodeProvider } from '../../../../providers/spvnode/spvnode';
 @Component({
   selector: 'page-backupwallet',
   templateUrl: './backupwallet.html'
@@ -14,14 +15,16 @@ import { Logger } from '../../../../providers/logger/logger';
 export class BackupWalletPage {
   public index: number = 0;
   public indexstr: string = '开始备份';
-  public mnemonic: string = '去 的 发 个 好 就 看 吗 你 吧 了 赔';
+  public mnemonic: string;
   public list: any;
   public checkList;
   public status: any;
   constructor(
     private navCtrl: NavController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private spvNodeProvider: SpvNodeProvider
   ) {
+    this.mnemonic = this.spvNodeProvider.getmnemonicPhrase();
     this.checkList = [];
     this.status = false;
     this.list = this.mnemonic.split(' ');
@@ -32,6 +35,7 @@ export class BackupWalletPage {
       this.list[currentRandom] = current;
     }
   }
+  ionViewDidEnter() {}
   controlPage() {
     if (this.index == 0) {
       this.index = 1;
