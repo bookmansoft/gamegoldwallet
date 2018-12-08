@@ -129,6 +129,19 @@ export class SpvNodeProvider {
     if (!this.wdb) {
       throw new Error('wallet plugin is not installed');
     }
+
+    this.node.ensure().then(() => {
+      // 测试钱包数据库是否已经建立
+      return this.wdb.checkNewRecord();
+    }).then(() => {
+      if (this.wdb.newRecord) {
+        // 当前尚未建立钱包数据库，引导用户进入创建钱包流程，补充输入必要的前导信息，例如 passphrase
+        // 选择1：引导用户导入助记符
+        this.wdb.setmnemonicByWords(128);
+        // 设置wdb的语言环境
+        this.wdb.setlanguage('simplified chinese');
+      }
+    });
   }
   /**
    * 打开当前node,并且监听交易事件
