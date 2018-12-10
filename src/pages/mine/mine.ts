@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import { Events, ModalController, NavController } from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
@@ -20,6 +21,7 @@ import { ContractPage } from '../contract/contract';
 import { FeedbackCompletePage } from '../feedback/feedback-complete/feedback-complete';
 import { SendFeedbackPage } from '../feedback/send-feedback/send-feedback';
 import { CreateWalletPage } from '../mine/createwallet/createwallet';
+import { MyWalletPage } from '../mine/mywallet/mywallet';
 import { PinModalPage } from '../pin/pin-modal/pin-modal';
 import { ReceivePage } from '../receive/receive';
 import { ScanPage } from '../scan/scan';
@@ -61,6 +63,7 @@ export class MinePage {
   public showBalanceButton: boolean = false;
   public scanning: boolean = false;
   public walletBalance;
+  public walletpassword: string;
   constructor(
     private navCtrl: NavController,
     private app: AppProvider,
@@ -74,7 +77,8 @@ export class MinePage {
     private translate: TranslateService,
     private modalCtrl: ModalController,
     private touchid: TouchIdProvider,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    private storage: Storage
   ) {
     this.appName = this.app.info.nameCase;
     this.walletsBtc = [];
@@ -86,6 +90,9 @@ export class MinePage {
   }
 
   ionViewWillEnter() {
+    this.storage.get('walletpassword').then(val => {
+      this.walletpassword = val;
+    });
     this.currentLanguageName = this.language.getName(
       this.language.getCurrent()
     );
@@ -105,7 +112,16 @@ export class MinePage {
   }
   // 跳转新建钱包
   gotoCreatewallet() {
-    this.navCtrl.push(CreateWalletPage, {});
+    if (this.walletpassword != null) {
+      this.gotoMyWallet();
+    } else {
+      this.navCtrl.push(CreateWalletPage, {});
+    }
+  }
+
+  // 跳转我的钱包
+  gotoMyWallet() {
+    this.navCtrl.push(MyWalletPage, {});
   }
 
   ionViewDidEnter() {
