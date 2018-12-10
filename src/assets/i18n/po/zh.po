@@ -1533,7 +1533,7 @@ msgid "Read only wallet"
 msgstr "錢包只供唯讀"
 
 msgid "Receive"
-msgstr "接收"
+msgstr "接收游戏金"
 
 msgid "Receive in"
 msgstr "在接收"

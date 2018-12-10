@@ -6,22 +6,22 @@
 </ion-header>
 <ion-content>
     <ion-item no-lines style="background: #ffffff !important;">
-        <div item-start style="font-size:16px;padding-left: 20px;"><span style="font-size:18px;">0</span> GDD</div>
+        <div item-start *ngIf="walletBalance" style="font-size:16px;padding-left: 20px;"><span style="font-size:18px;">{{walletBalance.confirmed}}</span> GDD</div>
     </ion-item>
     <ion-row no-lines style="background: #ffffff !important;margin-top: 10px;padding:10px 10px 5px 10px;">
-        <div class="div">
+        <div class="div" (click)="openScanPage()">
             <img src="assets/img/my-sao.png">
             <span>扫一扫</span>
         </div>
-        <div class="div">
+        <div class="div" (click)="openSendPage()">
             <img src="assets/img/my-send.png">
             <span>发送</span>
         </div>
-        <div class="div">
+        <div class="div" (click)="openReceivePage()">
             <img src="assets/img/my-qr.png">
             <span>接收</span>
         </div>
-        <div class="div">
+        <div class="div" (click)="openContractPage()">
             <img src="assets/img/my-ch.png">
             <span>交易对</span>
         </div>

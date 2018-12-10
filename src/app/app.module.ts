@@ -1,6 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 /* Modules */
@@ -35,6 +36,7 @@ import { NoLowFee } from '../directives/no-low-fee/no-low-fee';
 import { COMPONENTS } from './../components/components';
 
 /* Providers */
+import { from } from 'rxjs/observable/from';
 import { ProvidersModule } from './../providers/providers.module';
 
 /* Read translation files */
@@ -69,6 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
       backButtonIcon: 'ios-arrow-back',
       backButtonText: ''
     }),
+    IonicStorageModule.forRoot(),
     BrowserModule,
     HttpClientModule,
     MomentModule,

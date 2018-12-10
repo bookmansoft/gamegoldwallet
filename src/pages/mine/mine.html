@@ -14,7 +14,7 @@
     <ion-item no-lines detail-push style="background: #ffffff !important;">
         <div item-start *ngIf="walletBalance" style="font-size:16px;">{{walletBalance.confirmed}} GDD</div>
         <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
-            创建钱包
+            {{walletpassword == null ? '创建钱包':'我的钱包'}}
         </div>
     </ion-item>
     <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">

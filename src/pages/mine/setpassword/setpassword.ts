@@ -1,4 +1,5 @@
 import { Component, VERSION, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Events,
@@ -31,13 +32,38 @@ export class SetPasswordPage {
   constructor(
     private spvNodeProvider: SpvNodeProvider,
     public toastCtrl: ToastController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private logger: Logger,
+    private storage: Storage
   ) {}
-  ionViewDidEnter(password: HTMLInputElement, password1: HTMLInputElement) {
-    /** this.spvNodeProvider.createWallet(opt); */
-    if (password != null && password1 != null) {
-      this.gotoMyWallet();
+  /**
+   * 获取输入
+   * @param password
+   * @param password1
+   */
+  getInput(password: HTMLInputElement, password1: HTMLInputElement) {
+    if (password.value != '' && password1.value != '') {
+      if (password.value == password1.value) {
+        this.storage.set('walletpassword', password.value);
+        this.gotoMyWallet();
+      } else {
+        let toast = this.toastCtrl.create({
+          message: '确认密码和钱包密码不一致，请重新输入！',
+          duration: 2000
+        });
+        toast.present();
+      }
+    } else {
+      let toast = this.toastCtrl.create({
+        message: '请输入钱包密码和确认钱包密码！',
+        duration: 2000
+      });
+      toast.present();
     }
+  }
+
+  ionViewDidEnter() {
+    /** this.spvNodeProvider.createWallet(opt); */
   }
   // 跳转我的钱包
   gotoMyWallet() {
