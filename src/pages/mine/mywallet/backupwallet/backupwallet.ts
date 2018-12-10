@@ -1,6 +1,8 @@
 import { Component, VERSION, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  AlertController,
   Events,
   ModalController,
   NavController,
@@ -22,7 +24,9 @@ export class BackupWalletPage {
   constructor(
     private navCtrl: NavController,
     public toastCtrl: ToastController,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    private alertCtrl: AlertController,
+    private storage: Storage
   ) {
     this.mnemonic = this.spvNodeProvider.getmnemonicPhrase();
     this.checkList = [];
@@ -48,17 +52,32 @@ export class BackupWalletPage {
       let checkStr = this.checkList.join('');
       let mnem = this.mnemonic.replace(/\s*/g, '');
       if (checkStr == mnem) {
-        let toast = this.toastCtrl.create({
-          message: '请务必保管好您的助记词！',
-          duration: 2000
+        const confirm = this.alertCtrl.create({
+          title: '备份完成',
+          message: '请务必保管好您的助记词',
+          buttons: [
+            {
+              text: '好的',
+              handler: () => {
+                this.storage.set('backup', 'backup');
+                this.navCtrl.pop();
+              }
+            }
+          ]
         });
-        toast.present();
+        confirm.present();
       } else {
-        let toast = this.toastCtrl.create({
-          message: '请重新尝试验证您的助记词！',
-          duration: 2000
+        const confirm = this.alertCtrl.create({
+          title: '助记词验证错误',
+          message: '请重新尝试验证您的助记词',
+          buttons: [
+            {
+              text: '好的',
+              handler: () => {}
+            }
+          ]
         });
-        toast.present();
+        confirm.present();
       }
     }
   }
@@ -86,5 +105,23 @@ export class BackupWalletPage {
   onClearItems() {
     this.checkList.length = 0;
     this.status = true;
+  }
+  // 弹出对话框
+  showConfirm() {
+    const confirm = this.alertCtrl.create({
+      title: '提示',
+      message: '确定购买吗？',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => {}
+        },
+        {
+          text: '确定',
+          handler: () => {}
+        }
+      ]
+    });
+    confirm.present();
   }
 }

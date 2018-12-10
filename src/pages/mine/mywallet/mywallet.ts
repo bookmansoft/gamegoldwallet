@@ -1,4 +1,5 @@
 import { Component, VERSION, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Events,
@@ -22,18 +23,24 @@ import { BackupWalletPage } from '../mywallet/backupwallet/backupwallet';
 })
 export class MyWalletPage {
   public walletBalance;
+  // 是否已经备份过钱包标记
+  private backup: string;
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
     public toastCtrl: ToastController,
     private events: Events,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    private storage: Storage
   ) {}
   @ViewChild(Navbar) navBar: Navbar;
   ionViewDidLoad() {
     this.navBar.backButtonClick = this.backButtonClick;
   }
   ionViewWillEnter() {
+    this.storage.get('backup').then(val => {
+      this.backup = val;
+    });
     this.listenForEvents();
   }
   ionViewDidEnter() {

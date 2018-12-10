@@ -921,7 +921,40 @@ msgid "Hide advanced options"
 msgstr "隐藏高级选项"
 
 msgid "Home"
-msgstr "主屏幕"
+msgstr "首页"
+
+msgid "PropMarket"
+msgstr "道具集市"
+
+msgid "GameMarket"
+msgstr "兑换市场"
+
+msgid "Recommended"
+msgstr "推荐"
+
+msgid "Game"
+msgstr "游戏"
+
+msgid "Ranking"
+msgstr "排行"
+
+msgid "Release"
+msgstr "我要发布"
+
+msgid "All transactions"
+msgstr "全部交易"
+
+msgid "Buy"
+msgstr "购买"
+
+msgid "The wallet assets"
+msgstr "钱包资产"
+
+msgid "My wallet"
+msgstr "我的钱包"
+
+msgid "Create wallet"
+msgstr "创建钱包"
 
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
@@ -1098,7 +1131,7 @@ msgid "Maximum amount allowed is {{max}}"
 msgstr ""
 
 msgid "Me"
-msgstr "我"
+msgstr "我的"
 
 msgid "Meh - it's alright"
 msgstr "咩-没关系"

@@ -1,85 +1,120 @@
 <ion-header>
-    <ion-navbar color="blank" style="padding:0;margin:0;height:50px !important;min-height: 50px !important;border-bottom: 3px #f5f5f9 solid;">
-        <ion-item no-lines>
-            <img item-start src="assets/img/saoyisao.png" class="search-img" />
-            <ion-title>
-                兑换市场
-            </ion-title>
-            <img item-end src="assets/img/xiaoxi.png" class="search-img" />
-        </ion-item>
-    </ion-navbar>
+  <ion-navbar
+    color="blank"
+    style="padding:0;margin:0;height:50px !important;min-height: 50px !important;border-bottom: 3px #f5f5f9 solid;"
+  >
+    <ion-item no-lines>
+      <img item-start src="assets/img/saoyisao.png" class="search-img" />
+      <ion-title> {{ 'GameMarket' | translate }} </ion-title>
+      <img item-end src="assets/img/xiaoxi.png" class="search-img" />
+    </ion-item>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-item style="height:50px !important;min-height:50px !important;padding-top: 0px;padding-bottom: 0px;margin-top: 10px;">
-        <div style="font-size: 14px;">全部交易</div>
-        <button item-end ion-button class="btn" style="position: absolute;right: 2%;" (click)="gotoSale(game)">我要发布</button>
-    </ion-item>
-    <ion-list style="padding-top:0px;">
-        <ion-card style="padding-top: 0px !important;padding-bottom: 0px !important;" (click)="gotoSellingDetails(game)">
-            <ion-item style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;">
-                <div item-start class="test">G</div>
-                <div style="padding-top: 3px;">
-                    <h2>5 GOLD</h2>
-                    <p style="color:red;height: 20px;margin-top: 3px;">0.1 BTC</p>
-                </div>
-                <p style="position: absolute;right: 3%;bottom: 5%;">刚刚</p>
-            </ion-item>
-        </ion-card>
-        <ion-card style="padding-top: 0px !important;padding-bottom: 0px !important;">
-            <ion-item style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;">
-                <div item-start class="test">G</div>
-                <div style="padding-top: 3px;">
-                    <h2>50 GOLD</h2>
-                    <p style="color:red;height: 20px;margin-top: 3px;">1 BTC</p>
-                </div>
-                <p style="position: absolute;right: 3%;bottom: 5%;">2小时前</p>
-            </ion-item>
-        </ion-card>
-        <ion-card style="padding-top: 0px !important;padding-bottom: 0px !important;">
-            <ion-item style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;">
-                <div item-start class="test">G</div>
-                <div style="padding-top: 3px;">
-                    <h2>5 GOLD</h2>
-                    <p style="color:red;height: 20px;margin-top: 3px;">5 BTC</p>
-                </div>
-                <p style="position: absolute;right: 3%;bottom: 5%;">1小时前</p>
-            </ion-item>
-        </ion-card>
-        <ion-card style="padding-top: 0px !important;padding-bottom: 0px !important;">
-            <ion-item style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;">
-                <div item-start class="test">G</div>
-                <div style="padding-top: 3px;">
-                    <h2>5 GOLD</h2>
-                    <p style="color:red;height: 20px;margin-top: 3px;">0.1 BTC</p>
-                </div>
-                <p style="position: absolute;right: 3%;bottom: 5%;">2小时前</p>
-            </ion-item>
-        </ion-card>
-        <ion-card style="padding-top: 0px !important;padding-bottom: 0px !important;">
-            <ion-item style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;">
-                <div item-start class="test">G</div>
-                <div style="padding-top: 3px;">
-                    <h2>5 GOLD</h2>
-                    <p style="color:red;height: 20px;margin-top: 3px;">5 BTC</p>
-                </div>
-                <p style="position: absolute;right: 3%;bottom: 5%;">1小时前</p>
-            </ion-item>
-        </ion-card>
-        <ion-card style="padding-top: 0px !important;padding-bottom: 0px !important;">
-            <ion-item style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;">
-                <div item-start class="test">G</div>
-                <div style="padding-top: 3px;">
-                    <h2>5 GOLD</h2>
-                    <p style="color:red;height: 20px;margin-top: 3px;">5 BTC</p>
-                </div>
-                <p style="position: absolute;right: 3%;bottom: 5%;">2小时前</p>
-            </ion-item>
-        </ion-card>
-    </ion-list>
+  <ion-item
+    style="height:50px !important;min-height:50px !important;padding-top: 0px;padding-bottom: 0px;margin-top: 10px;"
+  >
+    <div style="font-size: 14px;">{{ 'All transactions' | translate }}</div>
+    <button
+      item-end
+      ion-button
+      class="btn"
+      style="position: absolute;right: 2%;"
+      (click)="gotoSale(game)"
+    >
+      {{ 'Release' | translate }}
+    </button>
+  </ion-item>
+  <ion-list style="padding-top:0px;">
+    <ion-card
+      style="padding-top: 0px !important;padding-bottom: 0px !important;"
+      (click)="gotoSellingDetails(game)"
+    >
+      <ion-item
+        style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;"
+      >
+        <div item-start class="test">G</div>
+        <div style="padding-top: 3px;">
+          <h2>5 GOLD</h2>
+          <p style="color:red;height: 20px;margin-top: 3px;">0.1 BTC</p>
+        </div>
+        <p style="position: absolute;right: 3%;bottom: 5%;">刚刚</p>
+      </ion-item>
+    </ion-card>
+    <ion-card
+      style="padding-top: 0px !important;padding-bottom: 0px !important;"
+    >
+      <ion-item
+        style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;"
+      >
+        <div item-start class="test">G</div>
+        <div style="padding-top: 3px;">
+          <h2>50 GOLD</h2>
+          <p style="color:red;height: 20px;margin-top: 3px;">1 BTC</p>
+        </div>
+        <p style="position: absolute;right: 3%;bottom: 5%;">2小时前</p>
+      </ion-item>
+    </ion-card>
+    <ion-card
+      style="padding-top: 0px !important;padding-bottom: 0px !important;"
+    >
+      <ion-item
+        style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;"
+      >
+        <div item-start class="test">G</div>
+        <div style="padding-top: 3px;">
+          <h2>5 GOLD</h2>
+          <p style="color:red;height: 20px;margin-top: 3px;">5 BTC</p>
+        </div>
+        <p style="position: absolute;right: 3%;bottom: 5%;">1小时前</p>
+      </ion-item>
+    </ion-card>
+    <ion-card
+      style="padding-top: 0px !important;padding-bottom: 0px !important;"
+    >
+      <ion-item
+        style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;"
+      >
+        <div item-start class="test">G</div>
+        <div style="padding-top: 3px;">
+          <h2>5 GOLD</h2>
+          <p style="color:red;height: 20px;margin-top: 3px;">0.1 BTC</p>
+        </div>
+        <p style="position: absolute;right: 3%;bottom: 5%;">2小时前</p>
+      </ion-item>
+    </ion-card>
+    <ion-card
+      style="padding-top: 0px !important;padding-bottom: 0px !important;"
+    >
+      <ion-item
+        style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;"
+      >
+        <div item-start class="test">G</div>
+        <div style="padding-top: 3px;">
+          <h2>5 GOLD</h2>
+          <p style="color:red;height: 20px;margin-top: 3px;">5 BTC</p>
+        </div>
+        <p style="position: absolute;right: 3%;bottom: 5%;">1小时前</p>
+      </ion-item>
+    </ion-card>
+    <ion-card
+      style="padding-top: 0px !important;padding-bottom: 0px !important;"
+    >
+      <ion-item
+        style="padding:0px 0px 0px 15px !important;margin: 0px !important;position: relative;"
+      >
+        <div item-start class="test">G</div>
+        <div style="padding-top: 3px;">
+          <h2>5 GOLD</h2>
+          <p style="color:red;height: 20px;margin-top: 3px;">5 BTC</p>
+        </div>
+        <p style="position: absolute;right: 3%;bottom: 5%;">2小时前</p>
+      </ion-item>
+    </ion-card>
+  </ion-list>
 
-
-    <!--<ion-list>
+  <!--<ion-list>
         <button *ngFor="let game of gamelist" ion-item (click)="gotoMaketList(game)">
       <ion-icon class="item-img" item-start>
         <img src={{game.img}} class="icon-game" />

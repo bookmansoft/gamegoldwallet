@@ -1,12 +1,22 @@
 <ion-tabs #tabs>
-    <ion-tab [root]="homeRoot" tabTitle="{{'首页'|translate}}" tabIcon="tab-home"></ion-tab>
-    <ion-tab [root]="PropMarketRoot" tabTitle="{{'道具集市'|translate}}" tabIcon="tab-propmarket"></ion-tab>
-    <ion-tab [root]="GameMarketRoot" tabTitle="{{'兑换市场'|translate}}" tabIcon="tab-gamemarket"></ion-tab>
-    <!--<ion-tab [root]="GoldMarketRoot" tabTitle="{{'Gold'|translate}}" tabIcon="tab-goldmarket"></ion-tab>-->
-    <ion-tab [root]="mineRoot" tabTitle="{{'我的'|translate}}" tabIcon="tab-mine"></ion-tab>
-    <!--<ion-tab [root]="homeRoot" tabTitle="{{'Home'|translate}}" tabIcon="tab-home"></ion-tab>
-  <ion-tab [root]="PropMarketRoot" tabTitle="{{'Prop'|translate}}" tabIcon="tab-propmarket"></ion-tab>
-  <ion-tab [root]="GameMarketRoot" tabTitle="{{'Game'|translate}}" tabIcon="tab-gamemarket"></ion-tab>
-  <ion-tab [root]="GoldMarketRoot" tabTitle="{{'Gold'|translate}}" tabIcon="tab-goldmarket"></ion-tab>
-  <ion-tab [root]="mineRoot" tabTitle="{{'me'|translate}}" tabIcon="tab-mine"></ion-tab>-->
+  <ion-tab
+    [root]="homeRoot"
+    tabTitle="{{ 'Home' | translate }}"
+    tabIcon="tab-home"
+  ></ion-tab>
+  <ion-tab
+    [root]="PropMarketRoot"
+    tabTitle="{{ 'PropMarket' | translate }}"
+    tabIcon="tab-propmarket"
+  ></ion-tab>
+  <ion-tab
+    [root]="GameMarketRoot"
+    tabTitle="{{ 'GameMarket' | translate }}"
+    tabIcon="tab-gamemarket"
+  ></ion-tab>
+  <ion-tab
+    [root]="mineRoot"
+    tabTitle="{{ 'Me' | translate }}"
+    tabIcon="tab-mine"
+  ></ion-tab>
 </ion-tabs>
