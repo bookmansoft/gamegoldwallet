@@ -123,25 +123,6 @@ export class SpvNodeProvider {
           break;
       }
     });
-    // 读取当前的钱包插件
-    // 判断是否装载钱包插件,理论上不可能没有
-    this.wdb = this.node.require('walletdb');
-    if (!this.wdb) {
-      throw new Error('wallet plugin is not installed');
-    }
-
-    this.node.ensure().then(() => {
-      // 测试钱包数据库是否已经建立
-      return this.wdb.checkNewRecord();
-    }).then(() => {
-      if (this.wdb.newRecord) {
-        // 当前尚未建立钱包数据库，引导用户进入创建钱包流程，补充输入必要的前导信息，例如 passphrase
-        // 选择1：引导用户导入助记符
-        this.wdb.setmnemonicByWords(128);
-        // 设置wdb的语言环境
-        this.wdb.setlanguage('simplified chinese');
-      }
-    });
   }
   /**
    * 打开当前node,并且监听交易事件
@@ -152,6 +133,22 @@ export class SpvNodeProvider {
       this.logger.info('block in hash: ' + item.rhash());
       this.events.publish('receive:block', item, entry);
     });
+    // 读取当前的钱包插件-必须在open之前进行.
+    // 判断是否装载钱包插件,理论上不可能没有
+    this.wdb = this.node.require('walletdb');
+    if (!this.wdb) {
+      throw new Error('wallet plugin is not installed');
+    }
+    // 增加测试钱包数据库的建立
+    await this.node.ensure();
+    await this.wdb.checkNewRecord();
+    if (this.wdb.newRecord) {
+      // 当前尚未建立钱包数据库，引导用户进入创建钱包流程，补充输入必要的前导信息，例如 passphrase
+      // 选择1：引导用户导入助记符
+      this.wdb.setmnemonicByLen(128);
+      // 设置wdb的语言环境
+      this.wdb.setlanguage('simplified chinese');
+    }
     await this.node.open();
     await this.node.connect();
     this.node.startSync();
@@ -161,7 +158,6 @@ export class SpvNodeProvider {
     this.logger.info('wallet id:' + this.wallet.id);
     this.events.publish('node:open', this.wallet);
 
-    this.logger.info(this.getmnemonicPhrase());
     this.wdb.primary.on('balance', () => {
       this.logger.info('primary:' + this.wdb.primary);
       this.logger.info('get balance:' + JSON.stringify(this.balance));
