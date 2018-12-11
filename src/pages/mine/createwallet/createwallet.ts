@@ -12,8 +12,10 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 
 // pages
+// import { ImportWalletPage } from '../../add/import-wallet/import-wallet';
 import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
+import { ImportWalletPage } from '../importwallet/importwallet';
 import { SetPasswordPage } from '../setpassword/setpassword';
 
 import { from } from 'rxjs/observable/from';
@@ -28,5 +30,10 @@ export class CreateWalletPage {
   // 跳转新建钱包
   gotoSetPassword() {
     this.navCtrl.push(SetPasswordPage, {});
+  }
+
+  // 跳转到导入钱包
+  gotoImportWallePage() {
+    this.navCtrl.push(ImportWalletPage, {});
   }
 }

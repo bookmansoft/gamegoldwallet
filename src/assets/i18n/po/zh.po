@@ -965,6 +965,9 @@ msgstr "收支明细"
 msgid "Send GGD"
 msgstr "发送游戏金"
 
+msgid "Import wallet"
+msgstr "导入钱包"
+
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
 

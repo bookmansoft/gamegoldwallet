@@ -1,18 +1,31 @@
 <ion-header>
-    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>新钱包</ion-title>
-        <!-- TODO:动态 -->
-    </ion-navbar>
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>新钱包</ion-title>
+    <!-- TODO:动态 -->
+  </ion-navbar>
 </ion-header>
 <ion-content style="padding:0px;">
-    <ion-item no-lines detail-push style="margin-top:10px;background: #ffffff !important;">
-        <img item-start class="icon-img" src="assets/img/createwallet.png" />
-        <ion-row style="font-size:16px;" (click)="gotoSetPassword()">
-            创建新钱包
-        </ion-row>
-    </ion-item>
-    <ion-item no-lines detail-push style="margin-top:10px;background: #ffffff !important;">
-        <img item-start class="icon-img" src="assets/img/import.png" />
-        <ion-row style="font-size:16px;"> 导入已有钱包 </ion-row>
-    </ion-item>
+  <ion-item
+    no-lines
+    detail-push
+    style="margin-top:10px;background: #ffffff !important;"
+  >
+    <img item-start class="icon-img" src="assets/img/createwallet.png" />
+    <ion-row style="font-size:16px;" (click)="gotoSetPassword()">
+      创建新钱包
+    </ion-row>
+  </ion-item>
+  <ion-item
+    no-lines
+    detail-push
+    style="margin-top:10px;background: #ffffff !important;"
+  >
+    <img item-start class="icon-img" src="assets/img/import.png" />
+    <ion-row style="font-size:16px;" (click)="gotoImportWallePage()">
+      导入已有钱包
+    </ion-row>
+  </ion-item>
 </ion-content>
