@@ -4,7 +4,8 @@ import {
   AlertController,
   Events,
   ModalController,
-  NavController
+  NavController,
+  NavParams
 } from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
 
@@ -38,6 +39,7 @@ export class ReceivePage {
   public showShareButton: boolean;
   public loading: boolean;
   public isOpenSelector: boolean;
+  private balance: any;
 
   constructor(
     private navCtrl: NavController,
@@ -52,7 +54,8 @@ export class ReceivePage {
     private externalLinkProvider: ExternalLinkProvider,
     private modalCtrl: ModalController,
     private addressProvider: AddressProvider,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    public navParams: NavParams
   ) {
     this.showShareButton = this.platformProvider.isCordova;
     this.wallet = spvNodeProvider.getWallet();
@@ -67,6 +70,8 @@ export class ReceivePage {
     //   // Update current address
     //   if (this.wallet && walletId == this.wallet.id && type == 'NewIncomingTx') this.setAddress(true);
     // });
+    this.balance = this.navParams.get('balance');
+    this.logger.info('>>>接收到的游戏金：' + this.balance);
     this.address = this.wallet.getAddress();
     this.qrAddress = 'bitcoin:' + this.address;
     this.loading = false;

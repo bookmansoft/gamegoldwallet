@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title> 确认发送</ion-title>
+        <!-- TODO:动态 -->
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-item no-lines style="height: 90px !important;min-height: 90px !important;">
+        <div>本次发送</div>
+        <div style="margin-top:13px;">
+            <span style="font-size:25px;">0.05 </span> GGD
+        </div>
+    </ion-item>
+    <ion-item no-lines style="margin-top:4px !important;height: 60px !important;min-height: 60px !important;">
+        <div>本次手续费</div>
+        <div style="margin-top:10px;">
+            0.0002 GGD
+        </div>
+    </ion-item>
+    <ion-item no-lines style="margin-top:4px !important;height: 120px !important;min-height: 120px !important;">
+        <div>发送到</div>
+        <div class="send-div">
+            BBSslkx777wdRaleslkx777w1313gggleslkx777w13leslkx777w13
+        </div>
+    </ion-item>
+    <ion-item no-lines style="margin-top:4px !important;height: 80px !important;min-height: 80px !important;">
+        <div>转账说明</div>
+        <div style="margin-top:10px;font-size: 15px;color:#999999;">
+            游戏道具购买
+        </div>
+    </ion-item>
+    <div padding style="margin-top:50px;">
+        <button ion-button class="btn" color="primary" block (click)="sendGDD()">发送</button>
+    </div>
+</ion-content>

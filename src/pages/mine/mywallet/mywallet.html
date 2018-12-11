@@ -1,53 +1,39 @@
 <ion-header>
-  <ion-navbar
-    color="blank"
-    style="height:50px !important;min-height: 50px !important;"
-  >
-    <ion-title>我的钱包</ion-title>
-    <!-- TODO:动态 -->
-  </ion-navbar>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{ 'My wallet' | translate }}</ion-title>
+        <!-- TODO:动态 -->
+    </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-item no-lines style="background: #ffffff !important;">
-    <div
-      item-start
-      *ngIf="walletBalance"
-      style="font-size:16px;padding-left: 20px;"
-    >
-      <span style="font-size:18px;">{{ walletBalance.confirmed }}</span> GDD
-    </div>
-  </ion-item>
-  <ion-row
-    no-lines
-    style="background: #ffffff !important;margin-top: 10px;padding:10px 10px 5px 10px;"
-  >
-    <div class="div" (click)="openScanPage()">
-      <img src="assets/img/my-sao.png" /> <span>扫一扫</span>
-    </div>
-    <div class="div" (click)="openSendPage()">
-      <img src="assets/img/my-send.png" /> <span>发送</span>
-    </div>
-    <div class="div" (click)="openReceivePage()">
-      <img src="assets/img/my-qr.png" /> <span>接收</span>
-    </div>
-    <div class="div" (click)="openContractPage()">
-      <img src="assets/img/my-ch.png" /> <span>交易对</span>
-    </div>
-  </ion-row>
-  <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">
-    收支明细
-  </ion-item>
-  <ion-item
-    detail-push
-    style="background: #ffffff !important;"
-    (click)="gotoBackupWalletPage()"
-  >
-    备份钱包
-    <span item-end [ngStyle]="{ color: backup == null ? 'red' : '#888888' }">{{
+    <ion-item no-lines style="background: #ffffff !important;">
+        <div item-start *ngIf="walletBalance" style="font-size:16px;padding-left: 20px;">
+            <span style="font-size:18px;">{{ walletBalance.confirmed }}</span> GDD
+        </div>
+    </ion-item>
+    <ion-row no-lines style="background: #ffffff !important;margin-top: 10px;padding:10px 10px 5px 10px;">
+        <div class="div" (click)="openScanPage()">
+            <img src="assets/img/my-sao.png" /> <span>{{ 'Flicking' | translate }}</span>
+        </div>
+        <div class="div" (click)="openSendPage()">
+            <img src="assets/img/my-send.png" /> <span>{{ 'Send' | translate }}</span>
+        </div>
+        <div class="div" (click)="openReceivePage()">
+            <img src="assets/img/my-qr.png" /> <span>{{ 'Receiving' | translate }}</span>
+        </div>
+        <div class="div" (click)="openContractPage()">
+            <img src="assets/img/my-ch.png" /> <span>{{ 'Trading' | translate }}</span>
+        </div>
+    </ion-row>
+    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">
+        {{ 'Payment details' | translate }}
+    </ion-item>
+    <ion-item detail-push style="background: #ffffff !important;" (click)="gotoBackupWalletPage()">
+        {{ 'Backup wallet' | translate }}
+        <span item-end [ngStyle]="{ color: backup == null ? 'red' : '#888888' }">{{
       backup == null ? '未备份' : '已备份'
     }}</span>
-  </ion-item>
-  <ion-item detail-push style="background: #ffffff !important;">
-    地址簿
-  </ion-item>
+    </ion-item>
+    <ion-item detail-push style="background: #ffffff !important;">
+        {{ 'Address Book' | translate }}
+    </ion-item>
 </ion-content>

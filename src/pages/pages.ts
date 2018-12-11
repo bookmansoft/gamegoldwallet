@@ -93,6 +93,7 @@ import { WalletTransactionHistoryPage } from '../pages/settings/wallet-settings/
 import { AmountPage } from '../pages/send/amount/amount';
 import { ChooseFeeLevelPage } from '../pages/send/choose-fee-level/choose-fee-level';
 import { ConfirmPage } from '../pages/send/confirm/confirm';
+import { ConfirmSendPage } from '../pages/send/confirmsend/confirmsend';
 
 /* Receive */
 import { CustomAmountPage } from '../pages/receive/custom-amount/custom-amount';
@@ -103,6 +104,7 @@ import { PropListPage } from '../pages/propmarket/proplist/proplist';
 import { PropReleasePage } from '../pages/propmarket/propsrelease/proprelease';
 
 /* game */
+import { from } from 'rxjs/observable/from';
 import { BuysuccessPage } from '../pages/gamemarket/buysuccess/buysuccess';
 import { MarketListPage } from '../pages/gamemarket/market-list/market-list';
 import { SalePage } from '../pages/gamemarket/sale/sale';
@@ -134,6 +136,7 @@ export const PAGES = [
   BackupWarningPage,
   BackupGamePage,
   ConfirmPage,
+  ConfirmSendPage,
   CustomAmountPage,
   DisclaimerPage,
   CollectEmailPage,

@@ -89,7 +89,9 @@ export class MyWalletPage {
   }
   // 接收
   public openReceivePage(): void {
-    this.navCtrl.push(ReceivePage);
+    this.navCtrl.push(ReceivePage, {
+      balance: this.walletBalance
+    });
   }
   // 扫一扫
   public openScanPage(): void {

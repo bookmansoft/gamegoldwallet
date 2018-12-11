@@ -16,10 +16,11 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 import { PaperWalletPage } from '../paper-wallet/paper-wallet';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
 import { AmountPage } from './amount/amount';
+import { ConfirmSendPage } from './confirmsend/confirmsend';
 
 @Component({
   selector: 'page-send',
-  templateUrl: 'send.html',
+  templateUrl: 'send.html'
 })
 export class SendPage {
   public search: string = '';
@@ -47,7 +48,7 @@ export class SendPage {
     private addressProvider: AddressProvider,
     private events: Events,
     private externalLinkProvider: ExternalLinkProvider
-  ) { }
+  ) {}
 
   ionViewDidLoad() {
     this.logger.info('ionViewDidLoad SendPage');
@@ -63,7 +64,7 @@ export class SendPage {
     // this.hasBtcWallets = !(_.isEmpty(this.walletsBtc));
     // this.hasBchWallets = !(_.isEmpty(this.walletsBch));
 
-    this.events.subscribe('finishIncomingDataMenuEvent', (data) => {
+    this.events.subscribe('finishIncomingDataMenuEvent', data => {
       switch (data.redirTo) {
         case 'AmountPage':
           this.sendPaymentToAddress(data.value, data.coin);
@@ -105,6 +106,10 @@ export class SendPage {
 
   private scanPaperWallet(privateKey: string) {
     this.navCtrl.push(PaperWalletPage, { privateKey });
+  }
+  // 跳转到确认发送页
+  gotoConfirmSend() {
+    this.navCtrl.push(ConfirmSendPage, {});
   }
 
   // private updateBchWalletsList(): void {
@@ -216,25 +221,28 @@ export class SendPage {
   }
   // 用了新方法,这些构成改了.
   public goToAmount(item: any): void {
-    item.getAddress().then((addr: string) => {
-      if (!addr) {
-        // Error is already formated
-        this.popupProvider.ionicAlert('Error - no address');
+    item
+      .getAddress()
+      .then((addr: string) => {
+        if (!addr) {
+          // Error is already formated
+          this.popupProvider.ionicAlert('Error - no address');
+          return;
+        }
+        this.logger.debug('Got address:' + addr + ' | ' + item.name);
+        this.navCtrl.push(AmountPage, {
+          recipientType: item.recipientType,
+          toAddress: addr,
+          name: item.name,
+          email: item.email,
+          color: item.color,
+          coin: item.coin,
+          network: item.network
+        });
         return;
-      }
-      this.logger.debug('Got address:' + addr + ' | ' + item.name);
-      this.navCtrl.push(AmountPage, {
-        recipientType: item.recipientType,
-        toAddress: addr,
-        name: item.name,
-        email: item.email,
-        color: item.color,
-        coin: item.coin,
-        network: item.network,
+      })
+      .catch((err: any) => {
+        this.logger.error('Send: could not getAddress', err);
       });
-      return;
-    }).catch((err: any) => {
-      this.logger.error('Send: could not getAddress', err);
-    });
   }
 }

@@ -101,9 +101,6 @@ msgstr "地址簿"
 msgid "Address Type"
 msgstr "地址类型"
 
-msgid "Address book"
-msgstr "地址簿"
-
 msgid "Addressbook is empty"
 msgstr "地址薄为空"
 
@@ -955,6 +952,18 @@ msgstr "我的钱包"
 
 msgid "Create wallet"
 msgstr "创建钱包"
+
+msgid "Flicking"
+msgstr "扫一扫"
+
+msgid "Trading"
+msgstr "交易对"
+
+msgid "Payment details"
+msgstr "收支明细"
+
+msgid "Send GGD"
+msgstr "发送游戏金"
 
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
