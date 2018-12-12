@@ -33,19 +33,19 @@ export class PaymentDetailsPage {
           {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
-            amount: '-30',
+            amount: '-30.00',
             type: 0
           },
           {
             date: '2018-10-01   15:00:00',
-            detail: '支出 - 购买道具',
-            amount: '130',
+            detail: '收入 - 系统奖励',
+            amount: '+130.00',
             type: 1
           },
           {
             date: '2018-10-01   15:00:00',
-            detail: '支出 - 购买道具',
-            amount: '150',
+            detail: '收入 - 卖出道具',
+            amount: '+150.00',
             type: 1
           }
         ]
@@ -56,13 +56,13 @@ export class PaymentDetailsPage {
           {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
-            amount: '-30',
+            amount: '-30.00',
             type: 0
           },
           {
             date: '2018-10-01   15:00:00',
-            detail: '支出 - 购买道具',
-            amount: '130',
+            detail: '收入 - 卖出道具',
+            amount: '+130.00',
             type: 1
           }
         ]
@@ -73,13 +73,13 @@ export class PaymentDetailsPage {
           {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
-            amount: '-30',
+            amount: '-30.00',
             type: 0
           },
           {
             date: '2018-10-01   15:00:00',
-            detail: '支出 - 购买道具',
-            amount: '130',
+            detail: '收入 - 卖出道具',
+            amount: '+130.00',
             type: 1
           }
         ]
@@ -90,13 +90,13 @@ export class PaymentDetailsPage {
           {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
-            amount: '-30',
+            amount: '-30.00',
             type: 0
           },
           {
             date: '2018-10-01   15:00:00',
-            detail: '支出 - 购买道具',
-            amount: '130',
+            detail: '收入 - 卖出道具',
+            amount: '+130.00',
             type: 1
           }
         ]
@@ -107,22 +107,17 @@ export class PaymentDetailsPage {
           {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
-            amount: '-30',
+            amount: '-30.00',
             type: 0
           },
           {
             date: '2018-10-01   15:00:00',
-            detail: '支出 - 购买道具',
-            amount: '130',
+            detail: '收入 - 卖出道具',
+            amount: '+130.00',
             type: 1
           }
         ]
       }
     ];
-    logger.info('>>>输出：' + this.datas);
-  }
-
-  getKeys(item) {
-    return Object.keys(item);
   }
 }
