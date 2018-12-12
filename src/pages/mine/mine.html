@@ -1,42 +1,34 @@
 <ion-header>
-  <ion-navbar
-    color="blank"
-    style="padding:0;margin:0;height:50px !important;min-height: 50px !important;"
-  >
-    <ion-item no-lines style="border-bottom: 3px #ffffff solid;">
-      <img
-        item-start
-        src="assets/img/saoyisao.png"
-        class="search-img"
-        (click)="openScanPage()"
-      />
+    <ion-navbar color="blank" style="padding:0;margin:0;height:50px !important;min-height: 50px !important;">
+        <ion-item no-lines style="border-bottom: 3px #ffffff solid;">
+            <img item-start src="assets/img/saoyisao.png" class="search-img" (click)="openScanPage()" />
 
-      <img item-end src="assets/img/xiaoxi.png" class="search-img" />
-    </ion-item>
-  </ion-navbar>
+            <img item-end src="assets/img/xiaoxi.png" class="search-img" />
+        </ion-item>
+    </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-item no-lines style="background: #ffffff !important;">
-    钱包资产
-  </ion-item>
-  <ion-item no-lines detail-push style="background: #ffffff !important;">
-    <div item-start *ngIf="walletBalance" style="font-size:16px;">
-      {{ walletBalance.confirmed }} GDD
-    </div>
-    <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
-      {{ walletpassword == null ? '创建钱包' : '我的钱包' }}
-    </div>
-  </ion-item>
-  <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">
-    <img item-start class="icon-img" src="assets/img/icon_game.png" />
-    <ion-row style="font-size:16px;"> 我的游戏 </ion-row>
-  </ion-item>
-  <ion-item detail-push style="background: #ffffff !important;">
-    <img item-start class="icon-img" src="assets/img/icon_props.png" />
-    <ion-row style="font-size:16px;"> 我的道具 </ion-row>
-  </ion-item>
-  <ion-item detail-push style="background: #ffffff !important;">
-    <img item-start class="icon-img" src="assets/img/icon_about.png" />
-    <ion-row style="font-size:16px;"> 关于我们 </ion-row>
-  </ion-item>
+    <ion-item no-lines style="background: #ffffff !important;">
+        钱包资产
+    </ion-item>
+    <ion-item no-lines detail-push style="background: #ffffff !important;">
+        <div item-start *ngIf="walletBalance" style="font-size:16px;">
+            {{ walletBalance.confirmed }} GDD
+        </div>
+        <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
+            {{ walletpassword == null ? '创建钱包' : '进入钱包' }}
+        </div>
+    </ion-item>
+    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">
+        <img item-start class="icon-img" src="assets/img/icon_game.png" />
+        <ion-row style="font-size:16px;"> 我的游戏 </ion-row>
+    </ion-item>
+    <ion-item detail-push style="background: #ffffff !important;">
+        <img item-start class="icon-img" src="assets/img/icon_props.png" />
+        <ion-row style="font-size:16px;"> 我的道具 </ion-row>
+    </ion-item>
+    <ion-item detail-push style="background: #ffffff !important;">
+        <img item-start class="icon-img" src="assets/img/icon_about.png" />
+        <ion-row style="font-size:16px;"> 关于我们 </ion-row>
+    </ion-item>
 </ion-content>

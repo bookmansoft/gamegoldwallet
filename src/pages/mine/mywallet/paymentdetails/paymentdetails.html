@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{ 'Payment details' | translate }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngFor="let item of datas">
+        <div>{{item?.month}}</div>
+        <!--<div *ngFor="let item of data">
+            <div style="padding:5px 0px 5px 10px;">item.month</div>
+            <ion-item *ngFor="let item of items.info">
+                <img item-start src="assets/img/up_arrow.png">
+                <div style="padding-left:8px;">item.detail</div>
+                <div item-end>
+                    <div style="text-align: right;">item.amount</div>
+                    <div style="font-size:13px;color:#999999;margin-top: 10px;">item.date</div>
+                </div>
+            </ion-item>
+        </div>-->
+    </ion-list>
+</ion-content>

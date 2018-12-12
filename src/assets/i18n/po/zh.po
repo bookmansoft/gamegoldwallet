@@ -218,8 +218,8 @@ msgstr "隐藏余额"
 msgid "Be sure to store your recovery phrase in a secure place. If this app is deleted, your money cannot be recovered without it."
 msgstr "请务必将您的恢复短语存储在一个安全的地方。如果这个程序被删除，不能没有它恢复你的钱。"
 
-msgid "Bitcoin Address"
-msgstr "比特币地址"
+msgid "GGD Address"
+msgstr "GameGold钱包地址"
 
 msgid "Bitcoin Cash Wallets"
 msgstr "比特币现金钱包"

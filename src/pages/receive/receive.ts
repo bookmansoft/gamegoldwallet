@@ -71,7 +71,6 @@ export class ReceivePage {
     //   if (this.wallet && walletId == this.wallet.id && type == 'NewIncomingTx') this.setAddress(true);
     // });
     this.balance = this.navParams.get('balance');
-    this.logger.info('>>>接收到的游戏金：' + this.balance);
     this.address = this.wallet.getAddress();
     this.qrAddress = 'bitcoin:' + this.address;
     this.loading = false;

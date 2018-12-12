@@ -45,6 +45,8 @@ export class ImportWalletPage {
       } else {
         this.status = false;
       }
+    } else {
+      this.status = true;
     }
   }
 

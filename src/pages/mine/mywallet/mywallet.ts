@@ -16,7 +16,9 @@ import { ContractPage } from '../../contract/contract';
 import { ReceivePage } from '../../receive/receive';
 import { ScanPage } from '../../scan/scan';
 import { SendPage } from '../../send/send';
+import { AddressbookPage } from '../../settings/addressbook/addressbook';
 import { BackupWalletPage } from '../mywallet/backupwallet/backupwallet';
+import { PaymentDetailsPage } from './paymentdetails/paymentdetails';
 @Component({
   selector: 'page-mywallet',
   templateUrl: './mywallet.html'
@@ -47,12 +49,21 @@ export class MyWalletPage {
     this.spvNodeProvider.getBalance();
   }
 
+  public openAddressBookPage(): void {
+    this.navCtrl.push(AddressbookPage);
+  }
+
   ionViewWillLeave() {
     this.unListenForEvents();
   }
+  // 跳转到收支明细
+  gotoPaymentDetailsPage() {
+    this.navCtrl.push(PaymentDetailsPage, {});
+  }
+
   // 返回到我的页面
   backButtonClick = (e: UIEvent) => {
-    this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 4));
+    this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 5));
   };
 
   // 跳转到备份钱包

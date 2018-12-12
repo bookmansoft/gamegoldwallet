@@ -24,7 +24,7 @@
             <img src="assets/img/my-ch.png" /> <span>{{ 'Trading' | translate }}</span>
         </div>
     </ion-row>
-    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">
+    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;" (click)="gotoPaymentDetailsPage()">
         {{ 'Payment details' | translate }}
     </ion-item>
     <ion-item detail-push style="background: #ffffff !important;" (click)="gotoBackupWalletPage()">
@@ -33,7 +33,7 @@
       backup == null ? '未备份' : '已备份'
     }}</span>
     </ion-item>
-    <ion-item detail-push style="background: #ffffff !important;">
+    <ion-item detail-push style="background: #ffffff !important;" (click)="openAddressBookPage()">
         {{ 'Address Book' | translate }}
     </ion-item>
 </ion-content>
