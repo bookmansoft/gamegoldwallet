@@ -12,6 +12,7 @@ import {
 import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../../providers/logger/logger';
 import { SpvNodeProvider } from '../../../../providers/spvnode/spvnode';
+import { BillingDetailsPage } from '../billingdetails/billingdetails';
 @Component({
   selector: 'page-paymentdetails',
   templateUrl: './paymentdetails.html'
@@ -119,5 +120,9 @@ export class PaymentDetailsPage {
         ]
       }
     ];
+  }
+  // 跳转到流水详情
+  gotoBillingDetailsPage() {
+    this.navCtrl.push(BillingDetailsPage, {});
   }
 }

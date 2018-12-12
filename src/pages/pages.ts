@@ -70,6 +70,7 @@ import { CreateWalletPage } from '../pages/mine/createwallet/createwallet';
 import { ImportWalletPage } from '../pages/mine/importwallet/importwallet';
 import { MinePage } from '../pages/mine/mine';
 import { BackupWalletPage } from '../pages/mine/mywallet/backupwallet/backupwallet';
+import { BillingDetailsPage } from '../pages/mine/mywallet/billingdetails/billingdetails';
 import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
 import { PaymentDetailsPage } from '../pages/mine/mywallet/paymentdetails/paymentdetails';
 import { SetPasswordPage } from '../pages/mine/setpassword/setpassword';
@@ -146,6 +147,7 @@ export const PAGES = [
   MinePage,
   SetPasswordPage,
   PaymentDetailsPage,
+  BillingDetailsPage,
   ImportWalletPage,
   BackupWalletPage,
   MyWalletPage,

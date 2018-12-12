@@ -10,7 +10,10 @@
 <ion-content>
   <ion-list *ngFor="let items of datas">
     <div style="padding:5px 0px 5px 10px;">{{ items?.month }}</div>
-    <ion-item *ngFor="let item of items.info">
+    <ion-item
+      *ngFor="let item of items.info"
+      (click)="gotoBillingDetailsPage()"
+    >
       <img
         item-start
         src="assets/img/{{ item?.type == 0 ? 'up_arrow' : 'down_arrow' }}.png"
