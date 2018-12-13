@@ -17,13 +17,16 @@ import { SpvNodeProvider } from '../../../../providers/spvnode/spvnode';
   templateUrl: './billingdetails.html'
 })
 export class BillingDetailsPage {
-  public datas: any[];
+  public datas: any;
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
     public toastCtrl: ToastController,
     private events: Events,
     private spvNodeProvider: SpvNodeProvider,
-    private storage: Storage
-  ) {}
+    private storage: Storage,
+    public navParams: NavParams
+  ) {
+    this.datas = this.navParams.get('data');
+  }
 }

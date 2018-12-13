@@ -48,7 +48,7 @@ msgid "A total of {{fee}} {{coin}} were excluded. These funds come from UTXOs sm
 msgstr ""
 
 msgid "About"
-msgstr "关于"
+msgstr "关于我们"
 
 msgid "About {{appName}}"
 msgstr ""
@@ -932,6 +932,12 @@ msgstr "推荐"
 msgid "Game"
 msgstr "游戏"
 
+msgid "My game"
+msgstr "我的游戏"
+
+msgid "My props"
+msgstr "我的道具"
+
 msgid "Ranking"
 msgstr "排行"
 
@@ -967,6 +973,9 @@ msgstr "发送游戏金"
 
 msgid "Import wallet"
 msgstr "导入钱包"
+
+msgid "Fee Policy"
+msgstr "手续费策略"
 
 msgid "Billing details"
 msgstr "流水详情"
@@ -2176,7 +2185,7 @@ msgid "Verify your identity"
 msgstr ""
 
 msgid "Version"
-msgstr "版本"
+msgstr "当前版本"
 
 msgid "View"
 msgstr "查看"

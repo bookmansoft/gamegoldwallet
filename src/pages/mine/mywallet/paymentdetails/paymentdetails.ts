@@ -35,19 +35,28 @@ export class PaymentDetailsPage {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
             amount: '-30.00',
-            type: 0
+            type: 0,
+            order: '12121110225546227811220',
+            note: '换取道具',
+            balance: 1020.0
           },
           {
             date: '2018-10-01   15:00:00',
             detail: '收入 - 系统奖励',
             amount: '+130.00',
-            type: 1
+            type: 1,
+            order: '12121110225546227811220',
+            note: '转出道具',
+            balance: 1050.0
           },
           {
             date: '2018-10-01   15:00:00',
             detail: '收入 - 卖出道具',
             amount: '+150.00',
-            type: 1
+            type: 1,
+            order: '12121110225546227811220',
+            note: '转出道具',
+            balance: 920.0
           }
         ]
       },
@@ -58,13 +67,19 @@ export class PaymentDetailsPage {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
             amount: '-30.00',
-            type: 0
+            type: 0,
+            order: '12121110225546227811220',
+            note: '换取道具',
+            balance: 770.0
           },
           {
             date: '2018-10-01   15:00:00',
             detail: '收入 - 卖出道具',
             amount: '+130.00',
-            type: 1
+            type: 1,
+            order: '12121110225546227811220',
+            note: '转出道具',
+            balance: 800.0
           }
         ]
       },
@@ -75,13 +90,19 @@ export class PaymentDetailsPage {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
             amount: '-30.00',
-            type: 0
+            type: 0,
+            order: '12121110225546227811220',
+            note: '换取道具',
+            balance: 670.0
           },
           {
             date: '2018-10-01   15:00:00',
             detail: '收入 - 卖出道具',
             amount: '+130.00',
-            type: 1
+            type: 1,
+            order: '12121110225546227811220',
+            note: '转出道具',
+            balance: 700.0
           }
         ]
       },
@@ -92,13 +113,19 @@ export class PaymentDetailsPage {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
             amount: '-30.00',
-            type: 0
+            type: 0,
+            order: '12121110225546227811220',
+            note: '换取道具',
+            balance: 570.0
           },
           {
             date: '2018-10-01   15:00:00',
             detail: '收入 - 卖出道具',
             amount: '+130.00',
-            type: 1
+            type: 1,
+            order: '12121110225546227811220',
+            note: '转出道具',
+            balance: 600.0
           }
         ]
       },
@@ -109,20 +136,27 @@ export class PaymentDetailsPage {
             date: '2018-10-01   15:00:00',
             detail: '支出 - 购买道具',
             amount: '-30.00',
-            type: 0
+            type: 0,
+            order: '12121110225546227811220',
+            note: '换取道具',
+            balance: 470.0
           },
           {
             date: '2018-10-01   15:00:00',
             detail: '收入 - 卖出道具',
             amount: '+130.00',
-            type: 1
+            type: 1,
+            order: '12121110225546227811220',
+            note: '转出道具',
+            balance: 500.0
           }
         ]
       }
     ];
   }
   // 跳转到流水详情
-  gotoBillingDetailsPage() {
-    this.navCtrl.push(BillingDetailsPage, {});
+  gotoBillingDetailsPage(item: any) {
+    this.logger.info('>>>流水：' + JSON.stringify(item));
+    this.navCtrl.push(BillingDetailsPage, { data: item });
   }
 }

@@ -74,6 +74,7 @@ import { BillingDetailsPage } from '../pages/mine/mywallet/billingdetails/billin
 import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
 import { PaymentDetailsPage } from '../pages/mine/mywallet/paymentdetails/paymentdetails';
 import { SetPasswordPage } from '../pages/mine/setpassword/setpassword';
+import { PoundagePage } from '../pages/settings/poundage/poundage';
 
 /* Wallet Settings */
 import { WalletColorPage } from '../pages/settings/wallet-settings/wallet-color/wallet-color';
@@ -146,6 +147,7 @@ export const PAGES = [
   FingerprintModalPage,
   MinePage,
   SetPasswordPage,
+  PoundagePage,
   PaymentDetailsPage,
   BillingDetailsPage,
   ImportWalletPage,

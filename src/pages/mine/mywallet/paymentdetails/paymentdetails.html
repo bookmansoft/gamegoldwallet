@@ -1,46 +1,23 @@
 <ion-header>
-  <ion-navbar
-    color="blank"
-    style="height:50px !important;min-height: 50px !important;"
-  >
-    <ion-title>{{ 'Payment details' | translate }}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{ 'Payment details' | translate }}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngFor="let items of datas">
-    <div style="padding:5px 0px 5px 10px;">{{ items?.month }}</div>
-    <ion-item
-      *ngFor="let item of items.info"
-      (click)="gotoBillingDetailsPage()"
-    >
-      <img
-        item-start
-        src="assets/img/{{ item?.type == 0 ? 'up_arrow' : 'down_arrow' }}.png"
-      />
-      <div style="padding-left:8px;">{{ item?.detail }}</div>
-      <div item-end>
-        <div
-          [ngStyle]="{ color: item?.type == 0 ? '' : '#1abb9b' }"
-          style="text-align: right;font-size: 20px;"
-        >
-          {{ item?.amount }}
-        </div>
-        <div style="font-size:13px;color:#999999;margin-top: 10px;">
-          {{ item?.date }}
-        </div>
-      </div>
-    </ion-item>
-    <!--<div *ngFor="let item of data">
-            <div style="padding:5px 0px 5px 10px;">item.month</div>
-            <ion-item *ngFor="let item of items.info">
-                <img item-start src="assets/img/up_arrow.png">
-                <div style="padding-left:8px;">item.detail</div>
-                <div item-end>
-                    <div style="text-align: right;">item.amount</div>
-                    <div style="font-size:13px;color:#999999;margin-top: 10px;">item.date</div>
+    <ion-list *ngFor="let items of datas">
+        <div style="padding:5px 0px 5px 10px;">{{ items?.month }}</div>
+        <ion-item *ngFor="let item of items.info" (click)="gotoBillingDetailsPage(item)">
+            <img item-start src="assets/img/{{ item?.type == 0 ? 'up_arrow' : 'down_arrow' }}.png" />
+            <div style="padding-left:8px;">{{ item?.detail }}</div>
+            <div item-end>
+                <div [ngStyle]="{ color: item?.type == 0 ? '' : '#1abb9b' }" style="text-align: right;font-size: 22px;">
+                    {{ item?.amount }}
                 </div>
-            </ion-item>
-        </div>-->
-  </ion-list>
+                <div style="font-size:13px;color:#999999;margin-top: 10px;">
+                    {{ item?.date }}
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
 </ion-content>

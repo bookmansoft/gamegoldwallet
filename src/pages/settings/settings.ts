@@ -104,10 +104,6 @@ export class SettingsPage {
     this.navCtrl.push(AdvancedPage);
   }
 
-  public openAboutPage(): void {
-    this.navCtrl.push(AboutPage);
-  }
-
   public openLockPage(): void {
     let config = this.configProvider.get();
     let lockMethod =
