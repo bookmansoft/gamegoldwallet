@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>{{ 'Import wallet' | translate }}</ion-title>
+    <!-- TODO:动态 -->
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item no-lines>
+    <div>请按顺序输入您备份钱包的助记词(12个汉字，汉字间用空格分开)</div>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input
+      [(ngModel)]="backupInput"
+      type="text"
+      maxlength="23"
+      class="input"
+      placeholder="请输入助记词"
+      (ionChange)="onChange()"
+    ></ion-input>
+  </ion-item>
+  <div padding style="margin-top:80px;">
+    <button
+      [disabled]="status"
+      ion-button
+      class="btn"
+      color="primary"
+      block
+      (click)="submitBackup()"
+    >
+      下一步
+    </button>
+  </div>
+</ion-content>

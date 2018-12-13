@@ -103,11 +103,11 @@ export class AddressbookAddPage {
         });
     } else {
       let opts = {
-        title: 'Error',
-        message: 'Could not save the contact',
+        title: '提示',
+        message: '无法保存联系人',
         buttons: [
           {
-            text: 'OK',
+            text: '确定',
             handler: () => {
               this.navCtrl.pop();
             }

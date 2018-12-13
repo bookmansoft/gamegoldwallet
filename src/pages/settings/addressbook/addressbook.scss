@@ -1,45 +1,62 @@
 page-addressbook {
-  .zero-state {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    &-icon {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      padding: 13px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-      background-color: #fff;
-      img {
+    background: transparent none;
+    &>ion-content.content {
+        background: #f5f5f9;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    .zero-state {
         height: 100%;
-        width: 100%;
-      }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        &-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            padding: 13px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            background-color: #fff;
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+        &-heading {
+            font-size: 20px;
+            margin: 1rem;
+        }
+        &-description {
+            font-size: 0.9em;
+            margin-top: 0;
+            margin-left: 2rem;
+            margin-right: 2rem;
+            margin-bottom: 120px;
+            opacity: 0.6;
+            max-width: 300px;
+        }
     }
-    &-heading {
-      font-size: 20px;
-      margin: 1rem;
+    .contact {
+        ion-label {
+            display: flex;
+            align-items: center;
+            gravatar {
+                margin-right: 1.5rem;
+            }
+        }
     }
-    &-description {
-      font-size: 0.9em;
-      margin-top: 0;
-      margin-left: 2rem;
-      margin-right: 2rem;
-      margin-bottom: 120px;
-      opacity: 0.6;
-      max-width: 300px;
+    .btn {
+        border-radius: 15px;
+        width: 65%;
+        min-width: 65%;
+        height: 40px;
     }
-  }
-  .contact {
-    ion-label {
-      display: flex;
-      align-items: center;
-      gravatar {
-        margin-right: 1.5rem;
-      }
-    }
-  }
 }

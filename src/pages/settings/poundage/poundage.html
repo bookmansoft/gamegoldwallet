@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{'Fee Policy' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-item no-lines>
+        <div style="font-size:15px;color:#999999;">手续费是游戏金交易过程中产生的费用。该费用由打包交易的矿工收取，手续费高低会影响交易打包的速度。</div>
+        <div style="font-size:15px;color:#999999;margin-top: 8px;">当前已选费率策略:</div>
+        <div style="font-size:15px;margin-top: 8px;">平均确认时间: 30 分钟</div>
+        <div style="font-size:15px;">当前费用率: 20 尘/字节</div>
+    </ion-item>
+    <form [formGroup]="langForm">
+        <ion-list radio-group formControlName="langs" (ionChange)="langSelect()" style="margin-top:10px !important;">
+            <ion-item no-lines>
+                <ion-label>高(非常快)</ion-label>
+                <ion-radio value="veryfast"></ion-radio>
+            </ion-item>
+            <ion-item no-lines style="margin-top:2px !important;">
+                <ion-label>较高(优先)</ion-label>
+                <ion-radio value="givepriority"></ion-radio>
+            </ion-item>
+            <ion-item no-lines style="margin-top:2px !important;">
+                <ion-label>常规</ion-label>
+                <ion-radio value="conventional"></ion-radio>
+            </ion-item>
+            <ion-item no-lines style="margin-top:2px !important;">
+                <ion-label>经济(较慢)</ion-label>
+                <ion-radio value="slower"></ion-radio>
+            </ion-item>
+            <ion-item no-lines style="margin-top:2px !important;">
+                <ion-label>超级经济(慢)</ion-label>
+                <ion-radio value="slow"></ion-radio>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>

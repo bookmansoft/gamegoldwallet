@@ -1,7 +1,7 @@
 /* Pages */
 import { AddPage } from '../pages/add/add';
 /* import { CreateWalletPage } from '../pages/add/create-wallet/create-wallet';*/
-import { ImportWalletPage } from '../pages/add/import-wallet/import-wallet';
+/* import { ImportWalletPage } from '../pages/add/import-wallet/import-wallet';*/
 import { JoinWalletPage } from '../pages/add/join-wallet/join-wallet';
 import { BackupGamePage } from '../pages/backup/backup-game/backup-game';
 import { BackupWarningPage } from '../pages/backup/backup-warning/backup-warning';
@@ -67,10 +67,14 @@ import { NotificationsPage } from '../pages/settings/notifications/notifications
 
 /* Mine */
 import { CreateWalletPage } from '../pages/mine/createwallet/createwallet';
+import { ImportWalletPage } from '../pages/mine/importwallet/importwallet';
 import { MinePage } from '../pages/mine/mine';
 import { BackupWalletPage } from '../pages/mine/mywallet/backupwallet/backupwallet';
+import { BillingDetailsPage } from '../pages/mine/mywallet/billingdetails/billingdetails';
 import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
+import { PaymentDetailsPage } from '../pages/mine/mywallet/paymentdetails/paymentdetails';
 import { SetPasswordPage } from '../pages/mine/setpassword/setpassword';
+import { PoundagePage } from '../pages/settings/poundage/poundage';
 
 /* Wallet Settings */
 import { WalletColorPage } from '../pages/settings/wallet-settings/wallet-color/wallet-color';
@@ -131,7 +135,6 @@ export const PAGES = [
   FeedbackPage,
   FeedbackCompletePage,
   IncomingDataMenuPage,
-  ImportWalletPage,
   JoinWalletPage,
   BackupWarningPage,
   BackupGamePage,
@@ -144,6 +147,10 @@ export const PAGES = [
   FingerprintModalPage,
   MinePage,
   SetPasswordPage,
+  PoundagePage,
+  PaymentDetailsPage,
+  BillingDetailsPage,
+  ImportWalletPage,
   BackupWalletPage,
   MyWalletPage,
   HomePage,

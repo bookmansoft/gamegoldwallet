@@ -1,39 +1,52 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{title}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{'About' | translate}}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item-divider>{{'Release information'| translate}}</ion-item-divider>
-    <ion-item>
-      <ion-icon class="custom-icon" name="ios-download-outline" item-start></ion-icon>
-      {{'Version' | translate}}
-      <ion-note item-end>
-        v{{version}}
-      </ion-note>
+    <ion-item no-lines style="font-weight: bold !important;">
+        百谷王游戏金链
     </ion-item>
-    <ion-item class="commit-hash" (click)="openExternalLink()">
-      <ion-icon class="custom-icon" name="logo-github" item-start></ion-icon>
-      Commit hash
-      <ion-note item-end>
-        #{{commitHash}}
-      </ion-note>
+    <ion-item no-lines>
+        <div>
+            百谷王通过区块链技术，为游戏玩家提供道具上链、去中心化道具交易等功能，便于游戏玩家管理自己的虚拟资产、将游戏道具出售、转赠他人。
+        </div>
     </ion-item>
-    <ion-item-divider></ion-item-divider>
-    <button ion-item (click)="openTermsOfUse()">
+    <ion-item no-lines style="margin-top:8px !important;">
+        {{'Version' | translate}}
+        <ion-note item-end>
+            v{{version}}
+        </ion-note>
+    </ion-item>
+    <!--<ion-list>
+        <ion-item-divider>{{'Release information'| translate}}</ion-item-divider>
+        <ion-item>
+            <ion-icon class="custom-icon" name="ios-download-outline" item-start></ion-icon>
+            {{'Version' | translate}}
+            <ion-note item-end>
+                v{{version}}
+            </ion-note>
+        </ion-item>
+        <ion-item class="commit-hash" (click)="openExternalLink()">
+            <ion-icon class="custom-icon" name="logo-github" item-start></ion-icon>
+            Commit hash
+            <ion-note item-end>
+                #{{commitHash}}
+            </ion-note>
+        </ion-item>
+        <ion-item-divider></ion-item-divider>
+        <button ion-item (click)="openTermsOfUse()">
       <ion-icon class="custom-icon" name="ios-list-box-outline" item-start></ion-icon>
       {{'Terms of Use' | translate }}
     </button>
-    <button ion-item (click)="openPrivacyPolicy()">
+        <button ion-item (click)="openPrivacyPolicy()">
       <ion-icon class="custom-icon" name="ios-lock-outline" item-start></ion-icon>
       {{'Privacy Policy' | translate }}
     </button>
-    <button ion-item (click)="openSessionLog()">
+        <button ion-item (click)="openSessionLog()">
       <ion-icon class="custom-icon" name="ios-copy-outline" item-start></ion-icon>
       {{ 'Session log' | translate }}
     </button>
-  </ion-list>
-
+    </ion-list>-->
 </ion-content>

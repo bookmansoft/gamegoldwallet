@@ -48,7 +48,7 @@ msgid "A total of {{fee}} {{coin}} were excluded. These funds come from UTXOs sm
 msgstr ""
 
 msgid "About"
-msgstr "关于"
+msgstr "关于我们"
 
 msgid "About {{appName}}"
 msgstr ""
@@ -218,8 +218,8 @@ msgstr "隐藏余额"
 msgid "Be sure to store your recovery phrase in a secure place. If this app is deleted, your money cannot be recovered without it."
 msgstr "请务必将您的恢复短语存储在一个安全的地方。如果这个程序被删除，不能没有它恢复你的钱。"
 
-msgid "Bitcoin Address"
-msgstr "比特币地址"
+msgid "GGD Address"
+msgstr "GameGold钱包地址"
 
 msgid "Bitcoin Cash Wallets"
 msgstr "比特币现金钱包"
@@ -932,6 +932,12 @@ msgstr "推荐"
 msgid "Game"
 msgstr "游戏"
 
+msgid "My game"
+msgstr "我的游戏"
+
+msgid "My props"
+msgstr "我的道具"
+
 msgid "Ranking"
 msgstr "排行"
 
@@ -964,6 +970,15 @@ msgstr "收支明细"
 
 msgid "Send GGD"
 msgstr "发送游戏金"
+
+msgid "Import wallet"
+msgstr "导入钱包"
+
+msgid "Fee Policy"
+msgstr "手续费策略"
+
+msgid "Billing details"
+msgstr "流水详情"
 
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
@@ -2170,7 +2185,7 @@ msgid "Verify your identity"
 msgstr ""
 
 msgid "Version"
-msgstr "版本"
+msgstr "当前版本"
 
 msgid "View"
 msgstr "查看"
