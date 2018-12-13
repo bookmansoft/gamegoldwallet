@@ -1,4 +1,5 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Events,
@@ -104,7 +105,8 @@ export class HomePage {
     private translate: TranslateService,
     private emailProvider: EmailNotificationsProvider,
     private replaceParametersProvider: ReplaceParametersProvider,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    private storage: Storage
   ) {
     this.updatingWalletId = {};
     this.addressbook = {};
@@ -115,6 +117,12 @@ export class HomePage {
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.spvNodeProvider.open();
     this.gameServer = 'http://40.73.119.183:7555';
+    // 设置默认费率
+    this.storage.get('poundage').then(val => {
+      if (val == null) {
+        this.storage.set('poundage', 'conventional');
+      }
+    });
   }
   // 用于实时搜索,提示
   onInput(inputEvent: Event) {
