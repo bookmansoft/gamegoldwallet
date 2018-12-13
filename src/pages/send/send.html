@@ -1,55 +1,82 @@
 <ion-header>
-
-    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>{{'Send GGD' | translate}}</ion-title>
-    </ion-navbar>
-
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>{{ 'Send GGD' | translate }}</ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-item no-lines style="height: 35px !important;min-height: 35px !important;padding-top: 6px;">
-        接收人地址
+  <ion-item
+    no-lines
+    style="height: 35px !important;min-height: 35px !important;padding-top: 6px;"
+  >
+    接收人地址
+  </ion-item>
+  <ion-item
+    no-lines
+    style="padding-top:0px !important;padding-bottom:0px !important;"
+  >
+    <ion-item
+      no-lines
+      class="ion-input"
+      style="padding:0 0 0 8px !important;margin: 0px !important;"
+    >
+      <textarea class="textarea" placeholder="输入接收人地址"></textarea>
+      <ion-icon item-right name="close-circle"></ion-icon>
     </ion-item>
-    <ion-item no-lines style="padding-top:0px !important;padding-bottom:0px !important;">
-        <ion-item no-lines class="ion-input" style="padding:0 0 0 8px !important;margin: 0px !important;">
-            <textarea class="textarea" placeholder="输入接收人地址"></textarea>
-            <ion-icon item-right name="close-circle"></ion-icon>
-        </ion-item>
-        <div class="address-div">
-            <img src="../../assets/img/saoyisao.png">
-            <div style="margin-left:10px;">扫描接收人二维码获取地址</div>
-        </div>
-    </ion-item>
-    <ion-item no-lines style="margin-top:4px !important;">
-        <ion-item no-lines style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 !important;">
-            转账金额
-        </ion-item>
-        <ion-item style="padding:0px !important;margin: 0px !important;">
-            <ion-item no-lines class="ion-input" style="height:30px !important;padding:0px !important;">
-                <ion-input style="font-size:15px !important;" placeholder="输入发送金额"></ion-input>
-                <ion-icon item-right name="close-circle"></ion-icon>
-            </ion-item>
-            <div item-end>单位(GGD)</div>
-        </ion-item>
-        <div class="div">
-            <span style="color:#999999;margin-right:10px;">钱包余额</span>
-            <span>100.1234 GGD</span>
-        </div>
-    </ion-item>
-    <ion-item no-lines style="margin-top:4px !important;">
-        <div item-start>
-            付款方承担手续费
-        </div>
-        <ion-toggle color="primary" checked="true"></ion-toggle>
-    </ion-item>
-    <ion-item no-lines style="margin-top:4px !important;">
-        <ion-item no-lines style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 0 10px 0 !important;">
-            转账说明
-        </ion-item>
-        <ion-item no-lines class="ion-input" style="height:30px !important;padding:0px !important;">
-            <ion-input style="font-size:15px !important;" placeholder="输入转账说明"></ion-input>
-        </ion-item>
-    </ion-item>
-    <div padding style="margin-top:50px;">
-        <button ion-button class="btn" color="primary" (click)="gotoConfirmSend()">下一步</button>
+    <div class="address-div">
+      <img src="../../assets/img/saoyisao.png" />
+      <div style="margin-left:10px;">扫描接收人二维码获取地址</div>
     </div>
+  </ion-item>
+  <ion-item no-lines style="margin-top:4px !important;">
+    <ion-item
+      no-lines
+      style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 !important;"
+    >
+      转账金额
+    </ion-item>
+    <ion-item style="padding:0px !important;margin: 0px !important;">
+      <ion-item
+        no-lines
+        class="ion-input"
+        style="height:30px !important;padding:0px !important;"
+      >
+        <ion-input
+          style="font-size:15px !important;"
+          placeholder="输入发送金额"
+        ></ion-input>
+        <ion-icon item-right name="close-circle"></ion-icon>
+      </ion-item>
+      <div item-end>单位(石)</div>
+    </ion-item>
+    <div class="div">
+      <span style="color:#999999;margin-right:10px;">钱包余额</span>
+      <span>100.1234 石</span>
+    </div>
+  </ion-item>
+  <ion-item no-lines style="margin-top:4px !important;">
+    <ion-item
+      no-lines
+      style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 0 10px 0 !important;"
+    >
+      转账说明
+    </ion-item>
+    <ion-item
+      no-lines
+      class="ion-input"
+      style="height:30px !important;padding:0px !important;"
+    >
+      <ion-input
+        style="font-size:15px !important;"
+        placeholder="输入转账说明"
+      ></ion-input>
+    </ion-item>
+  </ion-item>
+  <div padding style="margin-top:50px;">
+    <button ion-button class="btn" color="primary" (click)="gotoConfirmSend()">
+      下一步
+    </button>
+  </div>
 </ion-content>

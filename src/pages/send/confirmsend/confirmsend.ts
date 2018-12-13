@@ -16,13 +16,16 @@ import { IncomingDataProvider } from '../../../providers/incoming-data/incoming-
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 
+import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
+import { PoundagePage } from '../../settings/poundage/poundage';
 @Component({
   selector: 'page-confirmsend',
   templateUrl: './confirmsend.html'
 })
 export class ConfirmSendPage {
   private pass: string;
+  private poundage: string;
   constructor(
     private spvNodeProvider: SpvNodeProvider,
     public toastCtrl: ToastController,
@@ -33,6 +36,12 @@ export class ConfirmSendPage {
   ) {
     this.storage.get('walletpassword').then(val => {
       this.pass = val;
+    });
+  }
+
+  ionViewWillEnter() {
+    this.storage.get('poundage').then(val => {
+      this.poundage = val;
     });
   }
 
@@ -83,5 +92,9 @@ export class ConfirmSendPage {
       ]
     });
     prompt.present();
+  }
+  // 跳转到费率页
+  gotoPoundagePage() {
+    this.navCtrl.push(PoundagePage, {});
   }
 }
