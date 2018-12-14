@@ -1,0 +1,30 @@
+page-mygame {
+    background: transparent none;
+    &>ion-content.content {
+        background: #ffffff;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    ion-item img {
+        height: 60px;
+        width: 60px;
+    }
+    .btn {
+        border-radius: 15px;
+        width: 45px;
+        min-width: 45px;
+    }
+    .view-text {
+        font-weight: bold;
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

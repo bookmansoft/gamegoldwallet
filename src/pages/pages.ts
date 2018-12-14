@@ -69,6 +69,8 @@ import { NotificationsPage } from '../pages/settings/notifications/notifications
 import { CreateWalletPage } from '../pages/mine/createwallet/createwallet';
 import { ImportWalletPage } from '../pages/mine/importwallet/importwallet';
 import { MinePage } from '../pages/mine/mine';
+import { MyGamePage } from '../pages/mine/mygame/mygame';
+import { MyPropsPage } from '../pages/mine/myprops/myprops';
 import { BackupWalletPage } from '../pages/mine/mywallet/backupwallet/backupwallet';
 import { BillingDetailsPage } from '../pages/mine/mywallet/billingdetails/billingdetails';
 import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
@@ -148,6 +150,8 @@ export const PAGES = [
   MinePage,
   SetPasswordPage,
   PoundagePage,
+  MyGamePage,
+  MyPropsPage,
   PaymentDetailsPage,
   BillingDetailsPage,
   ImportWalletPage,

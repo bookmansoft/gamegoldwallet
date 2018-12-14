@@ -19,11 +19,11 @@
             {{ walletpassword == null ? '创建钱包' : '进入钱包' }}
         </div>
     </ion-item>
-    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;">
+    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;" (click)="openMyGamePage()">
         <img item-start class="icon-img" src="assets/img/icon_game.png" />
         <ion-row style="font-size:16px;"> {{'My game' | translate}} </ion-row>
     </ion-item>
-    <ion-item detail-push style="background: #ffffff !important;">
+    <ion-item detail-push style="background: #ffffff !important;" (click)="openMyPropsPage()">
         <img item-start class="icon-img" src="assets/img/icon_props.png" />
         <ion-row style="font-size:16px;"> {{'My props' | translate}} </ion-row>
     </ion-item>

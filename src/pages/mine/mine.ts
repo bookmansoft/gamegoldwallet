@@ -17,10 +17,13 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { TouchIdProvider } from '../../providers/touchid/touchid';
 
 // pages
+import { from } from 'rxjs/observable/from';
 import { ContractPage } from '../contract/contract';
 import { FeedbackCompletePage } from '../feedback/feedback-complete/feedback-complete';
 import { SendFeedbackPage } from '../feedback/send-feedback/send-feedback';
 import { CreateWalletPage } from '../mine/createwallet/createwallet';
+import { MyGamePage } from '../mine/mygame/mygame';
+import { MyPropsPage } from '../mine/myprops/myprops';
 import { MyWalletPage } from '../mine/mywallet/mywallet';
 import { PinModalPage } from '../pin/pin-modal/pin-modal';
 import { ReceivePage } from '../receive/receive';
@@ -278,5 +281,13 @@ export class MinePage {
 
   public openContractPage(): void {
     this.navCtrl.push(ContractPage);
+  }
+  // 我的游戏
+  public openMyGamePage(): void {
+    this.navCtrl.push(MyGamePage);
+  }
+  // 我的道具
+  public openMyPropsPage(): void {
+    this.navCtrl.push(MyPropsPage);
   }
 }
