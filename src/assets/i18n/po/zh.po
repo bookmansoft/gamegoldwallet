@@ -980,6 +980,21 @@ msgstr "手续费策略"
 msgid "Billing details"
 msgstr "流水详情"
 
+msgid "veryfast"
+msgstr "高(非常快)"
+
+msgid "givepriority"
+msgstr "较高(优先)"
+
+msgid "conventional"
+msgstr "常规"
+
+msgid "slower"
+msgstr "经济(较慢)"
+
+msgid "slow"
+msgstr "超级经济(慢)"
+
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
 
