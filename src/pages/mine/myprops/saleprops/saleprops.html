@@ -1,0 +1,22 @@
+<ion-header>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{ 'My sale props' | translate }}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let item of datas">
+        <ion-card>
+            <ion-item>
+                <img item-start src="{{item.src}}">
+                <div>
+                    <div class="view-text">{{item.name}}</div>
+                    <div class="div">
+                        <div>{{item.content}}</div>
+                        <div style="color:red;">{{item.pay}}石</div>
+                    </div>
+                </div>
+            </ion-item>
+            <div padding class="div-empty"></div>
+        </ion-card>
+    </ion-list>
+</ion-content>

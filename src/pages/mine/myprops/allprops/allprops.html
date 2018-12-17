@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>{{ 'All Props' | translate }}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div *ngFor="let item of datas;let i=index">
+        <ion-item no-lines style="height:40px !important;margin-top: 10px !important;">
+            <img item-start class="title-img" src="{{item.src}}">
+            <div style="line-height:25px;font-size: 16px;">{{item.name}}</div>
+            <button item-end ion-button outline class="btn">
+                                        进入游戏
+                                      </button>
+        </ion-item>
+        <ion-grid padding [ngClass]="{'ion-grid':i != datas.length - 1}">
+            <ion-row>
+                <div *ngFor="let item of item.propinfo" style="width: 25%;text-align: center;position: relative;">
+                    <img class="img" src="{{item.src}}">
+                    <img *ngIf="item.lable == 1" style="position: absolute;width: 30px;height: 30px;right: 2px;right: 0px;top: -15px;z-index: 99;" src="assets/img/new.png">
+                    <div>{{item.propname}}</div>
+                </div>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

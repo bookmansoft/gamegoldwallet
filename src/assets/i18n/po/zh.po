@@ -995,6 +995,24 @@ msgstr "经济(较慢)"
 msgid "slow"
 msgstr "超级经济(慢)"
 
+msgid "All Props"
+msgstr "全部道具"
+
+msgid "My sale props"
+msgstr "我的在售道具"
+
+msgid "Props bill"
+msgstr "道具流水"
+
+msgid "Bill all"
+msgstr "全部"
+
+msgid "Bill to obtain"
+msgstr "获取"
+
+msgid "Bill roll out"
+msgstr "转出"
+
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
 

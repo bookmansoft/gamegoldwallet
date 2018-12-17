@@ -1,0 +1,28 @@
+page-allprops {
+    background: transparent none;
+    &>ion-content.content {
+        background: #ffffff;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid !important;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    .title-img {
+        height: 35px;
+        width: 35px;
+    }
+    .btn {
+        border-radius: 15px;
+    }
+    .img {
+        height: 65px;
+        width: 65px;
+        border-radius: 15px;
+    }
+    .ion-grid {
+        border-bottom: 5px #f5f5f9 solid;
+    }
+}

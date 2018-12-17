@@ -70,7 +70,10 @@ import { CreateWalletPage } from '../pages/mine/createwallet/createwallet';
 import { ImportWalletPage } from '../pages/mine/importwallet/importwallet';
 import { MinePage } from '../pages/mine/mine';
 import { MyGamePage } from '../pages/mine/mygame/mygame';
+import { AllPropsPage } from '../pages/mine/myprops/allprops/allprops';
 import { MyPropsPage } from '../pages/mine/myprops/myprops';
+import { PropsBillPage } from '../pages/mine/myprops/propsbill/propsbill';
+import { SalePropsPage } from '../pages/mine/myprops/saleprops/saleprops';
 import { BackupWalletPage } from '../pages/mine/mywallet/backupwallet/backupwallet';
 import { BillingDetailsPage } from '../pages/mine/mywallet/billingdetails/billingdetails';
 import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
@@ -152,6 +155,9 @@ export const PAGES = [
   PoundagePage,
   MyGamePage,
   MyPropsPage,
+  PropsBillPage,
+  AllPropsPage,
+  SalePropsPage,
   PaymentDetailsPage,
   BillingDetailsPage,
   ImportWalletPage,
