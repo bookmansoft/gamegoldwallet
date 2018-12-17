@@ -1,0 +1,23 @@
+page-propsdetails {
+    background: transparent none;
+    &>ion-content.content {
+        background: #f5f5f9;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    ion-item {
+        background: #ffffff !important;
+    }
+    .div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size: 15px;
+        margin-top: 13px;
+    }
+}

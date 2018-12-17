@@ -1013,6 +1013,9 @@ msgstr "获取"
 msgid "Bill roll out"
 msgstr "转出"
 
+msgid "Prop bill details"
+msgstr "道具流水详情"
+
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
 

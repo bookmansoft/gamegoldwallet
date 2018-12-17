@@ -73,6 +73,7 @@ import { MyGamePage } from '../pages/mine/mygame/mygame';
 import { AllPropsPage } from '../pages/mine/myprops/allprops/allprops';
 import { MyPropsPage } from '../pages/mine/myprops/myprops';
 import { PropsBillPage } from '../pages/mine/myprops/propsbill/propsbill';
+import { PropsDetailsPage } from '../pages/mine/myprops/propsdetails/propsdetails';
 import { SalePropsPage } from '../pages/mine/myprops/saleprops/saleprops';
 import { BackupWalletPage } from '../pages/mine/mywallet/backupwallet/backupwallet';
 import { BillingDetailsPage } from '../pages/mine/mywallet/billingdetails/billingdetails';
@@ -156,6 +157,7 @@ export const PAGES = [
   MyGamePage,
   MyPropsPage,
   PropsBillPage,
+  PropsDetailsPage,
   AllPropsPage,
   SalePropsPage,
   PaymentDetailsPage,

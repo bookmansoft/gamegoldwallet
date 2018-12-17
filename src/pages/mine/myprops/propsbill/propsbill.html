@@ -24,76 +24,23 @@
 </ion-header>
 <ion-content>
     <div [ngSwitch]="index">
-        <ion-list *ngSwitchCase="'1'">
-            <div style="padding:5px 0px 5px 10px;">09-19</div>
-            <ion-item>
-                <img item-start src="assets/img/up_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>APP内兑换</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <img item-start src="assets/img/up_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>游戏内获取</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <img item-start src="assets/img/down_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>游戏内获取</div>
-                </div>
-            </ion-item>
-            <div style="padding:5px 0px 5px 10px;">09-20</div>
-            <ion-item>
-                <img item-start src="assets/img/up_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>APP内兑换</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <img item-start src="assets/img/up_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>游戏内获取</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <img item-start src="assets/img/down_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>游戏内获取</div>
-                </div>
-            </ion-item>
-            <div style="padding:5px 0px 5px 10px;">09-21</div>
-            <ion-item>
-                <img item-start src="assets/img/up_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>赠送他人</div>
-                </div>
-            </ion-item>
-            <ion-item>
-                <img item-start src="assets/img/up_arrow.png" />
-                <div style="padding-left: 8px;">黄金59式</div>
-                <div class="div">
-                    <div>黄金59式</div>
-                    <div>熔铸</div>
-                </div>
-            </ion-item>
+        <ion-list *ngSwitchCase="1">
+            <ng-container *ngFor="let item of datas">
+                <div style="padding:5px 0px 5px 10px;">{{item.date}}</div>
+                <ion-item *ngFor="let item of item.info" (click)="openPropsDetailsPage()">
+                    <img *ngIf="item.lable==1" item-start src="assets/img/down_arrow.png" />
+                    <img *ngIf="item.lable==2" item-start src="assets/img/up_arrow.png" />
+                    <img *ngIf="item.lable==3" item-start src="assets/img/fused.png" />
+                    <div style="padding-left: 8px;">{{item.name}}</div>
+                    <div class="div">
+                        <div>{{item.game}}</div>
+                        <div>{{item.instructions}}</div>
+                    </div>
+                </ion-item>
+            </ng-container>
         </ion-list>
-        <ion-list *ngSwitchCase="'2'">
+
+        <ion-list *ngSwitchCase="2">
             <div style="padding:5px 0px 5px 10px;">09-19</div>
             <ion-item>
                 <img item-start src="assets/img/up_arrow.png" />
