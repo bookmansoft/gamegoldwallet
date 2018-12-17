@@ -35,6 +35,7 @@ export class ContractPage {
   sellSwitch: string;
   // 买单列表
   contracts: any;
+  index: number = 1;
 
   constructor(
     private navCtrl: NavController,
@@ -78,7 +79,12 @@ export class ContractPage {
 
   // 选择币种时候,重新加载买卖列表
   switchType(value) {
-    this.logger.info("changed: " + value);
+    this.logger.info('changed: ' + value);
   }
 
+  // 选项卡切换
+  onSelect(index) {
+    this.logger.info('点击 !' + index);
+    this.index = index;
+  }
 }

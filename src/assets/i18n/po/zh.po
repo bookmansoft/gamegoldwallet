@@ -1016,6 +1016,15 @@ msgstr "转出"
 msgid "Prop bill details"
 msgstr "道具流水详情"
 
+msgid "My contract"
+msgstr "我的交易对"
+
+msgid "Contract buy"
+msgstr "我买到的"
+
+msgid "Contract sale"
+msgstr "我的出售"
+
 msgid "How do you like {{appName}}?"
 msgstr "你喜欢 {{appName}}？"
 

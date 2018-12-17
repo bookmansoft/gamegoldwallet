@@ -1,5 +1,8 @@
 <ion-header>
-  <ion-navbar class="navbar-transparent">
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
     <ion-title>
       <!-- <ion-select [(ngModel)]="changeType" placeholder="BTC" interface="popover" (ionChange)="switchType($event)">
         <ion-option value="BTC">BTC
@@ -8,11 +11,42 @@
         <ion-option value="BTH">BTH</ion-option>
         <ion-option value="ETC">ETC</ion-option>
       </ion-select> -->
-      我的兑换信息
+      {{ 'My contract' | translate }}
     </ion-title>
   </ion-navbar>
+  <div class="content-menu">
+    <div
+      class="menu-item"
+      style="border-right:2px #f5f5f9 solid;"
+      tappable
+      (click)="onSelect(1)"
+    >
+      <span
+        [ngStyle]="{ color: index == 1 ? '#1abb9b' : '' }"
+        style="color:#1abb9b;"
+        >{{ 'Contract buy' | translate }}</span
+      >
+      <span [ngClass]="{ select: index == 1 }"></span>
+    </div>
+    <div
+      class="menu-item"
+      style="border-right:2px #f5f5f9 solid;"
+      tappable
+      (click)="onSelect(2)"
+    >
+      <span [ngStyle]="{ color: index == 2 ? '#1abb9b' : '' }">{{
+        'Contract sale' | translate
+      }}</span>
+      <span [ngClass]="{ select: index == 2 }"></span>
+    </div>
+  </div>
 </ion-header>
 <ion-content>
+  <div [ngSwitch]="index">
+    <ion-list *ngSwitchCase="1"> <div>df</div> </ion-list>
+
+    <ion-list *ngSwitchCase="2"> <div>测试1</div> </ion-list>
+  </div>
   <!-- 原先交易市场的设计,目前仅实现单向兑换 -->
   <!-- <div padding>
     <ion-segment [(ngModel)]="sellSwitch">
@@ -27,7 +61,7 @@
 
   <!-- <div [ngSwitch]="sellSwitch"> -->
   <!-- </div> -->
-
+  <!--
   <ion-list>
     <ion-card *ngFor="let contract of contracts">
       <ion-card-header>
@@ -57,6 +91,7 @@
 
     </ion-card>
   </ion-list>
+  -->
 
   <!-- <ion-list *ngSwitchCase="'sell'">
       <ion-item>
@@ -66,7 +101,4 @@
         <h2>Luna</h2>
       </ion-item>
     </ion-list> -->
-
-
-
 </ion-content>
