@@ -1,70 +1,94 @@
 page-contract {
-  background: transparent none;
-  & > ion-content.content {
-    background: #f5f5f9;
-  }
-  .navbar-transparent,
-  .toolbar-background {
-    background: #fff;
-    border-bottom: 3px #f5f5f9 solid !important;
-    box-sizing: border-box;
-    padding: 0px;
-  }
-  ion-select {
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
-  }
-  .item-inner {
-    border-radius: 0 !important;
-    border: none !important;
-    height: 40px !important;
-    width: 40px !important;
-    background-size: 40px 40px !important;
-    background-repeat: no-repeat;
-  }
-  .change-price {
-    text-align: center;
-    font: 1.4em sans-serif;
-  }
-
-  .alert-radio-inner {
-    background-color: transparent !important;
-  }
-
-  ion-card img {
-    width: 20%;
-    display: inline-block;
-  }
-
-  .change-price {
-    display: block;
-  }
-  .content-menu {
-    display: flex;
-    flex-direction: row;
-    height: 42px;
-    box-sizing: border-box;
-    border-bottom: 3px #f5f5f9 solid;
-    justify-content: space-between;
-    font-size: 15px;
-    background: #ffffff;
-  }
-  .menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  .select {
-    background: #1abb9b;
-    width: 70px;
-    height: 4px;
-    margin-top: 3px;
-    border-radius: 8px;
-  }
-  .select-on {
-    display: none;
-  }
+    background: transparent none;
+    &>ion-content.content {
+        background: #f5f5f9;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        border-bottom: 3px #f5f5f9 solid !important;
+        box-sizing: border-box;
+        padding: 0px;
+    }
+    ion-select {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+    .item-inner {
+        border-radius: 0 !important;
+        border: none !important;
+        height: 40px !important;
+        width: 40px !important;
+        background-size: 40px 40px !important;
+        background-repeat: no-repeat;
+    }
+    .change-price {
+        text-align: center;
+        font: 1.4em sans-serif;
+    }
+    .alert-radio-inner {
+        background-color: transparent !important;
+    }
+    .change-price {
+        display: block;
+    }
+    .content-menu {
+        display: flex;
+        flex-direction: row;
+        height: 42px;
+        box-sizing: border-box;
+        border-bottom: 3px #f5f5f9 solid;
+        justify-content: space-between;
+        font-size: 15px;
+        background: #ffffff;
+    }
+    .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .select {
+        background: #1abb9b;
+        width: 70px;
+        height: 4px;
+        margin-top: 3px;
+        border-radius: 8px;
+    }
+    .select-on {
+        display: none;
+    }
+    .div-empty {
+        height: 30px;
+        border-top: 2px #f5f5f9 solid;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .test {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        justify-content: center;
+        border: 2px #ffcc00 solid;
+        box-sizing: border-box;
+        color: #ffcc00;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-content: center;
+    }
+    .item-div {
+        height: 50px;
+        text-align: center;
+        align-items: center;
+        background: #ffcc00;
+    }
 }
