@@ -22,7 +22,20 @@ $app-direction: ltr;
 @import 'my';
 @import 'icons';
 // Colors
-$colors: ( primary: $color-primary, secondary: $color-secondary, warning: #ffa500, danger: #ef473a, success: #01d1a2, light: #f4f4f4, blank: #fff, dark: #424242, grey: #667, light-grey: #9b9bab, btn:#1abb9b, black:#000000);
+$colors: (
+  primary: $color-primary,
+  secondary: $color-secondary,
+  warning: #ffa500,
+  danger: #ef473a,
+  success: #01d1a2,
+  light: #f4f4f4,
+  blank: #fff,
+  dark: #424242,
+  grey: #667,
+  light-grey: #f2f2f2,
+  btn: #1abb9b,
+  black: #000000
+);
 // App background color
 $background-color: #f5f5f5;
 // Item list background color
@@ -43,7 +56,11 @@ $toolbar-md-title-text-color: color($colors, light);
 // Onboarding colors
 $onboarding-gradient-top-color: $toolbar-background;
 $onboarding-gradient-bottom-color: $color-secondary-dark;
-$onboarding-background-image: linear-gradient( to bottom, $onboarding-gradient-top-color 0%, $onboarding-gradient-bottom-color 100%);
+$onboarding-background-image: linear-gradient(
+  to bottom,
+  $onboarding-gradient-top-color 0%,
+  $onboarding-gradient-bottom-color 100%
+);
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -104,10 +121,9 @@ $button-md-text-transform: none;
 @import 'roboto';
 @import 'noto-sans';
 @font-face {
-    font-family: 'AmazonEmberDisplay';
-    src: url(../assets/fonts/AmazonEmberDisplay_Rg.ttf) format('truetype');
+  font-family: 'AmazonEmberDisplay';
+  src: url(../assets/fonts/AmazonEmberDisplay_Rg.ttf) format('truetype');
 }
-
 
 /* Ionic Overrides and Workarounds */
 
@@ -115,57 +131,56 @@ $button-md-text-transform: none;
 // Hide scrollbars on platforms which don't match iOS, Android, or Windows
 // (So scroll bars are not visible in Chrome, NW.js, or Electron.)
 .platform-core .scroll-content {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 // Removes border-bottom
-.md ion-list>.item:last-child,
-.md ion-list>.item-wrapper:last-child .item,
-.ios ion-list>.item:last-child,
-.ios ion-list>.item-wrapper:last-child .item {
-    border-bottom: none;
+.md ion-list > .item:last-child,
+.md ion-list > .item-wrapper:last-child .item,
+.ios ion-list > .item:last-child,
+.ios ion-list > .item-wrapper:last-child .item {
+  border-bottom: none;
 }
-
 
 /* Fix iPhone X screen */
 
 ion-footer {
-    .toolbar {
-        padding-top: 0rem !important;
-        padding-right: 0rem !important;
-        padding-left: 0rem !important;
-        .toolbar-background {
-            background: none;
-            border: 0px;
-        }
+  .toolbar {
+    padding-top: 0rem !important;
+    padding-right: 0rem !important;
+    padding-left: 0rem !important;
+    .toolbar-background {
+      background: none;
+      border: 0px;
     }
-    .toolbar-md {
-        padding-bottom: 0rem;
-    }
-    .toolbar-ios {
-        margin-bottom: -4px;
-    }
+  }
+  .toolbar-md {
+    padding-bottom: 0rem;
+  }
+  .toolbar-ios {
+    margin-bottom: -4px;
+  }
 }
 
 // Titles centered on all headers for material design
 .toolbar {
-    &.toolbar-md {
-        //material design only
-        position: relative;
-        .back-button {
-            z-index: 999;
-        }
-        .title-md {
-            //material design only
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            .toolbar-title-md {
-                padding: 0px 50px 0px 50px;
-            }
-        }
+  &.toolbar-md {
+    //material design only
+    position: relative;
+    .back-button {
+      z-index: 999;
     }
+    .title-md {
+      //material design only
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      .toolbar-title-md {
+        padding: 0px 50px 0px 50px;
+      }
+    }
+  }
 }
