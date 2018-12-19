@@ -103,6 +103,7 @@ export class PropMarketPage {
   // 用于跳转到道具页面
   gotoPropList(gameinfo) {
     // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
+    // 这个地址应该存储到storage中.
     this.navCtrl.push(PropListPage, {
       game: gameinfo,
       userId: this.firstAddress

@@ -45,6 +45,10 @@ export class SpvNodeProvider {
   private wdb: any;
   // wallet钱包
   private wallet: any;
+  // 登记启动时候是否设置了助记词
+  private mnemonicConfig: boolean;
+  // 登记启动时候设置的助记词
+  private bootstrapMnemonic: string;
   // 厂商列表
   private cplist: any;
   // 道具列表
@@ -116,49 +120,48 @@ export class SpvNodeProvider {
         case 'chaindb':
           if (ret.result == 'new') {
             // 链库是新建的
-            this.logger.info('1111 ChainDB new');
+            this.logger.info('ChainDB new');
           } else {
             // 链库是已有的
-            this.logger.info('22222 ChainDB exist');
-          }
-          break;
-
-        case 'walletdb':
-          if (ret.result == 'new') {
-            // 钱包库是新建的
-            this.logger.info('33333 WalletDB new');
-          } else {
-            // 钱包是已有的
-            this.logger.info('44444 WalletDB exist');
+            this.logger.info('ChainDB exist');
           }
           break;
       }
     });
-  }
-  /**
-   * 打开当前node,并且监听交易事件
-   *
-   */
-  public async open() {
-    this.node.chain.on('block', (item, entry) => {
-      this.logger.info('block in hash: ' + item.rhash());
-      this.events.publish('receive:block', item, entry);
-    });
+    // 默认没有设置助记词
+    this.mnemonicConfig = false;
+    this.bootstrapMnemonic = '';
     // 读取当前的钱包插件-必须在open之前进行.
     // 判断是否装载钱包插件,理论上不可能没有
     this.wdb = this.node.require('walletdb');
     if (!this.wdb) {
       throw new Error('wallet plugin is not installed');
     }
+  }
+  /**
+   * 打开当前node,并且监听交易事件
+   * 该函数应该在进入home之前调用;
+   * 此时,如果首次运行app,并且设置了助记词,系统会根据助记词生成钱包,否则则生成随机钱包.
+   * 非首次运行,直接运行open即可,spvNode会自动打开已有的钱包
+   */
+  public async open() {
+    this.node.chain.on('block', (item, entry) => {
+      this.logger.info('block in hash: ' + item.rhash());
+      this.events.publish('receive:block', item, entry);
+    });
     // 增加测试钱包数据库的建立
     await this.node.ensure();
     await this.wdb.checkNewRecord();
     if (this.wdb.newRecord) {
-      // 当前尚未建立钱包数据库，引导用户进入创建钱包流程，补充输入必要的前导信息，例如 passphrase
-      // 选择1：引导用户导入助记符
-      this.wdb.setmnemonicByLen(128);
-      // 设置wdb的语言环境
+      // 设置wdb的语言环境--TODO:语种可切换
       this.wdb.setlanguage('simplified chinese');
+      // 当前尚未建立钱包数据库，根据之前引导用户进入创建钱包流程，      
+      if (this.mnemonicConfig && this.bootstrapMnemonic.length > 0) {
+        this.wdb.setmnemonicByWords(this.bootstrapMnemonic);
+      }
+      else {
+        this.wdb.setmnemonicByLen(128);
+      }
     }
     try { await this.node.open(); }
     catch (e) {
@@ -182,7 +185,7 @@ export class SpvNodeProvider {
     this.getFirstAddress();
   }
 
-  // 根据配置创建一个钱包
+  // 根据配置创建一个钱包 -- 目前不需要
   public createWallet(opt): Promise<any> {
     return new Promise((resolve, reject) => {
       this.wdb
@@ -204,7 +207,7 @@ export class SpvNodeProvider {
         });
     });
   }
-  // 根据配置导入一个已有钱包
+  // 根据配置导入一个已有钱包 -- 目前不需要
   public importWallet(opt): Promise<any> {
     return new Promise((resolve, reject) => {
       // 判断助记词的合法性
@@ -220,7 +223,7 @@ export class SpvNodeProvider {
       }
     });
   }
-
+  // 创建默认钱包 -- 目前不需要
   private doCreateDefaultWallet(opt): Promise<any> {
     return new Promise((resolve, reject) => {
       // 选择3：指定熵的长度（位），内部自动生成助记符，然后引导用户离线记录对应的助记符
@@ -230,6 +233,18 @@ export class SpvNodeProvider {
       this.wdb.setlanguage('simplified chinese');
       return resolve(this.wdb);
     });
+  }
+  // 设置初始助记词,返回true,设置成功,返回false,助记词非法,需要重新设置.
+  // 仅在第一次进入钱包app引导页时候调用
+  public setMnemonic(mnemonic: string): boolean {
+    let ret = this.wdb.testmnemonic(mnemonic);
+    // 判断助记词的合法性,校验不通过,不允许创建钱包
+    if (ret.code != 0) {
+      return false;
+    }
+    this.mnemonicConfig = true;
+    this.bootstrapMnemonic = mnemonic;
+    return true;
   }
   /**
    * 获取当前使用的主钱包
@@ -262,15 +277,6 @@ export class SpvNodeProvider {
   }
 
   /**
-   * 获取最新的地址,这个由wallet记录,实际并没有生成新地址
-   * --TODO:移动到wallet中
-   */
-  public getRecentAddress(): string {
-    if (this.wallet) {
-      return this.wallet.getRecentAddress;
-    }
-  }
-  /**
    * 获取当前钱包余额
    * --TODO:移动到wallet中
    */
@@ -282,6 +288,20 @@ export class SpvNodeProvider {
         return balance;
       });
     }
+  }
+  // 获取当前接收地址
+  getFirstAddress(): any {
+    this.wdb.rpc
+      .execute({
+        method: 'address.receive',
+      })
+      .then(address => {
+        if (!!address) {
+          let firstAddress = address;
+          this.events.publish('address.first', firstAddress);
+          return firstAddress;
+        }
+      });
   }
   /**
    * 获取一个未使用的新地址
@@ -475,18 +495,5 @@ export class SpvNodeProvider {
       });
   }
 
-  // 获取当前接收地址
-  getFirstAddress(): any {
-    this.wdb.rpc
-      .execute({
-        method: 'address.receive',
-      })
-      .then(address => {
-        if (!!address) {
-          let firstAddress = address;
-          this.events.publish('address.first', firstAddress);
-          return firstAddress;
-        }
-      });
-  }
+
 }
