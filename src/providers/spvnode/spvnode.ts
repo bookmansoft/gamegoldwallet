@@ -53,6 +53,17 @@ export class SpvNodeProvider {
   private eventNotification: Events;
   // 余额
   private balance: any;
+  // TODO: 定义调用钱包的默认参数,目前写固定值,待优化
+  private walletConfig =
+    {
+      cid: "xxxxxxxx-game-gold-root-xxxxxxxxxxxx",
+      user: {
+        auth: false,
+        password: "bookmansoft",
+        username: "bitcoinrpc"
+      },
+      wid: "primary"
+    }
 
   constructor(
     private logger: Logger,
@@ -149,7 +160,10 @@ export class SpvNodeProvider {
       // 设置wdb的语言环境
       this.wdb.setlanguage('simplified chinese');
     }
-    await this.node.open();
+    try { await this.node.open(); }
+    catch (e) {
+      this.logger.info('primary:' + e);
+    }
     await this.node.connect();
     this.node.startSync();
     this.wallet = this.wdb.primary;
@@ -164,7 +178,7 @@ export class SpvNodeProvider {
     });
     await this.getBalance();
     // getCplist必须在getBalance后调用
-    // this.getCpList();
+    this.getCpList();
     this.getFirstAddress();
   }
 
@@ -465,7 +479,7 @@ export class SpvNodeProvider {
   getFirstAddress(): any {
     this.wdb.rpc
       .execute({
-        method: 'address.list',
+        method: 'address.receive',
       })
       .then(addresses => {
         if (!!addresses && addresses.length > 0) {
