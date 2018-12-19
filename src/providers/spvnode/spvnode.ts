@@ -475,15 +475,15 @@ export class SpvNodeProvider {
       });
   }
 
-  // 获取第一个地址
+  // 获取当前接收地址
   getFirstAddress(): any {
     this.wdb.rpc
       .execute({
         method: 'address.receive',
       })
-      .then(addresses => {
-        if (!!addresses && addresses.length > 0) {
-          let firstAddress = addresses[0][0];
+      .then(address => {
+        if (!!address) {
+          let firstAddress = address;
           this.events.publish('address.first', firstAddress);
           return firstAddress;
         }
