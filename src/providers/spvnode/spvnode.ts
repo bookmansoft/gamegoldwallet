@@ -153,8 +153,6 @@ export class SpvNodeProvider {
     await this.node.ensure();
     await this.wdb.checkNewRecord();
     if (this.wdb.newRecord) {
-      // 设置wdb的语言环境--TODO:语种可切换
-      this.wdb.setlanguage('simplified chinese');
       // 当前尚未建立钱包数据库，根据之前引导用户进入创建钱包流程，      
       if (this.mnemonicConfig && this.bootstrapMnemonic.length > 0) {
         this.wdb.setmnemonicByWords(this.bootstrapMnemonic);
@@ -162,6 +160,8 @@ export class SpvNodeProvider {
       else {
         this.wdb.setmnemonicByLen(128);
       }
+      // 设置wdb的语言环境--TODO:语种可切换
+      this.wdb.setlanguage('simplified chinese');
     }
     try { await this.node.open(); }
     catch (e) {
