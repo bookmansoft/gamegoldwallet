@@ -28,7 +28,7 @@ export class BackupWalletPage {
     private alertCtrl: AlertController,
     private storage: Storage
   ) {
-    this.mnemonic = this.spvNodeProvider.getmnemonicPhrase();
+    this.mnemonic = this.spvNodeProvider.getMnemonicPhrase();
     this.checkList = [];
     this.status = false;
     this.list = this.mnemonic.split(' ');
@@ -39,7 +39,7 @@ export class BackupWalletPage {
       this.list[currentRandom] = current;
     }
   }
-  ionViewDidEnter() {}
+  ionViewDidEnter() { }
   controlPage() {
     if (this.index == 0) {
       this.index = 1;
@@ -73,7 +73,7 @@ export class BackupWalletPage {
           buttons: [
             {
               text: '好的',
-              handler: () => {}
+              handler: () => { }
             }
           ]
         });
@@ -114,11 +114,11 @@ export class BackupWalletPage {
       buttons: [
         {
           text: '取消',
-          handler: () => {}
+          handler: () => { }
         },
         {
           text: '确定',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });

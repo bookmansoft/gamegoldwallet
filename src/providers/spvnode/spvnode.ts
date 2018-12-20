@@ -319,32 +319,89 @@ export class SpvNodeProvider {
     });
   }
   /**
-   * 获取钱包内交易明细
-   * --TODO:移动到wallet中
+   * 发送游戏金到指定的地址,如果成功,返回构造的交易信息.
+   * @param addr:为接收方地址
+   * @param amout:为转账金额-单位为尘(10-8),不包含手续费
+   * @return tx:返回生成的交易信息.
    */
-  public getTxDetails(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (this.wallet) {
-        this.wallet
-          .getHistory()
-          .then(txs => {
-            return this.wallet.toDetails(txs);
-          })
-          .then(txs => {
-            return resolve(txs);
-          });
-      } else {
-        return reject();
-      }
+  public sendGGD(addr: string, amount: number): any {
+    this.wdb.rpc.execute({ method: 'tx.send', params: [addr, amount] }).then(tx => {
+      this.events.publish('tx.send', tx);
+      return tx;
+    });
+  }
+  /** 
+   * wallet-details页面使用
+   * 获取钱包内交易明细-支持页码查询,目前每页最多返回10条
+   */
+  public getTxDetails(page: number): any {
+    this.wdb.rpc.execute({ method: 'tx.history', params: [page] }).then(txs => {
+      this.events.publish('tx.history', txs);
+      return txs;
     });
   }
   /**
    * 获得钱包的助记词
-   * --TODO:移动到wallet中
    */
-  public getmnemonicPhrase(): string {
+  public getMnemonicPhrase(): string {
     if (this.wallet) {
       return this.wallet.master.mnemonic.phrase;
+    }
+  }
+  /**
+   * 加密钱包
+   * @param phrase: 加密钱包的密钥
+   * @return 是否加密成功
+   */
+  public async encryptWallet(phrase: string): Promise<boolean> {
+    try {
+      await this.wdb.rpc.execute({ method: 'wallet.encrypt', params: [phrase] });
+      return false;
+    }
+    catch (err) {
+      return false;
+    }
+  }
+  /**
+   * 解密钱包
+   * @param phrase: 解密钱包的密钥
+   * @return 是否解密成功
+   */
+  public async decryptWallet(phrase: string): Promise<boolean> {
+    try {
+      await this.wdb.rpc.execute({ method: 'wallet.decrypt', params: [phrase] });
+      return false;
+    }
+    catch (err) {
+      return false;
+    }
+  }
+  /**
+   * 临时解密钱包-该函数在任何加密过的钱包执行资金类交易之前都需要调用
+   * @param phrase: 解密钱包的密钥
+   * @param unlockSecond: 解密的时限(单位是秒)
+   * @return 是否解密成功
+   */
+  public async unlockWallet(phrase: string, unlockSecond: number): Promise<boolean> {
+    try {
+      await this.wdb.rpc.execute({ method: 'wallet.unlock', params: [phrase] });
+      return false;
+    }
+    catch (err) {
+      return false;
+    }
+  }
+  /**
+   * 重新锁上临时解密钱包-该函数在任何加密过的钱包执行资金类交易之后都需要调用   
+   * @return 是否解密成功
+   */
+  public async lockWallet(): Promise<boolean> {
+    try {
+      await this.wdb.rpc.execute({ method: 'wallet.lock', params: [] });
+      return false;
+    }
+    catch (err) {
+      return false;
     }
   }
   // 获取厂商列表,先要Flush,然后再List
