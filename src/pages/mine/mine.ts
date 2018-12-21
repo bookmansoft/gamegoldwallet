@@ -290,4 +290,25 @@ export class MinePage {
   public openMyPropsPage(): void {
     this.navCtrl.push(MyPropsPage);
   }
+
+  // XXX:加密解密钱包例子函数..没有实际调用
+  async useEncryWallet() {
+    const encr = await this.spvNodeProvider.encryptWallet("1111111");
+    this.logger.info("encry result " + encr);
+
+    const unlo1 = await this.spvNodeProvider.unlockWallet("222222222", 60);
+    this.logger.info("unlock result 1" + unlo1);
+    // 解锁才能转币,购买道具等
+    const unlo2 = await this.spvNodeProvider.unlockWallet("1111111", 60);
+    this.logger.info("unlock result 2" + unlo2);
+    // 使用完可以立即加锁.重复加锁不报错
+    const lock = await this.spvNodeProvider.lockWallet();
+    this.logger.info("lock result " + lock);
+
+    const decr1 = await this.spvNodeProvider.decryptWallet("22222222");
+    this.logger.info("decry result 1: " + decr1);
+    // 永久解密
+    const decr2 = await this.spvNodeProvider.decryptWallet("1111111");
+    this.logger.info("decry result 2: " + decr2);
+  }
 }

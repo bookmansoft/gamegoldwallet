@@ -409,7 +409,7 @@ export class SpvNodeProvider {
     }
   }
   /**
-   * 修改钱包的加密密码   
+   * 修改钱包的加密密码-实际等于用oldPhrase解密,然后用newPhrase加密
    * @return 是否解密成功
    */
   public async changePassWallet(oldPhrase: string, newPhrase: string): Promise<boolean> {
