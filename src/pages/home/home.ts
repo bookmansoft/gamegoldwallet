@@ -115,6 +115,15 @@ export class HomePage {
     this.showReorderBtc = false;
     this.showReorderBch = false;
     this.zone = new NgZone({ enableLongStackTrace: false });
+    // XXX:演示用代码,这段代码应该移动到启动页里面
+    this.storage.get('firstStart').then(val => {
+      if (val == null) {
+        if (this.spvNodeProvider.setMnemonic('顾 看 乳 初 锐 继 劳 蓝 确 炭 败 沟'))
+          this.storage.set('firstStart', 'false');
+      }
+    });
+    // XXX:End
+    // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
     this.spvNodeProvider.open();
     this.gameServer = 'http://40.73.119.183:7555';
     // 设置默认费率
@@ -293,14 +302,14 @@ export class HomePage {
     this.homeTip = false;
   }
 
-  private async checkAnnouncement() {}
+  private async checkAnnouncement() { }
 
   public hideAnnouncement(): void {
     this.persistenceProvider.setShowAmazonJapanAnnouncement('hide');
     this.showAnnouncement = false;
   }
 
-  public openAnnouncement(): void {}
+  public openAnnouncement(): void { }
 
   private checkFeedbackInfo() {
     this.persistenceProvider.getFeedbackInfo().then(info => {

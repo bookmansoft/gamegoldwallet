@@ -356,9 +356,10 @@ export class SpvNodeProvider {
   public async encryptWallet(phrase: string): Promise<boolean> {
     try {
       await this.wdb.rpc.execute({ method: 'wallet.encrypt', params: [phrase] });
-      return false;
+      return true;
     }
     catch (err) {
+      this.logger.info('encryptWallet error:' + err);
       return false;
     }
   }
@@ -370,9 +371,10 @@ export class SpvNodeProvider {
   public async decryptWallet(phrase: string): Promise<boolean> {
     try {
       await this.wdb.rpc.execute({ method: 'wallet.decrypt', params: [phrase] });
-      return false;
+      return true;
     }
     catch (err) {
+      this.logger.info('decryptWallet error:' + err);
       return false;
     }
   }
@@ -385,9 +387,10 @@ export class SpvNodeProvider {
   public async unlockWallet(phrase: string, unlockSecond: number): Promise<boolean> {
     try {
       await this.wdb.rpc.execute({ method: 'wallet.unlock', params: [phrase] });
-      return false;
+      return true;
     }
     catch (err) {
+      this.logger.info('unlockWallet error:' + err);
       return false;
     }
   }
@@ -398,9 +401,24 @@ export class SpvNodeProvider {
   public async lockWallet(): Promise<boolean> {
     try {
       await this.wdb.rpc.execute({ method: 'wallet.lock', params: [] });
-      return false;
+      return true;
     }
     catch (err) {
+      this.logger.info('lockWallet error:' + err);
+      return false;
+    }
+  }
+  /**
+   * 修改钱包的加密密码   
+   * @return 是否解密成功
+   */
+  public async changePassWallet(oldPhrase: string, newPhrase: string): Promise<boolean> {
+    try {
+      await this.wdb.rpc.execute({ method: 'wallet.changepassphrase', params: [oldPhrase, newPhrase] });
+      return true;
+    }
+    catch (err) {
+      this.logger.info('changePassWallet error:' + err);
       return false;
     }
   }
