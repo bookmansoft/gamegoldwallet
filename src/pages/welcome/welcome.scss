@@ -1,0 +1,19 @@
+page-welcome {
+  background: transparent none;
+  & > ion-content.content {
+    background: #fff;
+  }
+  .navbar-transparent,
+  .toolbar-background {
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0px;
+  }
+  .btn {
+    border-radius: 15px;
+    width: 90%;
+    min-width: 90%;
+    height: 40px;
+    font-size: 16px;
+  }
+}

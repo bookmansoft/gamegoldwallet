@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Storage } from '@ionic/storage';
 import {
   App,
   Events,
@@ -40,6 +41,7 @@ import { ConfirmPage } from '../pages/send/confirm/confirm';
 import { AddressbookAddPage } from '../pages/settings/addressbook/add/add';
 import { TabsPage } from '../pages/tabs/tabs';
 import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
+import { WelcomePage } from '../pages/welcome/welcome';
 
 // As the handleOpenURL handler kicks in before the App is started,
 // declare the handler function at the top of app.component.ts (outside the class definition)
@@ -47,6 +49,7 @@ import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
 (window as any).handleOpenURL = (url: string) => {
   (window as any).handleOpenURL_LastURL = url;
 };
+import { from } from 'rxjs/observable/from';
 
 @Component({
   templateUrl: 'app.html',
@@ -59,6 +62,7 @@ export class GgWalletApp {
     | typeof AmountPage
     | typeof DisclaimerPage
     | typeof TabsPage
+    | typeof WelcomePage
     | typeof OnboardingPage;
   private onResumeSubscription: Subscription;
   private isModalOpen: boolean;
@@ -88,7 +92,8 @@ export class GgWalletApp {
     private popupProvider: PopupProvider,
     private pushNotificationsProvider: PushNotificationsProvider,
     private app: App,
-    private incomingDataProvider: IncomingDataProvider
+    private incomingDataProvider: IncomingDataProvider,
+    private storage: Storage
   ) {
     this.initializeApp();
   }
@@ -171,7 +176,15 @@ export class GgWalletApp {
     //         ? OnboardingPage
     //         : DisclaimerPage;
     //   });
-    this.rootPage = TabsPage;
+    this.storage.get('firstIn').then(result => {
+      this.logger.info('firstIn is ' + result);
+      result = false;
+      if (result) {
+        this.rootPage = TabsPage;
+      } else {
+        this.rootPage = WelcomePage;
+      }
+    });
   }
 
   private onProfileLoad(profile) {

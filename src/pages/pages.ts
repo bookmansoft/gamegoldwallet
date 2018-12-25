@@ -25,6 +25,7 @@ import { TxpDetailsPage } from '../pages/txp-details/txp-details';
 import { SearchTxModalPage } from '../pages/wallet-details/search-tx-modal/search-tx-modal';
 import { WalletBalancePage } from '../pages/wallet-details/wallet-balance/wallet-balance';
 import { WalletDetailsPage } from '../pages/wallet-details/wallet-details';
+import { WelcomePage } from '../pages/welcome/welcome';
 
 /*Includes */
 import { CardItemPage } from '../pages/includes/card-item/card-item';
@@ -121,6 +122,7 @@ import { SalePage } from '../pages/gamemarket/sale/sale';
 import { SellingDetailsPage } from '../pages/gamemarket/sellingdetails/sellingdetails';
 
 export const PAGES = [
+  WelcomePage,
   ActivityPage,
   AddPage,
   AmountPage,

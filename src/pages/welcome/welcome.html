@@ -1,0 +1,30 @@
+<!--<ion-header>
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>引导页</ion-title>
+  </ion-navbar>
+</ion-header>-->
+<ion-content padding>
+  <ion-slides pager>
+    <ion-slide> <div>引导页1</div> </ion-slide>
+    <ion-slide> <div>引导页2</div> </ion-slide>
+    <ion-slide>
+      <ion-row>
+        <ion-col><div>引导页3</div></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div style="font-size:18px;">点击开始使用，创建个人钱包账号</div>
+          <div padding>
+            <button ion-button class="btn" color="primary" (click)="openTabs()">
+              开始使用
+            </button>
+          </div>
+          <div style="color:#1abb9b;font-size:18px;">已有钱包，我要导入</div>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
