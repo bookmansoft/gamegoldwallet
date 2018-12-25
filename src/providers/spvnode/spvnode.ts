@@ -272,7 +272,7 @@ export class SpvNodeProvider {
   /**
    * 发送转账交易
    */
-  public sendTX(tx): Promise<any> {
+  public async sendTX(tx): Promise<any> {
     return this.node.sendTX(tx);
   }
 
@@ -280,7 +280,7 @@ export class SpvNodeProvider {
    * 获取当前钱包余额
    * --TODO:移动到wallet中
    */
-  public getBalance(): any {
+  public async getBalance(): Promise<any> {
     if (this.wallet) {
       return this.wallet.getBalance().then(balance => {
         this.balance = balance;
@@ -290,7 +290,7 @@ export class SpvNodeProvider {
     }
   }
   // 获取当前接收地址
-  getFirstAddress(): any {
+  public async getFirstAddress(): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'address.receive',
@@ -307,7 +307,7 @@ export class SpvNodeProvider {
    * 获取一个未使用的新地址
    * --TODO:移动到wallet中
    */
-  public getNewAddress(): Promise<any> {
+  public async getNewAddress(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.wallet) {
         this.wallet.createReceive().then(address => {
@@ -324,7 +324,7 @@ export class SpvNodeProvider {
    * @param amout:为转账金额-单位为尘(10-8),不包含手续费
    * @return tx:返回生成的交易信息.
    */
-  public sendGGD(addr: string, amount: number): any {
+  public async sendGGD(addr: string, amount: number): Promise<any> {
     this.wdb.rpc.execute({ method: 'tx.send', params: [addr, amount] }).then(tx => {
       this.events.publish('tx.send', tx);
       return tx;
@@ -334,7 +334,7 @@ export class SpvNodeProvider {
    * wallet-details页面使用
    * 获取钱包内交易明细-支持页码查询,目前每页最多返回10条
    */
-  public getTxDetails(page: number): any {
+  public async getTxDetails(page: number): Promise<any> {
     this.wdb.rpc.execute({ method: 'tx.history', params: [page] }).then(txs => {
       this.events.publish('tx.history', txs);
       return txs;
@@ -423,7 +423,7 @@ export class SpvNodeProvider {
     }
   }
   // 获取厂商列表,先要Flush,然后再List
-  getCpList(): any {
+  public async getCpList(): Promise<any> {
     this.node.rpc
       .execute({ method: 'cp.flush', params: [] })
       .then(() => {
@@ -439,7 +439,7 @@ export class SpvNodeProvider {
   }
 
   // 获取背包中道具列表
-  getPropList(): any {
+  public async getPropList(): Promise<any> {
     this.wdb.rpc.execute({ method: 'prop.list', params: [] }).then(props => {
       this.props = props;
       this.events.publish('prop.list', props);
@@ -449,7 +449,7 @@ export class SpvNodeProvider {
 
   // 拍卖背包中道具,需要传入商品与价格
   // 目前仅提供一口价的拍卖模式.
-  saleProp(prop, np): any {
+  public async saleProp(prop, np): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'prop.sale',
@@ -462,7 +462,7 @@ export class SpvNodeProvider {
   }
 
   // 熔铸背包中道具,需要传入商品
-  foundProp(prop): any {
+  public async foundProp(prop): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'prop.found',
@@ -475,7 +475,7 @@ export class SpvNodeProvider {
   }
 
   // 参与竞价,需要传入商品与价格
-  buyProp(order, np): any {
+  public async buyProp(order, np): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'prop.buy',
@@ -490,7 +490,7 @@ export class SpvNodeProvider {
       });
   }
   // 列出市场道具
-  listMarket(cp): any {
+  public async listMarket(cp): Promise<any> {
     this.node.rpc
       .execute({
         method: 'prop.list.market',
@@ -505,7 +505,7 @@ export class SpvNodeProvider {
   }
 
   // 支付订单
-  orderPay(order): any {
+  public async orderPay(order): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'order.pay',
@@ -518,7 +518,7 @@ export class SpvNodeProvider {
   }
 
   // 创建交易对-目前仅btc,type默认1
-  createContract(ggAmount, btcAmount, btcAddress, type = 1): any {
+  public async createContract(ggAmount, btcAmount, btcAddress, type = 1): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'contract.create',
@@ -531,7 +531,7 @@ export class SpvNodeProvider {
   }
 
   // 承诺兑换交易对-目前仅btc,type默认1
-  promiseContract(contractId): any {
+  public async promiseContract(contractId): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'contract.promise',
@@ -544,7 +544,7 @@ export class SpvNodeProvider {
   }
 
   // 查询交易对
-  listContract(type = 1): any {
+  public async listContract(type = 1): Promise<any> {
     this.node.rpc
       .execute({
         method: 'contract.list',
@@ -559,7 +559,7 @@ export class SpvNodeProvider {
   }
 
   // 查询我参与的交易对
-  listMineContract(): any {
+  public async listMineContract(): Promise<any> {
     this.wdb.rpc
       .execute({
         method: 'contract.mine',
