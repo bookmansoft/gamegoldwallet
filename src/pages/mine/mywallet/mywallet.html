@@ -40,6 +40,7 @@
         <div item-start>
             使用支付密码
         </div>
-        <ion-toggle color="primary" checked="true"></ion-toggle>
+        <!--(ionChange)="toggleFun()"-->
+        <ion-toggle color="primary" checked="{{isToggled}}" [ngModel]="isToggled" (ionChange)="toggleFun()"></ion-toggle>
     </ion-item>
 </ion-content>

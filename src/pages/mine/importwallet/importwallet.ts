@@ -150,6 +150,7 @@ export class ImportWalletPage {
                 if (this.password == data.password) {
                   this.storage.set('backup', 'backup');
                   this.storage.set('firstIn', true);
+                  this.storage.set('walletpassword', data.password);
                   if (this.path == 'welcome') {
                     this.app.getRootNav().push(TabsPage);
                   } else if (this.path == 'mine') {
