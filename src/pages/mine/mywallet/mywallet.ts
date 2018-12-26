@@ -33,6 +33,7 @@ export class MyWalletPage {
   private title1: string = '确认您的支付密码';
   private password: string;
   public walletpassword: string;
+  private index: boolean = false;
 
   constructor(
     private navCtrl: NavController,
@@ -44,6 +45,14 @@ export class MyWalletPage {
     private alertCtrl: AlertController
   ) {
     this.isToggled = false;
+    this.storage.get('walletpassword').then(val => {
+      this.logger.info('缓存：' + val);
+      this.walletpassword = val;
+      this.isToggled = val ? true : false;
+      if (val == null) {
+        this.index = true;
+      }
+    });
   }
   @ViewChild(Navbar) navBar: Navbar;
   ionViewDidLoad() {
@@ -52,11 +61,6 @@ export class MyWalletPage {
   ionViewWillEnter() {
     this.storage.get('backup').then(val => {
       this.backup = val;
-    });
-    this.storage.get('walletpassword').then(val => {
-      this.logger.info('缓存密码：' + val);
-      this.walletpassword = val;
-      this.isToggled = val ? true : false;
     });
     this.listenForEvents();
   }
@@ -70,23 +74,16 @@ export class MyWalletPage {
   // 开关按钮事件监听
   public toggleFun() {
     this.logger.info('Toggled: ' + this.isToggled);
-    if (this.isToggled && this.walletpassword == null) {
+    if (this.isToggled && this.index) {
       this.setPassword(this.title, 0);
-      // this.setPassword(this.title, 0)
     } else {
-      this.logger.info('密码：' + this.walletpassword);
-      if (this.walletpassword != null) {
-        // let toast = this.toastCtrl.create({
-        //   message: '关',
-        //   duration: 2000
-        // });
-        // toast.present();
+      if (!this.isToggled && !this.index) {
         this.colsePassword();
       }
     }
   }
 
-  // 设置支付密码
+  // 取消支付密码
   colsePassword() {
     const prompt = this.alertCtrl.create({
       title: '',
@@ -96,12 +93,13 @@ export class MyWalletPage {
         {
           name: 'password',
           placeholder: '请输入',
-          type: 'number'
+          type: 'password'
         }
       ],
       buttons: [
         {
           text: '取消',
+          cssClass: 'alert-btn',
           handler: data => {
             this.isToggled = true;
           }
@@ -113,8 +111,9 @@ export class MyWalletPage {
             if (data.password != '') {
               if (this.walletpassword == data.password) {
                 this.storage.remove('walletpassword');
+                this.index = true;
               } else {
-                this.setPassword(this.title, 0);
+                this.isToggled = true;
                 let toast = this.toastCtrl.create({
                   message: '支付密码错误！',
                   duration: 2000
@@ -122,7 +121,7 @@ export class MyWalletPage {
                 toast.present();
               }
             } else {
-              this.setPassword(this.title, 0);
+              this.isToggled = true;
               let toast = this.toastCtrl.create({
                 message: '输入不能为空！',
                 duration: 2000
@@ -141,17 +140,19 @@ export class MyWalletPage {
     const prompt = this.alertCtrl.create({
       title,
       message: '支付密码若丢失则无法找回，请妥善保管',
+      cssClass: 'headChoice',
       enableBackdropDismiss: false,
       inputs: [
         {
           name: 'password',
           placeholder: '请输入',
-          type: 'number'
+          type: 'password'
         }
       ],
       buttons: [
         {
           text: '取消',
+          cssClass: 'alert-btn',
           handler: data => {
             this.isToggled = false;
           }
@@ -169,6 +170,7 @@ export class MyWalletPage {
                   this.walletpassword = data.password;
                   this.storage.set('walletpassword', data.password);
                   this.isToggled = true;
+                  this.index = false;
                 } else {
                   let toast = this.toastCtrl.create({
                     message: '两次输入的密码不一致！',

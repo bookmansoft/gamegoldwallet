@@ -90,6 +90,7 @@ export class ImportWalletPage {
       buttons: [
         {
           text: '以后再说',
+          cssClass: 'alert-btn',
           handler: data => {
             // this.navCtrl.push(MyWalletPage, {});
             this.storage.set('backup', 'backup');
@@ -116,6 +117,7 @@ export class ImportWalletPage {
   setPassword(title: string, index: number) {
     const prompt = this.alertCtrl.create({
       title,
+      cssClass: 'headChoice',
       message: '支付密码若丢失则无法找回，请妥善保管',
       enableBackdropDismiss: false,
       inputs: [
@@ -128,6 +130,7 @@ export class ImportWalletPage {
       buttons: [
         {
           text: '取消',
+          cssClass: 'alert-btn',
           handler: data => {
             this.storage.set('backup', 'backup');
             this.storage.set('firstIn', true);
