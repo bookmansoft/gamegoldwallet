@@ -150,7 +150,9 @@ export class MinePage {
         {
           text: '开始导入',
           handler: data => {
-            this.navCtrl.push(ImportWalletPage, {});
+            this.navCtrl.push(ImportWalletPage, {
+              path: 'mine'
+            });
           }
         }
       ]

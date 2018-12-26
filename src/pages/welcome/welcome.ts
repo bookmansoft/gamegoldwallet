@@ -31,6 +31,8 @@ export class WelcomePage {
   }
   // 进入导入钱包
   openImportWalletPage() {
-    this.navCtrl.push(ImportWalletPage, {});
+    this.navCtrl.push(ImportWalletPage, {
+      path: 'welcome'
+    });
   }
 }
