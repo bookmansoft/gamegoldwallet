@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { Events, ModalController, NavController } from 'ionic-angular';
+import {
+  AlertController,
+  Events,
+  ModalController,
+  NavController
+} from 'ionic-angular';
 import { Logger } from '../../providers/logger/logger';
 
 import * as _ from 'lodash';
@@ -22,6 +27,7 @@ import { ContractPage } from '../contract/contract';
 import { FeedbackCompletePage } from '../feedback/feedback-complete/feedback-complete';
 import { SendFeedbackPage } from '../feedback/send-feedback/send-feedback';
 import { CreateWalletPage } from '../mine/createwallet/createwallet';
+import { ImportWalletPage } from '../mine/importwallet/importwallet';
 import { MyGamePage } from '../mine/mygame/mygame';
 import { MyPropsPage } from '../mine/myprops/myprops';
 import { MyWalletPage } from '../mine/mywallet/mywallet';
@@ -65,6 +71,7 @@ export class MinePage {
   public showNoTransactionsYetMsg: boolean;
   public showBalanceButton: boolean = false;
   public scanning: boolean = false;
+  public importWallet: boolean = false;
   public walletBalance;
   public walletpassword: string;
   constructor(
@@ -81,7 +88,8 @@ export class MinePage {
     private modalCtrl: ModalController,
     private touchid: TouchIdProvider,
     private spvNodeProvider: SpvNodeProvider,
-    private storage: Storage
+    private storage: Storage,
+    private alertCtrl: AlertController
   ) {
     this.appName = this.app.info.nameCase;
     this.walletsBtc = [];
@@ -113,13 +121,41 @@ export class MinePage {
         : null;
     this.listenForEvents();
   }
+  // 显示导入钱包按钮
+  showImportWallet() {
+    this.importWallet = this.importWallet ? false : true;
+  }
   // 跳转新建钱包
   gotoCreatewallet() {
-    if (this.walletpassword != null) {
-      this.gotoMyWallet();
-    } else {
-      this.navCtrl.push(CreateWalletPage, {});
-    }
+    this.gotoMyWallet();
+  }
+
+  // 弹出导入钱包对话框
+  alertImportWallet() {
+    this.importWallet = false;
+    this.showFound();
+  }
+
+  // 显示导入钱包确认窗title: this.translate.instant('Warning')
+  showFound() {
+    const foundPrompt = this.alertCtrl.create({
+      title: '是否确定导入已有钱包',
+      message:
+        '导入钱包后，当前钱包将会被覆盖，信息若没有备份则无法找回，请确保当前钱包已经备份完毕',
+      buttons: [
+        {
+          text: '取消导入',
+          handler: data => {}
+        },
+        {
+          text: '开始导入',
+          handler: data => {
+            this.navCtrl.push(ImportWalletPage, {});
+          }
+        }
+      ]
+    });
+    foundPrompt.present();
   }
 
   // 跳转我的钱包
@@ -293,22 +329,22 @@ export class MinePage {
 
   // XXX:加密解密钱包例子函数..没有实际调用
   async useEncryWallet() {
-    const encr = await this.spvNodeProvider.encryptWallet("1111111");
-    this.logger.info("encry result " + encr);
+    const encr = await this.spvNodeProvider.encryptWallet('1111111');
+    this.logger.info('encry result ' + encr);
 
-    const unlo1 = await this.spvNodeProvider.unlockWallet("222222222", 60);
-    this.logger.info("unlock result 1" + unlo1);
+    const unlo1 = await this.spvNodeProvider.unlockWallet('222222222', 60);
+    this.logger.info('unlock result 1' + unlo1);
     // 解锁才能转币,购买道具等
-    const unlo2 = await this.spvNodeProvider.unlockWallet("1111111", 60);
-    this.logger.info("unlock result 2" + unlo2);
+    const unlo2 = await this.spvNodeProvider.unlockWallet('1111111', 60);
+    this.logger.info('unlock result 2' + unlo2);
     // 使用完可以立即加锁.重复加锁不报错
     const lock = await this.spvNodeProvider.lockWallet();
-    this.logger.info("lock result " + lock);
+    this.logger.info('lock result ' + lock);
 
-    const decr1 = await this.spvNodeProvider.decryptWallet("22222222");
-    this.logger.info("decry result 1: " + decr1);
+    const decr1 = await this.spvNodeProvider.decryptWallet('22222222');
+    this.logger.info('decry result 1: ' + decr1);
     // 永久解密
-    const decr2 = await this.spvNodeProvider.decryptWallet("1111111");
-    this.logger.info("decry result 2: " + decr2);
+    const decr2 = await this.spvNodeProvider.decryptWallet('1111111');
+    this.logger.info('decry result 2: ' + decr2);
   }
 }

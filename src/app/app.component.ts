@@ -178,12 +178,7 @@ export class GgWalletApp {
     //   });
     this.storage.get('firstIn').then(result => {
       this.logger.info('firstIn is ' + result);
-      result = false;
-      if (result) {
-        this.rootPage = TabsPage;
-      } else {
-        this.rootPage = WelcomePage;
-      }
+      this.rootPage = result ? TabsPage : WelcomePage;
     });
   }
 

@@ -2,10 +2,18 @@
     <ion-navbar color="blank" style="padding:0;margin:0;height:50px !important;min-height: 50px !important;">
         <ion-item no-lines style="border-bottom: 3px #ffffff solid;">
             <img item-start src="assets/img/saoyisao.png" class="search-img" (click)="openScanPage()" />
-
-            <img item-end src="assets/img/xiaoxi.png" class="search-img" />
+            <div item-end>
+                <img src="assets/img/add.png" class="search-img" style="margin-right:10px;" (click)="showImportWallet()" />
+                <img src="assets/img/xiaoxi.png" class="search-img" />
+            </div>
         </ion-item>
     </ion-navbar>
+    <ion-fab right *ngIf="importWallet">
+        <button ion-button class="btn" color="light" (click)="alertImportWallet()">
+                    导入钱包
+                  </button>
+
+    </ion-fab>
 </ion-header>
 <ion-content>
     <ion-item no-lines style="background: #ffffff !important;">
@@ -16,7 +24,7 @@
             {{ walletBalance.confirmed }} GDD
         </div>
         <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
-            {{ walletpassword == null ? '创建钱包' : '进入钱包' }}
+            进入钱包
         </div>
     </ion-item>
     <ion-item detail-push style="margin-top:10px;background: #ffffff !important;" (click)="openMyGamePage()">

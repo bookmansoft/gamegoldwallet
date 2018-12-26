@@ -63,7 +63,8 @@ export class MyWalletPage {
 
   // 返回到我的页面
   backButtonClick = (e: UIEvent) => {
-    this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 5));
+    // this.navCtrl.popTo(this.navCtrl.getByIndex(this.navCtrl.length() - 5));
+    this.navCtrl.popToRoot();
   };
 
   // 跳转到备份钱包

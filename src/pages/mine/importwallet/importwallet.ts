@@ -8,8 +8,10 @@ import {
   NavController,
   ToastController
 } from 'ionic-angular';
+import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
+import { MyWalletPage } from '../mywallet/mywallet';
 import { SetPasswordPage } from '../setpassword/setpassword';
 
 @Component({
@@ -31,11 +33,8 @@ export class ImportWalletPage {
   }
   // 监听助记词输入
   onChange() {
-    this.logger.info('>>>监听输入变化！' + this.backupInput);
-    this.logger.info('>>>输入长度：' + this.backupInput.length);
     if (this.backupInput.length == 23) {
       let num = this.backupInput.trim().split(' ').length - 1;
-      this.logger.info('>>>空格：' + num);
       if (num != 11) {
         let toast = this.toastCtrl.create({
           message: '格式错误，请确保文字之间有一个空格隔开！',
@@ -52,6 +51,43 @@ export class ImportWalletPage {
 
   // 提交助记词
   submitBackup() {
-    this.navCtrl.push(SetPasswordPage, {});
+    // this.navCtrl.push(SetPasswordPage, {});
+    if (this.spvNodeProvider.setMnemonic(this.backupInput)) {
+      this.showFound();
+    } else {
+      const foundPrompt = this.alertCtrl.create({
+        message:
+          '您输入的助记词不正确，请重新输入，请确保文字之间有一个空格隔开',
+        buttons: [
+          {
+            text: '好的',
+            handler: data => {}
+          }
+        ]
+      });
+      foundPrompt.present();
+    }
+  }
+
+  // 显示导入钱包确认窗
+  showFound() {
+    const foundPrompt = this.alertCtrl.create({
+      title: '是否要设置支付密码',
+      message:
+        '设置支付密码后，您的转账、支付等操作将需要输入支付密码。（支付密码若丢失则无法找回，请妥善保管）',
+      buttons: [
+        {
+          text: '以后再说',
+          handler: data => {
+            this.navCtrl.push(MyWalletPage, {});
+          }
+        },
+        {
+          text: '设置密码',
+          handler: data => {}
+        }
+      ]
+    });
+    foundPrompt.present();
   }
 }
