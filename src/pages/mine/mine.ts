@@ -20,6 +20,7 @@ import { PlatformProvider } from '../../providers/platform/platform';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { TouchIdProvider } from '../../providers/touchid/touchid';
+import { Utils } from '../../providers/utils/utils';
 
 // pages
 import { from } from 'rxjs/observable/from';
@@ -90,7 +91,8 @@ export class MinePage {
     private touchid: TouchIdProvider,
     private spvNodeProvider: SpvNodeProvider,
     private storage: Storage,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private utils: Utils
   ) {
     this.appName = this.app.info.nameCase;
     this.walletsBtc = [];
@@ -295,21 +297,12 @@ export class MinePage {
 
     this.events.subscribe('node:balance', balance => {
       this.walletBalance = balance;
-      this.balance = this.toKgUnit(this.walletBalance.confirmed);
-      this.logger.info('输出转换：' + this.balance);
+      this.balance = this.utils.toKgUnit(this.walletBalance.confirmed);
     });
 
     this.events.subscribe('node:cplist', cps => {
       // this.cpList = cps;
     });
-  }
-
-  // 转换成千克并保留3位小数点
-  private toKgUnit(value: number) {
-    let result = (value / 100000)
-      .toFixed(4)
-      .substring(0, (value / 100000).toFixed(4).lastIndexOf('.') + 4);
-    return result;
   }
 
   private unListenForEvents() {

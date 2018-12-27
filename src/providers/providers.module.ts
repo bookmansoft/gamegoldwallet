@@ -48,6 +48,7 @@ import {
   TouchIdProvider,
   TxConfirmNotificationProvider,
   TxFormatProvider,
+  Utils,
   Vibration,
   WalletProvider
 } from './index';
@@ -61,6 +62,7 @@ import {
     AppIdentityProvider,
     BackupProvider,
     SpvNodeProvider,
+    Utils,
     ErrorProvider,
     ConfigProvider,
 

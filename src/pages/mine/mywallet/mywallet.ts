@@ -13,6 +13,7 @@ import {
 import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
+import { Utils } from '../../../providers/utils/utils';
 import { ContractPage } from '../../contract/contract';
 import { ReceivePage } from '../../receive/receive';
 import { ScanPage } from '../../scan/scan';
@@ -34,6 +35,7 @@ export class MyWalletPage {
   private password: string;
   public walletpassword: string;
   private index: boolean = false;
+  public balance;
 
   constructor(
     private navCtrl: NavController,
@@ -42,7 +44,8 @@ export class MyWalletPage {
     private events: Events,
     private spvNodeProvider: SpvNodeProvider,
     private storage: Storage,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private utils: Utils
   ) {
     this.isToggled = false;
     this.storage.get('walletpassword').then(val => {
@@ -230,7 +233,7 @@ export class MyWalletPage {
 
     this.events.subscribe('node:balance', balance => {
       this.walletBalance = balance;
-      this.logger.info(this.walletBalance);
+      this.balance = this.utils.toKgUnit(this.walletBalance.confirmed);
     });
 
     this.events.subscribe('node:cplist', cps => {

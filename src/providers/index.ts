@@ -1,3 +1,5 @@
+import { from } from 'rxjs/observable/from';
+
 /* Native modules */
 export { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
 export { Clipboard } from '@ionic-native/clipboard';
@@ -21,6 +23,7 @@ export { AppProvider } from '../providers/app/app';
 export { BackupProvider } from '../providers/backup/backup';
 export { ErrorProvider } from '../providers/error/error';
 export { SpvNodeProvider } from '../providers/spvnode/spvnode';
+export { Utils } from '../providers/utils/utils';
 
 export { ConfigProvider } from '../providers/config/config';
 export {

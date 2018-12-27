@@ -1,39 +1,74 @@
 <ion-header>
-    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>{{'Receive'|translate}}</ion-title>
-    </ion-navbar>
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>{{ 'Receive' | translate }}</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-item no-lines>
-        <div item-start>当前账户余额(单位：千克)</div>
-        <div item-end *ngIf="balance" style="font-size:18px;font-weight: bold;">{{balance.confirmed}}</div>
-    </ion-item>
-    <ion-item no-lines style="margin-top: 4px;min-height: 30px !important;">
-        <div>接收二维码</div>
-    </ion-item>
-    <div *ngIf="wallet" class="qr-container">
-        <div *ngIf="loading" class="loading-address spinner">
-            <ion-spinner></ion-spinner>
-        </div>
-        <ngx-qrcode *ngIf="!loading && address" qrc-value="{{qrAddress}}" qrc-class="aclass" qrc-errorCorrectionLevel="M"></ngx-qrcode>
+  <ion-item no-lines>
+    <div item-start>当前账户余额(单位：千克)</div>
+    <div item-end *ngIf="balance" style="font-size:18px;font-weight: bold;">
+      {{ balance }}
     </div>
-    <ion-item no-lines *ngIf="!loading" style="margin-top: 4px;height: 50px !important;min-height: 50px !important;">
-        <div item-start>接收地址</div>
-        <button item-end ion-button class="btn" outline copy-to-clipboard="{{ address }}">
-            复制地址
-          </button>
-    </ion-item>
-    <ion-item no-liness style="padding-bottom:0px !important;padding-top:0px !important;margin-bottom:0px !important;margin-top:0px !important;">
-        <div class="send-div" style="margin-bottom:0px !important;margin-top:0px !important;">
-            {{ address }}
-        </div>
-    </ion-item>
-    <div padding style="margin-top:20px;text-align:center;">
-        <button ion-button [hidden]="!address" class="re-btn" color="primary" outline (click)="setAddress(true)">刷新二维码和地址</button>
+  </ion-item>
+  <ion-item no-lines style="margin-top: 4px;min-height: 30px !important;">
+    <div>接收二维码</div>
+  </ion-item>
+  <div *ngIf="wallet" class="qr-container">
+    <div *ngIf="loading" class="loading-address spinner">
+      <ion-spinner></ion-spinner>
     </div>
+    <ngx-qrcode
+      *ngIf="!loading && address"
+      qrc-value="{{ qrAddress }}"
+      qrc-class="aclass"
+      qrc-errorCorrectionLevel="M"
+    ></ngx-qrcode>
+  </div>
+  <ion-item
+    no-lines
+    *ngIf="!loading"
+    style="margin-top: 4px;height: 50px !important;min-height: 50px !important;"
+  >
+    <div item-start>接收地址</div>
+    <button
+      item-end
+      ion-button
+      class="btn"
+      outline
+      copy-to-clipboard="{{ address }}"
+    >
+      复制地址
+    </button>
+  </ion-item>
+  <ion-item
+    no-liness
+    style="padding-bottom:0px !important;padding-top:0px !important;margin-bottom:0px !important;margin-top:0px !important;"
+  >
+    <div
+      class="send-div"
+      style="margin-bottom:0px !important;margin-top:0px !important;"
+    >
+      {{ address }}
+    </div>
+  </ion-item>
+  <div padding style="margin-top:20px;text-align:center;">
+    <button
+      ion-button
+      [hidden]="!address"
+      class="re-btn"
+      color="primary"
+      outline
+      (click)="setAddress(true)"
+    >
+      刷新二维码和地址
+    </button>
+  </div>
 
-    <!--<div>
+  <!--<div>
         <div *ngIf="!loading" class="text-address ellipsis" copy-to-clipboard="{{ address }}">
             <img src="assets/img/icon-bitcoin.svg" alt="BTC" width="18" /> {{ address }}
         </div>
@@ -51,7 +86,7 @@
         </div>
     </div>-->
 
-    <!--<div *ngIf="wallet" class="no-wallet-message">
+  <!--<div *ngIf="wallet" class="no-wallet-message">
         <span translate>No wallet</span>
     </div>-->
 </ion-content>

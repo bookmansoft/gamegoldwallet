@@ -22,6 +22,7 @@ import { ExternalLinkProvider } from '../../providers/external-link/external-lin
 import { PlatformProvider } from '../../providers/platform/platform';
 import { ProfileProvider } from '../../providers/profile/profile';
 import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
+import { Utils } from '../../providers/utils/utils';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 import * as _ from 'lodash';
@@ -55,7 +56,8 @@ export class ReceivePage {
     private modalCtrl: ModalController,
     private addressProvider: AddressProvider,
     private spvNodeProvider: SpvNodeProvider,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public utils: Utils
   ) {
     this.showShareButton = this.platformProvider.isCordova;
     this.wallet = spvNodeProvider.getWallet();
@@ -70,7 +72,7 @@ export class ReceivePage {
     //   // Update current address
     //   if (this.wallet && walletId == this.wallet.id && type == 'NewIncomingTx') this.setAddress(true);
     // });
-    this.balance = this.navParams.get('balance');
+    this.balance = this.utils.toKgUnit(this.navParams.get('balance').confirmed);
     this.address = this.wallet.getAddress();
     this.qrAddress = 'bitcoin:' + this.address;
     this.loading = false;

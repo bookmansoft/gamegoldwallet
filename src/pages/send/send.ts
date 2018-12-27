@@ -10,6 +10,8 @@ import { IncomingDataProvider } from '../../providers/incoming-data/incoming-dat
 import { Logger } from '../../providers/logger/logger';
 import { PopupProvider } from '../../providers/popup/popup';
 import { ProfileProvider } from '../../providers/profile/profile';
+import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
+import { Utils } from '../../providers/utils/utils';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 // Pages
@@ -40,6 +42,8 @@ export class SendPage {
   private input: boolean = false;
   private readyText: string = '';
   private inputVal: string = '';
+  public walletBalance;
+  public balance;
 
   constructor(
     private navCtrl: NavController,
@@ -51,7 +55,9 @@ export class SendPage {
     private popupProvider: PopupProvider,
     private addressProvider: AddressProvider,
     private events: Events,
-    private externalLinkProvider: ExternalLinkProvider
+    private externalLinkProvider: ExternalLinkProvider,
+    private spvNodeProvider: SpvNodeProvider,
+    private utils: Utils
   ) {}
 
   ionViewDidLoad() {
@@ -62,6 +68,7 @@ export class SendPage {
 
   ionViewWillLeave() {
     this.events.unsubscribe('finishIncomingDataMenuEvent');
+    this.events.unsubscribe('node:balance');
   }
 
   ionViewWillEnter() {
@@ -69,7 +76,10 @@ export class SendPage {
     // this.walletsBch = this.profileProvider.getWallets({ coin: 'bch' });
     // this.hasBtcWallets = !(_.isEmpty(this.walletsBtc));
     // this.hasBchWallets = !(_.isEmpty(this.walletsBch));
-
+    this.events.subscribe('node:balance', balance => {
+      this.walletBalance = balance;
+      this.balance = this.utils.toKgUnit(this.walletBalance.confirmed);
+    });
     this.events.subscribe('finishIncomingDataMenuEvent', data => {
       switch (data.redirTo) {
         case 'AmountPage':
@@ -96,6 +106,7 @@ export class SendPage {
 
   ionViewDidEnter() {
     this.search = '';
+    this.spvNodeProvider.getBalance();
   }
 
   private goToUrl(url: string): void {
