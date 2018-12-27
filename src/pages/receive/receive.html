@@ -6,7 +6,7 @@
 
 <ion-content>
     <ion-item no-lines>
-        <div item-start>当前账户余额(单位：GGD)</div>
+        <div item-start>当前账户余额(单位：千克)</div>
         <div item-end *ngIf="balance" style="font-size:18px;font-weight: bold;">{{balance.confirmed}}</div>
     </ion-item>
     <ion-item no-lines style="margin-top: 4px;min-height: 30px !important;">
@@ -28,12 +28,6 @@
         <div class="send-div" style="margin-bottom:0px !important;margin-top:0px !important;">
             {{ address }}
         </div>
-    </ion-item>
-    <ion-item no-lines style="margin-top:4px !important;">
-        <div item-start>
-            付款方承担手续费
-        </div>
-        <ion-toggle color="primary" checked="true"></ion-toggle>
     </ion-item>
     <div padding style="margin-top:20px;text-align:center;">
         <button ion-button [hidden]="!address" class="re-btn" color="primary" outline (click)="setAddress(true)">刷新二维码和地址</button>

@@ -74,6 +74,7 @@ export class MinePage {
   public importWallet: boolean = false;
   public walletBalance;
   public walletpassword: string;
+  public balance;
   constructor(
     private navCtrl: NavController,
     private app: AppProvider,
@@ -145,6 +146,7 @@ export class MinePage {
       buttons: [
         {
           text: '取消导入',
+          cssClass: 'alert-btn',
           handler: data => {}
         },
         {
@@ -293,12 +295,21 @@ export class MinePage {
 
     this.events.subscribe('node:balance', balance => {
       this.walletBalance = balance;
-      this.logger.info(this.walletBalance);
+      this.balance = this.toKgUnit(this.walletBalance.confirmed);
+      this.logger.info('输出转换：' + this.balance);
     });
 
     this.events.subscribe('node:cplist', cps => {
       // this.cpList = cps;
     });
+  }
+
+  // 转换成千克并保留3位小数点
+  private toKgUnit(value: number) {
+    let result = (value / 100000)
+      .toFixed(4)
+      .substring(0, (value / 100000).toFixed(4).lastIndexOf('.') + 4);
+    return result;
   }
 
   private unListenForEvents() {

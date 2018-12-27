@@ -47,6 +47,19 @@ export class ConfirmSendPage {
 
   // 发送
   sendGDD() {
+    if (this.pass != null) {
+      this.showArter();
+    } else {
+      let toast = this.toastCtrl.create({
+        message: '没有设置密码！',
+        duration: 2000
+      });
+      toast.present();
+    }
+  }
+
+  // 弹出验证密码对话框
+  showArter() {
     const prompt = this.alertCtrl.create({
       title: '密码验证',
       message: '',
@@ -55,12 +68,13 @@ export class ConfirmSendPage {
         {
           name: 'password',
           placeholder: '请输入钱包密码',
-          type: 'number'
+          type: 'password'
         }
       ],
       buttons: [
         {
           text: '取消',
+          cssClass: 'alert-btn',
           handler: data => {}
         },
         {

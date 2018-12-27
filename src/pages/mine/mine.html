@@ -3,7 +3,7 @@
         <ion-item no-lines style="border-bottom: 3px #ffffff solid;">
             <img item-start src="assets/img/saoyisao.png" class="search-img" (click)="openScanPage()" />
             <div item-end>
-                <img src="assets/img/add.png" class="search-img" style="margin-right:10px;" (click)="showImportWallet()" />
+                <img src="assets/img/{{importWallet ? 'close':'add'}}.png" class="search-img" style="margin-right:10px;" (click)="showImportWallet()" />
                 <img src="assets/img/xiaoxi.png" class="search-img" />
             </div>
         </ion-item>
@@ -21,7 +21,7 @@
     </ion-item>
     <ion-item no-lines detail-push style="background: #ffffff !important;">
         <div item-start *ngIf="walletBalance" style="font-size:16px;">
-            {{ walletBalance.confirmed }} GDD
+            {{ balance }} 千克
         </div>
         <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
             进入钱包

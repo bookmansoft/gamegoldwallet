@@ -36,6 +36,10 @@ export class SendPage {
   public contactsShowMore: boolean;
   private CONTACTS_SHOW_LIMIT: number = 10;
   private currentContactsPage: number = 0;
+  private areaInput: boolean = false;
+  private input: boolean = false;
+  private readyText: string = '';
+  private inputVal: string = '';
 
   constructor(
     private navCtrl: NavController,
@@ -52,6 +56,8 @@ export class SendPage {
 
   ionViewDidLoad() {
     this.logger.info('ionViewDidLoad SendPage');
+    this.areaInput = this.readyText != '' ? true : false;
+    this.input = this.inputVal != '' ? true : false;
   }
 
   ionViewWillLeave() {
@@ -102,6 +108,32 @@ export class SendPage {
 
   private addToAddressBook(bitcoinAddress: string): void {
     this.navCtrl.push(AddressbookAddPage, { addressbookEntry: bitcoinAddress });
+  }
+
+  // 监听接收地址是否有输入
+  private onChangeText(value: string) {
+    this.readyText = value;
+    this.areaInput = value ? true : false;
+  }
+
+  // 监听金额是否有输入
+  private onChangeInputText(value: string) {
+    this.inputVal = value;
+    this.input = value ? true : false;
+  }
+
+  // 清空接收地址数据
+  private onAreaInput() {
+    this.logger.info('>>>输入的信息：' + this.readyText);
+    this.readyText = '';
+    this.areaInput = false;
+  }
+
+  // 清空接收地址数据
+  private onRemoveInput() {
+    this.logger.info('>>>输入的信息：' + this.inputVal);
+    this.inputVal = '';
+    this.input = false;
   }
 
   private scanPaperWallet(privateKey: string) {
