@@ -6,6 +6,7 @@ import {
   Events,
   ModalController,
   NavController,
+  NavParams,
   ToastController
 } from 'ionic-angular';
 
@@ -26,17 +27,26 @@ import { PoundagePage } from '../../settings/poundage/poundage';
 export class ConfirmSendPage {
   private pass: string;
   private poundage: string;
+  private address: string;
+  private pay: number;
+  private note: string;
+
   constructor(
     private spvNodeProvider: SpvNodeProvider,
     public toastCtrl: ToastController,
     private navCtrl: NavController,
     private logger: Logger,
     private storage: Storage,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public navParams: NavParams,
+    private events: Events
   ) {
     this.storage.get('walletpassword').then(val => {
       this.pass = val;
     });
+    this.address = this.navParams.get('toAddress');
+    this.note = this.navParams.get('note');
+    this.pay = this.navParams.get('pay');
   }
 
   ionViewWillEnter() {
@@ -45,16 +55,27 @@ export class ConfirmSendPage {
     });
   }
 
+  ionViewDidEnter() {
+    this.spvNodeProvider.sendGGD(this.address, this.pay * 100000);
+  }
+
+  ionViewWillLeave() {
+    this.events.unsubscribe('tx.send');
+  }
+
   // 发送
   sendGDD() {
     if (this.pass != null) {
       this.showArter();
     } else {
-      let toast = this.toastCtrl.create({
-        message: '没有设置密码！',
-        duration: 2000
+      // let toast = this.toastCtrl.create({
+      //   message: '没有设置密码！',
+      //   duration: 2000
+      // });
+      // toast.present();
+      this.events.subscribe('tx.send', tx => {
+        this.logger.info('>>>发送游戏金结果：' + JSON.stringify(tx));
       });
-      toast.present();
     }
   }
 
@@ -82,11 +103,14 @@ export class ConfirmSendPage {
           handler: data => {
             if (data.password != '') {
               if (data.password == this.pass) {
-                let toast = this.toastCtrl.create({
-                  message: '钱包密码正确！',
-                  duration: 2000
+                // let toast = this.toastCtrl.create({
+                //   message: '钱包密码正确！',
+                //   duration: 2000
+                // });
+                // toast.present();
+                this.events.subscribe('tx.send', tx => {
+                  this.logger.info('>>>发送游戏金结果：' + JSON.stringify(tx));
                 });
-                toast.present();
               } else {
                 let toast = this.toastCtrl.create({
                   message: '钱包密码错误请重新输入！',

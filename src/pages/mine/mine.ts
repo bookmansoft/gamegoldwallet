@@ -298,6 +298,7 @@ export class MinePage {
     this.events.subscribe('node:balance', balance => {
       this.walletBalance = balance;
       this.balance = this.utils.toKgUnit(this.walletBalance.confirmed);
+      this.logger.info('balance:' + JSON.stringify(balance));
     });
 
     this.events.subscribe('node:cplist', cps => {

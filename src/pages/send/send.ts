@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Events, NavController } from 'ionic-angular';
+import { Events, NavController, ToastController } from 'ionic-angular';
 import * as _ from 'lodash';
 
 // Providers
@@ -38,12 +38,14 @@ export class SendPage {
   public contactsShowMore: boolean;
   private CONTACTS_SHOW_LIMIT: number = 10;
   private currentContactsPage: number = 0;
+  private contrastSize: boolean = false;
   private areaInput: boolean = false;
   private input: boolean = false;
   private readyText: string = '';
   private inputVal: string = '';
   public walletBalance;
   public balance;
+  private noteText: string;
 
   constructor(
     private navCtrl: NavController,
@@ -57,7 +59,8 @@ export class SendPage {
     private events: Events,
     private externalLinkProvider: ExternalLinkProvider,
     private spvNodeProvider: SpvNodeProvider,
-    private utils: Utils
+    private utils: Utils,
+    public toastCtrl: ToastController
   ) {}
 
   ionViewDidLoad() {
@@ -131,6 +134,13 @@ export class SendPage {
   private onChangeInputText(value: string) {
     this.inputVal = value;
     this.input = value ? true : false;
+    this.contrastSize =
+      parseFloat(value) > parseFloat(this.balance) ? true : false;
+  }
+
+  // 获取转账说明
+  private onChangeNoteText(value: string) {
+    this.noteText = value;
   }
 
   // 清空接收地址数据
@@ -152,7 +162,36 @@ export class SendPage {
   }
   // 跳转到确认发送页
   gotoConfirmSend() {
-    this.navCtrl.push(ConfirmSendPage, {});
+    if (this.readyText == '') {
+      let toast = this.toastCtrl.create({
+        message: '接收地址不能为空！',
+        duration: 2000
+      });
+      toast.present();
+      return;
+    } else if (this.inputVal == '') {
+      let toast = this.toastCtrl.create({
+        message: '转账金额不能为空！',
+        duration: 2000
+      });
+      toast.present();
+      return;
+    } else if (parseFloat(this.inputVal) > parseFloat(this.balance)) {
+      let toast = this.toastCtrl.create({
+        message: '转账金额超过可用余额！',
+        duration: 2000
+      });
+      toast.present();
+      return;
+    }
+    this.logger.info(
+      '>>>输出：' + this.readyText + '--' + this.inputVal + '--' + this.noteText
+    );
+    this.navCtrl.push(ConfirmSendPage, {
+      toAddress: this.readyText,
+      pay: this.inputVal,
+      note: this.noteText
+    });
   }
 
   // private updateBchWalletsList(): void {
