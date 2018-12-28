@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 // import * as gamegold from 'gamegold';
 // TODO: 用更为Typescirpt方式,而非全局变量引入
 declare var gamegold: any;
+import { createContentChild } from '@angular/compiler/src/core';
 import { Events } from 'ionic-angular';
 import * as lodash from 'lodash';
 import { Observable } from 'rxjs/Observable';
@@ -325,10 +326,20 @@ export class SpvNodeProvider {
    * @return tx:返回生成的交易信息.
    */
   public async sendGGD(addr: string, amount: number): Promise<any> {
-    this.wdb.rpc.execute({ method: 'tx.send', params: [addr, amount] }).then(tx => {
-      this.events.publish('tx.send', tx);
-      return tx;
-    });
+    // TODO:定义成modal.
+    let ret = { code: 0, msg: "", data: {} };
+    try {
+      this.wdb.rpc.execute({ method: 'tx.send', params: [addr, amount] }).then(tx => {
+        ret.code = 0;
+        ret.data = tx;
+      });
+    }
+    catch (err) {
+      ret.code = 1;
+      ret.msg = err;
+    }
+    this.events.publish('tx.send', ret);
+    return ret;
   }
   /** 
    * wallet-details页面使用
