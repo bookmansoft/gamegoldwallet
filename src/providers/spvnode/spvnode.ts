@@ -104,7 +104,8 @@ export class SpvNodeProvider {
       // logger: nodeLogger,
       logger: nodeLogger,
       // 为当前的Cordava SPV节点传入seeds列表，当前节点在连接具体的seed时，将首先连接到其WS桥接端口上，透过该端口桥接其socket端口，进而实现数据交换
-      seeds: ['40.73.114.235:17333'],
+      seeds: ['40.73.114.235'],
+      only: ['40.73.119.67,40.73.119.131,40.73.119.142,40.73.119.127,40.73.119.154,40.73.114.235'],
       'node-uri': 'http://40.73.114.235:17332',
       'api-key': 'bookmansoft',
       // 钱包的默认语言版本
