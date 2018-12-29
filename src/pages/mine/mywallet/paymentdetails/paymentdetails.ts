@@ -19,6 +19,9 @@ import { BillingDetailsPage } from '../billingdetails/billingdetails';
 })
 export class PaymentDetailsPage {
   public datas: any[];
+  public totalPage: number;
+  public currentPage: number;
+
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
@@ -154,6 +157,14 @@ export class PaymentDetailsPage {
       }
     ];
   }
+
+  ionViewWillEnter() {
+    // 从第一页开始.
+    thisthis.spvNodeProvider.getTxDetails(1).then(txs => {
+      this.logger.info('>>>流水111111111：' + JSON.stringify(txs));
+    });
+  }
+
   // 跳转到流水详情
   gotoBillingDetailsPage(item: any) {
     this.logger.info('>>>流水：' + JSON.stringify(item));

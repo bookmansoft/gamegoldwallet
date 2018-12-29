@@ -330,10 +330,9 @@ export class SpvNodeProvider {
     // TODO:定义成modal.
     let ret = { code: 0, msg: "", data: {} };
     try {
-      this.wdb.rpc.execute({ method: 'tx.send', params: [addr, amount] }).then(tx => {
-        ret.code = 0;
-        ret.data = tx;
-      });
+      const tx = await this.wdb.rpc.execute({ method: 'tx.send', params: [addr, amount] })
+      ret.code = 0;
+      ret.data = tx;
     }
     catch (err) {
       ret.code = 1;
@@ -347,10 +346,9 @@ export class SpvNodeProvider {
    * 获取钱包内交易明细-支持页码查询,目前每页最多返回10条
    */
   public async getTxDetails(page: number): Promise<any> {
-    this.wdb.rpc.execute({ method: 'tx.history', params: [page] }).then(txs => {
-      this.events.publish('tx.history', txs);
-      return txs;
-    });
+    const txs = await this.wdb.rpc.execute({ method: 'tx.history', params: [page] });
+    this.events.publish('tx.history', txs);
+    return txs;
   }
   /**
    * 获得钱包的助记词
