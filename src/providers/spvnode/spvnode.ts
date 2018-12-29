@@ -88,7 +88,7 @@ export class SpvNodeProvider {
     this.logger.info('SPVNode Service initialized.');
     this.isPopupOpen = false;
     this.eventNotification = events;
-    var nodeLogger = gamegold.logger({ level: 'debug', console: true });
+    var nodeLogger = new gamegold.logger({ level: 'debug', console: true });
     // TODO:这些配置可以放config里面,特别是语种.
     this.node = new gamegold.spvnode({
       hash: true,
@@ -102,9 +102,9 @@ export class SpvNodeProvider {
       workers: false,
       // workerFile: '/gamegold - worker.js', //会覆盖 process.env.GAMEGOLD_WORKER_FILE，视情况运用
       // logger: nodeLogger,
-      logger: null,
+      logger: nodeLogger,
       // 为当前的Cordava SPV节点传入seeds列表，当前节点在连接具体的seed时，将首先连接到其WS桥接端口上，透过该端口桥接其socket端口，进而实现数据交换
-      seeds: [`40.73.114.235:17333`],
+      seeds: ['40.73.114.235:17333'],
       'node-uri': 'http://40.73.114.235:17332',
       'api-key': 'bookmansoft',
       // 钱包的默认语言版本
