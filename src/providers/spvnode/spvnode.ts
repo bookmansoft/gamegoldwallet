@@ -336,7 +336,7 @@ export class SpvNodeProvider {
     }
     catch (err) {
       ret.code = 1;
-      ret.msg = err;
+      ret.msg = err.message;
     }
     this.events.publish('tx.send', ret);
     return ret;
