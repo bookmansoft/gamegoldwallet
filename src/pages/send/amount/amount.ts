@@ -84,7 +84,6 @@ export class AmountPage {
     this.email = this.navParams.data.email;
     this.color = this.navParams.data.color;
     this.fixedUnit = this.navParams.data.fixedUnit;
-
     this.showRecipient = true;
     this.showSendMax = false;
     this.useSendMax = false;

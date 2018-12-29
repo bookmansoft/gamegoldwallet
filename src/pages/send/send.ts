@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { Events, NavController, ToastController } from 'ionic-angular';
+import {
+  Events,
+  NavController,
+  NavParams,
+  ToastController
+} from 'ionic-angular';
 import * as _ from 'lodash';
 
 // Providers
@@ -16,6 +21,7 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 
 // Pages
 import { PaperWalletPage } from '../paper-wallet/paper-wallet';
+import { ScanPage } from '../scan/scan';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
 import { AmountPage } from './amount/amount';
 import { ConfirmSendPage } from './confirmsend/confirmsend';
@@ -60,8 +66,11 @@ export class SendPage {
     private externalLinkProvider: ExternalLinkProvider,
     private spvNodeProvider: SpvNodeProvider,
     private utils: Utils,
-    public toastCtrl: ToastController
-  ) {}
+    public toastCtrl: ToastController,
+    public navParams: NavParams
+  ) {
+    this.readyText = this.navParams.data.toAddress;
+  }
 
   ionViewDidLoad() {
     this.logger.info('ionViewDidLoad SendPage');
@@ -192,6 +201,11 @@ export class SendPage {
       pay: this.inputVal,
       note: this.noteText
     });
+  }
+
+  // 扫一扫
+  public openScanPage(): void {
+    this.navCtrl.push(ScanPage, { fromSendPage: true });
   }
 
   // private updateBchWalletsList(): void {

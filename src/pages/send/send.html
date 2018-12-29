@@ -12,7 +12,7 @@
             <textarea class="textarea" [(ngModel)]="readyText" (ngModelChange)="onChangeText(readyText)" placeholder="输入接收人地址" rows="4" clearInput="true"></textarea>
             <ion-icon *ngIf="areaInput" item-right name="close-circle" (click)="onAreaInput()"></ion-icon>
         </ion-item>
-        <div class="address-div">
+        <div class="address-div" (click)="openScanPage()">
             <img src="../../assets/img/saoyisao.png" />
             <div style="margin-left:10px;">扫描接收人二维码获取地址</div>
         </div>

@@ -19,6 +19,7 @@ import { ScanProvider } from '../../providers/scan/scan';
 // pages
 import { PaperWalletPage } from '../paper-wallet/paper-wallet';
 import { AmountPage } from '../send/amount/amount';
+import { SendPage } from '../send/send';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
 
 import env from '../../environments';
@@ -87,7 +88,10 @@ export class ScanPage {
     this.scannerIsRestricted = false;
     this.canOpenSettings = false;
     this.isCordova = this.platform.isCordova;
-    if (this.navParams.data.fromAddressbook) {
+    if (
+      this.navParams.data.fromAddressbook ||
+      this.navParams.data.fromSendPage
+    ) {
       this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
       this.tabBarElement.style.display = 'none';
     }
@@ -100,7 +104,10 @@ export class ScanPage {
   ionViewWillLeave() {
     this.events.unsubscribe('finishIncomingDataMenuEvent');
     this.events.unsubscribe('scannerServiceInitialized');
-    if (this.navParams.data.fromAddressbook) {
+    if (
+      this.navParams.data.fromAddressbook ||
+      this.navParams.data.fromSendPage
+    ) {
       this.tabBarElement.style.display = 'flex';
     }
     if (!this.isCordova) {
@@ -126,6 +133,9 @@ export class ScanPage {
         this.scanner.resetScan();
       }
       switch (data.redirTo) {
+        case 'SendPage':
+          this.sendPaymentPage(data.value);
+          break;
         case 'AmountPage':
           this.sendPaymentToAddress(data.value, data.coin);
           break;
@@ -200,6 +210,10 @@ export class ScanPage {
 
   private scanPaperWallet(privateKey: string) {
     this.navCtrl.push(PaperWalletPage, { privateKey });
+  }
+
+  private sendPaymentPage(ggdAddress: string) {
+    this.navCtrl.push(SendPage, { toAddress: ggdAddress });
   }
 
   private updateCapabilities(): void {
