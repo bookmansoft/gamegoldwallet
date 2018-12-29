@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   AlertController,
   Events,
+  LoadingController,
   ModalController,
   NavController,
   NavParams,
@@ -21,6 +22,8 @@ import { JsonPipe } from '@angular/common';
 import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
 import { PoundagePage } from '../../settings/poundage/poundage';
+import { ConFirmResultPage } from '../confirmresult/confirmresult';
+
 @Component({
   selector: 'page-confirmsend',
   templateUrl: './confirmsend.html'
@@ -40,7 +43,8 @@ export class ConfirmSendPage {
     private storage: Storage,
     public alertCtrl: AlertController,
     public navParams: NavParams,
-    private events: Events
+    private events: Events,
+    public loadingCtrl: LoadingController
   ) {
     this.storage.get('walletpassword').then(val => {
       this.pass = val;
@@ -60,8 +64,7 @@ export class ConfirmSendPage {
     // });
   }
 
-  ionViewDidEnter() {
-  }
+  ionViewDidEnter() {}
 
   ionViewWillLeave() {
     // 可以不要,
@@ -73,10 +76,26 @@ export class ConfirmSendPage {
     if (this.pass != null) {
       this.showArter();
     } else {
-      this.spvNodeProvider.sendGGD(this.address, this.pay * 100000).then(ret => {
-        // 这里直接就能获取,不大需要注册tx.send事件
-        this.logger.info("AAAAAAAAAAA" + JSON.stringify(ret))
-      })
+      const loader = this.loadingCtrl.create({
+        content: '正在发送，请稍等...'
+      });
+      loader.present();
+      this.spvNodeProvider
+        .sendGGD(this.address, this.pay * 100000)
+        .then(ret => {
+          // 这里直接就能获取,不大需要注册tx.send事件
+          loader.dismiss();
+          if (ret.code == 0) {
+            this.navCtrl.push(ConFirmResultPage, {
+              resutl: 1
+            });
+          } else {
+            this.navCtrl.push(ConFirmResultPage, {
+              resutl: 0,
+              content: ret.msg
+            });
+          }
+        });
     }
   }
 
@@ -97,21 +116,33 @@ export class ConfirmSendPage {
         {
           text: '取消',
           cssClass: 'alert-btn',
-          handler: data => { }
+          handler: data => {}
         },
         {
           text: '确定',
           handler: data => {
             if (data.password != '') {
               if (data.password == this.pass) {
-                // let toast = this.toastCtrl.create({
-                //   message: '钱包密码正确！',
-                //   duration: 2000
-                // });
-                // toast.present();
-                this.events.subscribe('tx.send', tx => {
-                  this.logger.info('>>>发送游戏金结果：' + JSON.stringify(tx));
+                const loader = this.loadingCtrl.create({
+                  content: '正在发送，请稍等...'
                 });
+                loader.present();
+                this.spvNodeProvider
+                  .sendGGD(this.address, this.pay * 100000)
+                  .then(ret => {
+                    loader.dismiss();
+                    // 这里直接就能获取,不大需要注册tx.send事件
+                    if (ret.code == 0) {
+                      this.navCtrl.push(ConFirmResultPage, {
+                        resutl: 1
+                      });
+                    } else {
+                      this.navCtrl.push(ConFirmResultPage, {
+                        resutl: 0,
+                        content: ret.msg
+                      });
+                    }
+                  });
               } else {
                 let toast = this.toastCtrl.create({
                   message: '钱包密码错误请重新输入！',
