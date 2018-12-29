@@ -104,6 +104,7 @@ import { WalletTransactionHistoryPage } from '../pages/settings/wallet-settings/
 import { AmountPage } from '../pages/send/amount/amount';
 import { ChooseFeeLevelPage } from '../pages/send/choose-fee-level/choose-fee-level';
 import { ConfirmPage } from '../pages/send/confirm/confirm';
+import { ConFirmResultPage } from '../pages/send/confirmresult/confirmresult';
 import { ConfirmSendPage } from '../pages/send/confirmsend/confirmsend';
 
 /* Receive */
@@ -148,6 +149,7 @@ export const PAGES = [
   BackupGamePage,
   ConfirmPage,
   ConfirmSendPage,
+  ConFirmResultPage,
   CustomAmountPage,
   DisclaimerPage,
   CollectEmailPage,

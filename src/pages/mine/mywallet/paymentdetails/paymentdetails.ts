@@ -160,7 +160,7 @@ export class PaymentDetailsPage {
 
   ionViewWillEnter() {
     // 从第一页开始.
-    thisthis.spvNodeProvider.getTxDetails(1).then(txs => {
+    this.spvNodeProvider.getTxDetails(1).then(txs => {
       this.logger.info('>>>流水111111111：' + JSON.stringify(txs));
     });
   }

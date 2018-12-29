@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>{{ 'Send GGD' | translate }}</ion-title>
+    <!-- TODO:动态 -->
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-item no-lines>
+    <img
+      item-start
+      [ngStyle]="{
+        border: result == 1 ? '1px #01d1a2 solid' : '1px #f5062e solid'
+      }"
+      src="assets/img/{{ result == 1 ? 'successful' : 'failure' }}.png"
+    />
+    <div style="margin-left:5px;">
+      <div>{{ result == 1 ? '发送成功' : '发送失败' }}</div>
+      <div *ngIf="result != 1" style="color:#999999;">{{ content }}</div>
+    </div>
+  </ion-item>
+  <div padding class="div-btn">
+    <button ion-button class="btn" color="primary" (click)="onResultClick()">
+      {{ result == 1 ? '好的' : '返回' }}
+    </button>
+  </div>
+</ion-content>

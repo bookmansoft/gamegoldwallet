@@ -1,0 +1,37 @@
+page-confirmresult {
+  background: transparent none;
+  & > ion-content.content {
+    background: #ffffff;
+  }
+  .navbar-transparent,
+  .toolbar-background {
+    background: #fff;
+    border-bottom: 3px #f5f5f9 solid;
+    box-sizing: border-box;
+    padding: 0px;
+  }
+  ion-item {
+    margin-left: 50px !important;
+    margin-right: 50px !important;
+    margin-top: 45px !important;
+    img {
+      height: 35px;
+      width: 35px;
+      padding: 5px;
+      border-radius: 50%;
+    }
+  }
+  .btn {
+    border-radius: 15px;
+    width: 80%;
+    min-width: 80%;
+    height: 40px;
+    font-size: 16px;
+  }
+  .div-btn {
+    display: flex;
+    align-items: center;
+    margin-top: 50%;
+    justify-content: center;
+  }
+}
