@@ -17,6 +17,7 @@ import { IncomingDataProvider } from '../../../providers/incoming-data/incoming-
 import { PlatformProvider } from '../../../providers/platform/platform';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 
+import { JsonPipe } from '@angular/common';
 import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
 import { PoundagePage } from '../../settings/poundage/poundage';
@@ -53,14 +54,18 @@ export class ConfirmSendPage {
     this.storage.get('poundage').then(val => {
       this.poundage = val;
     });
+    // 可以不要,与leave成对使用
+    // this.events.subscribe('tx.send', tx => {
+    //   this.logger.info('>>>发送游戏金结果：' + JSON.stringify(tx));
+    // });
   }
 
   ionViewDidEnter() {
-    this.spvNodeProvider.sendGGD(this.address, this.pay * 100000);
   }
 
   ionViewWillLeave() {
-    this.events.unsubscribe('tx.send');
+    // 可以不要,
+    // this.events.unsubscribe('tx.send');
   }
 
   // 发送
@@ -68,14 +73,10 @@ export class ConfirmSendPage {
     if (this.pass != null) {
       this.showArter();
     } else {
-      // let toast = this.toastCtrl.create({
-      //   message: '没有设置密码！',
-      //   duration: 2000
-      // });
-      // toast.present();
-      this.events.subscribe('tx.send', tx => {
-        this.logger.info('>>>发送游戏金结果：' + JSON.stringify(tx));
-      });
+      this.spvNodeProvider.sendGGD(this.address, this.pay * 100000).then(ret => {
+        // 这里直接就能获取,不大需要注册tx.send事件
+        this.logger.info("AAAAAAAAAAA" + JSON.stringify(ret))
+      })
     }
   }
 
@@ -96,7 +97,7 @@ export class ConfirmSendPage {
         {
           text: '取消',
           cssClass: 'alert-btn',
-          handler: data => {}
+          handler: data => { }
         },
         {
           text: '确定',
