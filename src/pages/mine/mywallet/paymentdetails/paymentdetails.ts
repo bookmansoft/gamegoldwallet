@@ -261,13 +261,11 @@ export class PaymentDetailsPage {
         OutpuOthertAmout += OutpuOthertAmout;
       }
     }
-    let fee = inputSelfAmout + inputOtherAmout - OutpuSelftAmout - OutpuOthertAmout;
     return {
       inputSelf: inputSelfAmout,
       inputOther: inputOtherAmout,
       OutpuSelft: OutpuSelftAmout,
-      OutpuOthert: OutpuOthertAmout,
-      txFee: fee
+      OutpuOthert: OutpuOthertAmout
     }
   }
 }
