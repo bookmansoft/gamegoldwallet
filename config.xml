@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="45000000" id="com.bookman.ggwallet" ios-CFBundleVersion="0.4.0" version="0.4.0">
+<widget android-versionCode="45000001" id="com.bookman.ggwallet" ios-CFBundleVersion="0.5.0" version="0.5.0">
     <name>GgWallet</name>
     <description>
       GameGold Bitcoin Wallet
