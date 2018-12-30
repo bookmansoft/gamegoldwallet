@@ -6,31 +6,56 @@
     <ion-title>引导页</ion-title>
   </ion-navbar>
 </ion-header>-->
-<ion-content padding>
-    <ion-slides pager>
-        <ion-slide>
-            <div>引导页1</div>
-        </ion-slide>
-        <ion-slide>
-            <div>引导页2</div>
-        </ion-slide>
-        <ion-slide>
-            <ion-row>
-                <ion-col>
-                    <div>引导页3</div>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <div style="font-size:18px;">点击开始使用，创建个人钱包账号</div>
-                    <div padding>
-                        <button ion-button class="btn" color="primary" (click)="openTabs()">
+<ion-content>
+  <ion-slides pager>
+    <ion-slide>
+      <img style="height:100%;width:100%;" src="assets/img/w-first.png" />
+    </ion-slide>
+    <ion-slide>
+      <img style="height:100%;width:100%;" src="assets/img/w-second.png" />
+    </ion-slide>
+    <ion-slide>
+      <img
+        style="height:100%;width:100%;position: relative;"
+        src="assets/img/w-third.png"
+      />
+      <div
+        style="position:absolute;z-index:99;bottom: 18%;text-align: center;width: 100%;"
+      >
+        <div style="font-size:16px;color: #fff;">
+          点击开始使用，创建个人钱包
+        </div>
+        <div padding>
+          <button ion-button class="btn" color="blank" (click)="openTabs()">
+            开始使用
+          </button>
+        </div>
+        <div
+          style="color:#fff;font-size:16px;"
+          (click)="openImportWalletPage()"
+        >
+          导入已有钱包
+        </div>
+      </div>
+      <!-- <ion-row>
+        <ion-col> <img src="assets/img/w-third.png" /> </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div style="font-size:18px;">点击开始使用，创建个人钱包账号</div>
+          <div padding>
+            <button ion-button class="btn" color="primary" (click)="openTabs()">
               开始使用
             </button>
-                    </div>
-                    <div style="color:#1abb9b;font-size:18px;" (click)="openImportWalletPage()">已有钱包，我要导入</div>
-                </ion-col>
-            </ion-row>
-        </ion-slide>
-    </ion-slides>
+          </div>
+          <div
+            style="color:#1abb9b;font-size:18px;"
+            (click)="openImportWalletPage()"
+          >
+            已有钱包，我要导入
+          </div>
+        </ion-col>
+      </ion-row> -->
+    </ion-slide>
+  </ion-slides>
 </ion-content>

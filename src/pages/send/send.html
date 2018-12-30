@@ -1,55 +1,116 @@
 <ion-header>
-    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>{{ 'Send GGD' | translate }}</ion-title>
-    </ion-navbar>
+  <ion-navbar
+    color="blank"
+    style="height:50px !important;min-height: 50px !important;"
+  >
+    <ion-title>{{ 'Send GGD' | translate }}</ion-title>
+  </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-item no-lines style="height: 35px !important;min-height: 35px !important;padding-top: 6px;">
-        接收人地址
+  <ion-item
+    no-lines
+    style="height: 35px !important;min-height: 35px !important;padding-top: 6px;"
+  >
+    接收人地址
+  </ion-item>
+  <ion-item
+    no-lines
+    style="padding-top:0px !important;padding-bottom:0px !important;"
+  >
+    <ion-item
+      no-lines
+      class="ion-input"
+      style="padding:0 0 0 8px !important;margin: 0px !important;"
+    >
+      <textarea
+        class="textarea"
+        [(ngModel)]="readyText"
+        (ngModelChange)="onChangeText(readyText)"
+        placeholder="输入接收人地址"
+        rows="4"
+        clearInput="true"
+      ></textarea>
+      <ion-icon
+        *ngIf="areaInput"
+        item-right
+        name="close-circle"
+        (click)="onAreaInput()"
+      ></ion-icon>
     </ion-item>
-    <ion-item no-lines style="padding-top:0px !important;padding-bottom:0px !important;">
-        <ion-item no-lines class="ion-input" style="padding:0 0 0 8px !important;margin: 0px !important;">
-            <textarea class="textarea" [(ngModel)]="readyText" (ngModelChange)="onChangeText(readyText)" placeholder="输入接收人地址" rows="4" clearInput="true"></textarea>
-            <ion-icon *ngIf="areaInput" item-right name="close-circle" (click)="onAreaInput()"></ion-icon>
-        </ion-item>
-        <div class="address-div" (click)="openScanPage()">
-            <img src="../../assets/img/saoyisao.png" />
-            <div style="margin-left:10px;">扫描接收人二维码获取地址</div>
-        </div>
+    <div class="address-div" (click)="openScanPage()">
+      <img src="assets/img/saoyisao.png" />
+      <div style="margin-left:10px;">扫描接收人二维码获取地址</div>
+    </div>
+  </ion-item>
+  <ion-item no-lines style="margin-top:4px !important;">
+    <ion-item
+      no-lines
+      style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 !important;"
+    >
+      转账金额
     </ion-item>
-    <ion-item no-lines style="margin-top:4px !important;">
-        <ion-item no-lines style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 !important;">
-            转账金额
-        </ion-item>
-        <ion-item style="padding:0px !important;margin: 0px !important;">
-            <ion-item no-lines class="ion-input" style="height:30px !important;padding:0px !important;">
-                <ion-input type="number" style="font-size:15px !important;width: 120px !important;" [(ngModel)]="inputVal" (ngModelChange)="onChangeInputText(inputVal)" placeholder="输入发送金额" maxlength="12" clearInput="false"></ion-input>
-                <ion-icon item-right *ngIf="input" style="z-index: 9999 !important;" name="close-circle" (click)="onRemoveInput()"></ion-icon>
-            </ion-item>
-            <div item-end>千克</div>
-        </ion-item>
-        <div *ngIf="contrastSize;else other" class="div" style="color:red;font-size: 14px;">
-            转账金额超过可用余额
-        </div>
-        <ng-template #other>
-            <div class="div">
-                <span style="color:#999999;margin-right:10px;">钱包余额</span>
-                <span *ngIf="walletBalance">{{ balance }} 千克</span>
-            </div>
-        </ng-template>
-
+    <ion-item style="padding:0px !important;margin: 0px !important;">
+      <ion-item
+        no-lines
+        class="ion-input"
+        style="height:30px !important;padding:0px !important;"
+      >
+        <ion-input
+          type="number"
+          style="font-size:15px !important;width: 120px !important;"
+          [(ngModel)]="inputVal"
+          (ngModelChange)="onChangeInputText(inputVal)"
+          placeholder="输入发送金额"
+          maxlength="12"
+          clearInput="false"
+        ></ion-input>
+        <ion-icon
+          item-right
+          *ngIf="input"
+          style="z-index: 9999 !important;"
+          name="close-circle"
+          (click)="onRemoveInput()"
+        ></ion-icon>
+      </ion-item>
+      <div item-end>千克</div>
     </ion-item>
-    <ion-item no-lines style="margin-top:4px !important;">
-        <ion-item no-lines style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 0 10px 0 !important;">
-            转账说明
-        </ion-item>
-        <ion-item no-lines class="ion-input" style="height:30px !important;padding:0px !important;">
-            <ion-input style="font-size:15px !important;" [(ngModel)]="noteText" (ngModelChange)="onChangeNoteText(noteText)" placeholder="输入转账说明"></ion-input>
-        </ion-item>
+    <div
+      *ngIf="contrastSize; else other"
+      class="div"
+      style="color:red;font-size: 14px;"
+    >
+      转账金额超过可用余额
+    </div>
+    <ng-template #other>
+      <div class="div">
+        <span style="color:#999999;margin-right:10px;">钱包余额</span>
+        <span *ngIf="walletBalance">{{ balance }} 千克</span>
+      </div>
+    </ng-template>
+  </ion-item>
+  <ion-item no-lines style="margin-top:4px !important;">
+    <ion-item
+      no-lines
+      style="height:23px !important;min-height:23px !important;padding: 0 !important;margin: 0 0 10px 0 !important;"
+    >
+      转账说明
     </ion-item>
-    <div padding style="margin-top:50px;">
-        <button ion-button class="btn" color="primary" (click)="gotoConfirmSend()">
+    <ion-item
+      no-lines
+      class="ion-input"
+      style="height:30px !important;padding:0px !important;"
+    >
+      <ion-input
+        style="font-size:15px !important;"
+        [(ngModel)]="noteText"
+        (ngModelChange)="onChangeNoteText(noteText)"
+        placeholder="输入转账说明"
+      ></ion-input>
+    </ion-item>
+  </ion-item>
+  <div padding style="margin-top:50px;">
+    <button ion-button class="btn" color="primary" (click)="gotoConfirmSend()">
       下一步
     </button>
-    </div>
+  </div>
 </ion-content>
