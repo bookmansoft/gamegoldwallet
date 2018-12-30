@@ -580,5 +580,28 @@ export class SpvNodeProvider {
       });
   }
 
+  // 验证一个地址是否是我所有的
+  public async verifyMyAddress(addr: any): Promise<boolean> {
+    // 有可能为null输入..
+    if (!addr)
+      return false;
 
+    let isMine = false;
+    try {
+      let base58Address: string = typeof addr === 'string' ? addr : addr.toString(addr.network);
+      const privateKey = await this.wdb.rpc
+        .execute({
+          method: 'address.wif',
+          params: [base58Address]
+        });
+      // 仅当能正确获取地址的私钥时,该地址属于自己
+      if (!!privateKey) {
+        isMine = true;
+      }
+    }
+    catch (err) {
+      return isMine;
+    }
+    return isMine;
+  }
 }

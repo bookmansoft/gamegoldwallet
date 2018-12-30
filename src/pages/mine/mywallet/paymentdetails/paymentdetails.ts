@@ -19,8 +19,10 @@ import { BillingDetailsPage } from '../billingdetails/billingdetails';
 })
 export class PaymentDetailsPage {
   public datas: any[];
-  public totalPage: number;
-  public currentPage: number;
+  public total: number; // 总交易数
+  public currentPageNum: number; // 当前页交易数
+  public pageSize: number; // 每页交易数
+  public totalPages: number;
 
   constructor(
     private navCtrl: NavController,
@@ -161,7 +163,19 @@ export class PaymentDetailsPage {
   ionViewWillEnter() {
     // 从第一页开始.
     this.spvNodeProvider.getTxDetails(1).then(txs => {
-      this.logger.info('>>>流水111111111：' + JSON.stringify(txs));
+      this.pageSize = txs.pageSize;
+      this.currentPageNum = txs.pageNum;
+      this.total = txs.total;
+      this.totalPages = this.total % this.pageSize == 0 ? Math.floor(this.total / this.pageSize) : Math.floor(this.total / this.pageSize) + 1;
+      // 重新获取最后一页内容
+      if (this.total > 0)
+        // TODO: 这个应该做滚屏,转载多页信息.
+        this.spvNodeProvider.getTxDetails(this.totalPages).then(lastPage => {
+          // TODO:更新当前列表,请开德帮忙显示
+          this.filterTx(lastPage).then(datas => {
+            this.logger.info("get Tx DATA:" + JSON.stringify(datas));
+          });
+        });
     });
   }
 
@@ -169,5 +183,91 @@ export class PaymentDetailsPage {
   gotoBillingDetailsPage(item: any) {
     this.logger.info('>>>流水：' + JSON.stringify(item));
     this.navCtrl.push(BillingDetailsPage, { data: item });
+  }
+  // 过滤链上返回的交易信息,
+  async filterTx(txs): Promise<any[]> {
+    let datas = [];
+    let i;
+    let txsArray = txs.items;
+    for (i = 0; i < txsArray.length; i++) {
+      let item = txsArray[i];
+      let itemJson = item.toJSON();
+      // 比较麻烦的是判断交易的方向,目前钱包没有这些信息,需要遍历每个inputs和outputs
+      let txDirection: number;           // 转账方向 0-转出,1-转入,2-自己转自己
+      let txValue: number = 0;             // 交易金额(有效金额-不记手续费)
+
+      // 等它返回才继续.
+      let txAmout = await this.getTxAmout(item.inputs, item.outputs);
+      this.logger.info("Now TX txAmout:" + JSON.stringify(txAmout));
+
+      // 如果自己有输入金额,说明是转出
+      if (txAmout.inputSelf > 0) {
+        if (txAmout.OutpuOthert == 0) {
+          // 没有给别人转钱,自己转自己.
+          txDirection = 2;
+          txValue = txAmout.OutpuSelft;
+        }
+        else {
+          txDirection = 0;
+          txValue = txAmout.OutpuOthert;
+        }
+
+      }
+      else {
+        txDirection = 1;
+        txValue = txAmout.OutpuSelft;
+      }
+      let txData = {
+        hash: item.hash, // hash值
+        block: item.block, // 所在块
+        date: itemJson.date, // 交易时间
+        fee: itemJson.fee, // 手续费
+        direction: txDirection, // 转账方向,
+        value: txValue   // 交易金额
+      };
+      // this.logger.info("Now TX ITEM:" + JSON.stringify(txData));
+      datas.push(txData);
+    }
+
+    // 这时候datas是当前过滤的明细
+    return datas;
+  }
+
+
+  async getTxAmout(inputs, outputs) {
+    let nowInput: any;
+    let nowOutput: any;
+    let inputSelfAmout: number = 0;  // 当前交易自己的输入金额(付出)
+    let inputOtherAmout: number = 0; // 当前交易别人的输入金额(付出)
+    let OutpuSelftAmout: number = 0; // 当前交易自己的输出金额(收入)
+    let OutpuOthertAmout: number = 0; // 当前交易自己的输入金额(收入)
+
+    let i = 0;
+    for (i = 0; i < inputs.length; i++) {
+      nowInput = inputs[i];
+      if (await this.spvNodeProvider.verifyMyAddress(nowInput.address)) {
+        inputSelfAmout += nowInput.value;
+      }
+      else {
+        inputOtherAmout += nowInput.value;
+      }
+    }
+    for (i = 0; i < outputs.length; i++) {
+      nowOutput = outputs[i];
+      if (await this.spvNodeProvider.verifyMyAddress(nowOutput.address.toString())) {
+        OutpuSelftAmout += nowOutput.value;
+      }
+      else {
+        OutpuOthertAmout += OutpuOthertAmout;
+      }
+    }
+    let fee = inputSelfAmout + inputOtherAmout - OutpuSelftAmout - OutpuOthertAmout;
+    return {
+      inputSelf: inputSelfAmout,
+      inputOther: inputOtherAmout,
+      OutpuSelft: OutpuSelftAmout,
+      OutpuOthert: OutpuOthertAmout,
+      txFee: fee
+    }
   }
 }
