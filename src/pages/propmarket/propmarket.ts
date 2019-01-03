@@ -17,6 +17,7 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 // pages
+import { ScanPage } from '../scan/scan';
 import { AmountPage } from '../send/amount/amount';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
 import { PropListPage } from './proplist/proplist';
@@ -109,6 +110,11 @@ export class PropMarketPage {
       userId: this.firstAddress
     });
     this.logger.info('页面跳转gotoList' + gameinfo);
+  }
+
+  // 扫一扫
+  gotoScanPage() {
+    this.navCtrl.push(ScanPage, {});
   }
 
   ionViewWillEnter() {

@@ -37,6 +37,7 @@ import { ReleaseProvider } from '../../providers/release/release';
 import { ReplaceParametersProvider } from '../../providers/replace-parameters/replace-parameters';
 import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
+import { ScanPage } from '../scan/scan';
 
 @Component({
   selector: 'page-home',
@@ -150,6 +151,11 @@ export class HomePage {
   onSelect(index) {
     this.logger.info('点击 !' + index);
     this.index = index;
+  }
+
+  // 扫一扫
+  public openScanPage(): void {
+    this.navCtrl.push(ScanPage, {});
   }
 
   ionViewWillEnter() {

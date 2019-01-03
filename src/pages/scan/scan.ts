@@ -133,6 +133,21 @@ export class ScanPage {
         this.scanner.resetScan();
       }
       switch (data.redirTo) {
+        case 'GameMarketPage':
+          this.sendPaymentPage(data.value);
+          break;
+        case 'PropMarketPage':
+          this.sendPaymentPage(data.value);
+          break;
+        case 'HomePage':
+          this.sendPaymentPage(data.value);
+          break;
+        case 'MyWalletPage':
+          this.sendPaymentPage(data.value);
+          break;
+        case 'MinePage':
+          this.sendPaymentPage(data.value);
+          break;
         case 'SendPage':
           this.sendPaymentPage(data.value);
           break;

@@ -17,6 +17,7 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 // pages
+import { ScanPage } from '../scan/scan';
 import { MarketListPage } from './market-list/market-list';
 import { SalePage } from './sale/sale';
 import { SellingDetailsPage } from './sellingdetails/sellingdetails';
@@ -90,6 +91,11 @@ export class GameMarketPage {
     this.navCtrl.push(SalePage, {
       game: gameinfo
     });
+  }
+
+  // 扫一扫
+  public openScanPage(): void {
+    this.navCtrl.push(ScanPage, {});
   }
 
   // 显示熔铸的确认窗
