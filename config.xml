@@ -48,10 +48,6 @@
     <plugin name="cordova-plugin-vibration" spec="3.1.0" />
     <plugin name="cordova-plugin-file" spec="6.0.1" />
     <plugin name="cordova-custom-config" spec="5.0.2" />
-    <plugin name="cordova-plugin-customurlscheme" spec="https://github.com/cmgustavo/Custom-URL-scheme.git#v4.0">
-        <variable name="URL_SCHEME" value="bitcoin" />
-        <variable name="SECOND_URL_SCHEME" value="ggwallet" />
-    </plugin>
     <plugin name="cordova-plugin-ionic-webview" spec="1.1.16" />
     <platform name="ios">
         <config-file parent="UIStatusBarHidden" platform="ios" target="*-Info.plist">
@@ -113,6 +109,6 @@
         <splash density="port-xxhdpi" src="resources/ggwallet/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/ggwallet/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
-    <engine name="android" spec="7.0.0" />
+    <engine name="android" spec="^7.0.0" />
     <engine name="ios" spec="4.5.4" />
 </widget>
