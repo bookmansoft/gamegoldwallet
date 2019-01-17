@@ -30,11 +30,8 @@ export class SpvNodeProvider {
   private TOTAL_LOW_WARNING_RATIO: number = 0.3;
 
   private WALLET_STATUS_MAX_TRIES: number = 7;
-  private WALLET_STATUS_DELAY_BETWEEN_TRIES: number = 1.4 * 1000;
   private SOFT_CONFIRMATION_LIMIT: number = 12;
   private SAFE_CONFIRMATIONS: number = 6;
-
-  private progressFn = {};
 
   private isPopupOpen: boolean;
 
@@ -58,17 +55,17 @@ export class SpvNodeProvider {
   private eventNotification: Events;
   // 余额
   private balance: any;
-  // TODO: 定义调用钱包的默认参数,目前写固定值,待优化
-  private walletConfig =
-    {
-      cid: "xxxxxxxx-game-gold-root-xxxxxxxxxxxx",
-      user: {
-        auth: false,
-        password: "bookmansoft",
-        username: "bitcoinrpc"
-      },
-      wid: "primary"
-    }
+  // 定义调用钱包的默认参数,目前写固定值,待优化
+  // private walletConfig =
+  //   {
+  //     cid: "xxxxxxxx-game-gold-root-xxxxxxxxxxxx",
+  //     user: {
+  //       auth: false,
+  //       password: "bookmansoft",
+  //       username: "bitcoinrpc"
+  //     },
+  //     wid: "primary"
+  //   }
 
   constructor(
     private logger: Logger,
@@ -87,6 +84,7 @@ export class SpvNodeProvider {
   ) {
     this.logger.info('SPVNode Service initialized.');
     this.isPopupOpen = false;
+    this.nodeOpened = false;
     this.eventNotification = events;
     var nodeLogger = new gamegold.logger({ level: 'debug', console: true });
     // TODO:这些配置可以放config里面,特别是语种.
@@ -130,6 +128,10 @@ export class SpvNodeProvider {
           break;
       }
     });
+    this.node.chain.on('block', (item, entry) => {
+      this.logger.info('block in hash: ' + item.rhash());
+      this.events.publish('receive:block', item, entry);
+    });
     // 默认没有设置助记词
     this.mnemonicConfig = false;
     this.bootstrapMnemonic = '';
@@ -147,10 +149,8 @@ export class SpvNodeProvider {
    * 非首次运行,直接运行open即可,spvNode会自动打开已有的钱包
    */
   public async open() {
-    this.node.chain.on('block', (item, entry) => {
-      this.logger.info('block in hash: ' + item.rhash());
-      this.events.publish('receive:block', item, entry);
-    });
+    if (this.nodeOpened)
+      return true;
     // 增加测试钱包数据库的建立
     await this.node.ensure();
     await this.wdb.checkNewRecord();
@@ -181,13 +181,14 @@ export class SpvNodeProvider {
       this.logger.info('primary:' + this.wdb.primary);
       this.logger.info('get balance:' + JSON.stringify(this.balance));
     });
+    // 登录成功,查询余额,保证余额始终可用
     await this.getBalance();
-    // getCplist必须在getBalance后调用
-    this.getCpList();
-    this.getFirstAddress();
+    // this.getFirstAddress();
+    // 最后置上打开状态,保证后续动作的可靠性.
+    this.nodeOpened = true;
   }
 
-  // 根据配置创建一个钱包 -- 目前不需要
+  // 根据配置创建一个钱包 -- 目前不需要使用
   public createWallet(opt): Promise<any> {
     return new Promise((resolve, reject) => {
       this.wdb
@@ -209,23 +210,20 @@ export class SpvNodeProvider {
         });
     });
   }
-  // 根据配置导入一个已有钱包 -- 目前不需要
-  public importWallet(opt): Promise<any> {
-    return new Promise((resolve, reject) => {
-      // 判断助记词的合法性
-      let ret = this.wdb.testmnemonic(opt.passphrase);
-      if (ret.code == 0) {
-        // 选择1：引导用户导入助记符
-        this.wdb.setmnemonicByWords(opt.passphrase);
-        // 设置wdb的语言环境
-        this.wdb.setlanguage('simplified chinese');
-        return resolve(this.wdb);
-      } else {
-        reject(ret.msg);
-      }
-    });
+  // 根据配置导入一个已有钱包 -- 目前不需要使用
+  public importWallet(opt): boolean {
+    // 判断助记词的合法性
+    let ret = this.wdb.testmnemonic(opt.passphrase);
+    if (ret.code == 0) {
+      // 选择1：引导用户导入助记符
+      this.wdb.setmnemonicByWords(opt.passphrase);
+      // 设置wdb的语言环境
+      this.wdb.setlanguage('simplified chinese');
+      return true;
+    };
+    return false;
   }
-  // 创建默认钱包 -- 目前不需要
+  // 创建默认钱包 -- 目前不需要使用
   private doCreateDefaultWallet(opt): Promise<any> {
     return new Promise((resolve, reject) => {
       // 选择3：指定熵的长度（位），内部自动生成助记符，然后引导用户离线记录对应的助记符
@@ -252,10 +250,10 @@ export class SpvNodeProvider {
    * 获取当前使用的主钱包
    */
   public getWallet() {
-    if (this.wallet) {
+    if (this.nodeOpened) {
+      // 钱包的样式和名字,应该从spv移除.
       this.wallet.color = '#647ce8';
       this.wallet.name = '我的游戏钱包';
-
       return this.wallet;
     }
   }
@@ -283,42 +281,38 @@ export class SpvNodeProvider {
    * --TODO:移动到wallet中
    */
   public async getBalance(): Promise<any> {
-    if (this.wallet) {
-      return this.wallet.getBalance().then(balance => {
-        this.balance = balance;
-        this.events.publish('node:balance', balance);
-        return balance;
-      });
+    if (this.nodeOpened) {
+      const balance = await this.wallet.getBalance();
+      this.balance = balance;
+      this.events.publish('node:balance', balance);
+      return balance;
     }
   }
   // 获取当前接收地址
   public async getFirstAddress(): Promise<any> {
-    this.wdb.rpc
-      .execute({
+    if (this.nodeOpened) {
+      let address = await this.wdb.rpc.execute({
         method: 'address.receive',
       })
-      .then(address => {
-        if (!!address) {
-          let firstAddress = address;
-          this.events.publish('address.first', firstAddress);
-          return firstAddress;
-        }
-      });
+      if (!!address) {
+        let firstAddress = address;
+        this.events.publish('address.first', firstAddress);
+        return firstAddress;
+      }
+    }
   }
   /**
    * 获取一个未使用的新地址
    * --TODO:移动到wallet中
    */
   public async getNewAddress(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (this.wallet) {
-        this.wallet.createReceive().then(address => {
-          return resolve(address);
-        });
-      } else {
-        return reject();
-      }
-    });
+    if (this.nodeOpened) {
+      let address = this.wallet.createReceive();
+      if (!!address) {
+        this.events.publish('address.new', address);
+        return address;
+      };
+    }
   }
   /**
    * 发送游戏金到指定的地址,如果成功,返回构造的交易信息.
@@ -354,7 +348,7 @@ export class SpvNodeProvider {
    * 获得钱包的助记词
    */
   public getMnemonicPhrase(): string {
-    if (this.wallet) {
+    if (this.nodeOpened) {
       return this.wallet.master.mnemonic.phrase;
     }
   }
@@ -424,7 +418,10 @@ export class SpvNodeProvider {
    */
   public async changePassWallet(oldPhrase: string, newPhrase: string): Promise<boolean> {
     try {
-      await this.wdb.rpc.execute({ method: 'wallet.changepassphrase', params: [oldPhrase, newPhrase] });
+      await this.wdb.rpc.execute({
+        method: 'wallet.changepassphrase',
+        params: [oldPhrase, newPhrase]
+      });
       return true;
     }
     catch (err) {
@@ -434,150 +431,143 @@ export class SpvNodeProvider {
   }
   // 获取厂商列表,先要Flush,然后再List
   public async getCpList(): Promise<any> {
-    this.node.rpc
-      .execute({ method: 'cp.flush', params: [] })
-      .then(() => {
-        return this.node.rpc.execute({ method: 'cp.list', params: [] });
-      })
-      .then(cps => {
-        if (cps) {
-          this.cplist = cps;
-          this.events.publish('node:cplist', cps);
-          return cps;
-        }
+    if (this.nodeOpened) {
+      await this.node.rpc.execute({
+        method: 'cp.flush',
+        params: []
       });
+      const cplist = this.node.rpc.execute({ method: 'cp.list', params: [] });
+      if (cplist) {
+        this.cplist = cplist;
+        this.events.publish('node:cplist', cplist);
+        return cplist;
+      }
+    }
   }
 
   // 获取背包中道具列表
   public async getPropList(): Promise<any> {
-    this.wdb.rpc.execute({ method: 'prop.list', params: [] }).then(props => {
+    const props = await this.wdb.rpc.execute({
+      method: 'prop.list',
+      params: []
+    });
+    if (props) {
       this.props = props;
       this.events.publish('prop.list', props);
       return this.props;
-    });
+    }
   }
 
   // 拍卖背包中道具,需要传入商品与价格
   // 目前仅提供一口价的拍卖模式.
   public async saleProp(prop, np): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'prop.sale',
-        params: [prop.current.rev, prop.current.index, np]
-      })
-      .then(tx => {
-        this.events.publish('prop.sale', tx);
-        return tx;
-      });
+    const tx = await this.wdb.rpc.execute({
+      method: 'prop.sale',
+      params: [prop.current.rev, prop.current.index, np]
+    });
+    if (tx) {
+      this.events.publish('prop.sale', tx);
+      return tx;
+    }
   }
 
   // 熔铸背包中道具,需要传入商品
   public async foundProp(prop): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'prop.found',
-        params: [prop]
-      })
-      .then(tx => {
-        this.events.publish('prop.found', tx);
-        return tx;
-      });
+    const tx = await this.wdb.rpc.execute({
+      method: 'prop.found',
+      params: [prop]
+    });
+    if (tx) {
+      this.events.publish('prop.found', tx);
+      return tx;
+    }
   }
 
   // 参与竞价,需要传入商品与价格
   public async buyProp(order, np): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'prop.buy',
-        params: [
-          order.pid, // 拍卖物品编码
-          np // 新的竞拍价格
-        ]
-      })
-      .then(tx => {
-        this.events.publish('prop.buy', tx);
-        return tx;
-      });
+    const tx = await this.wdb.rpc.execute({
+      method: 'prop.buy',
+      params: [order.pid, // 拍卖物品编码
+        np // 新的竞拍价格
+      ]
+    });
+    if (tx) {
+      this.events.publish('prop.buy', tx);
+      return tx;
+    }
   }
   // 列出市场道具
   public async listMarket(cp): Promise<any> {
-    this.node.rpc
-      .execute({
-        method: 'prop.list.market',
-        params: [
-          cp.cid // 厂商编码
-        ]
-      })
-      .then(props => {
-        this.events.publish('prop.list.market', props);
-        return props;
-      });
+    const props = await this.node.rpc.execute({
+      method: 'prop.list.market',
+      params: [
+        cp.cid // 厂商编码
+      ]
+    });
+    if (props) {
+      this.events.publish('prop.list.market', props);
+      return props;
+    }
   }
 
   // 支付订单
   public async orderPay(order): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'order.pay',
-        params: [order.cid, order.uid, order.sn, order.price]
-      })
-      .then(tx => {
-        this.events.publish('order.pay', tx);
-        return tx;
-      });
+    const tx = await this.wdb.rpc.execute({
+      method: 'order.pay',
+      params: [order.cid, order.uid, order.sn, order.price]
+    });
+    if (tx) {
+      this.events.publish('order.pay', tx);
+      return tx;
+    }
   }
 
   // 创建交易对-目前仅btc,type默认1
   public async createContract(ggAmount, btcAmount, btcAddress, type = 1): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'contract.create',
-        params: [type, ggAmount, btcAmount, btcAddress]
-      })
-      .then(contract => {
-        this.events.publish('contract.create', contract);
-        return contract;
-      });
+    const contract = await this.wdb.rpc.execute({
+      method: 'contract.create',
+      params: [type, ggAmount, btcAmount, btcAddress]
+    });
+    if (contract) {
+      this.events.publish('contract.create', contract);
+      return contract;
+    }
   }
 
   // 承诺兑换交易对-目前仅btc,type默认1
   public async promiseContract(contractId): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'contract.promise',
-        params: [contractId]
-      })
-      .then(contract => {
-        this.events.publish('contract.promise', contract);
-        return contract;
-      });
+    const contract = await this.wdb.rpc.execute({
+      method: 'contract.promise',
+      params: [contractId]
+    });
+    if (contract) {
+      this.events.publish('contract.promise', contract);
+      return contract;
+    }
   }
 
   // 查询交易对
   public async listContract(type = 1): Promise<any> {
-    this.node.rpc
-      .execute({
-        method: 'contract.list',
-        params: [type]
-      })
-      .then(contracts => {
-        // TODO:出错怎么办?
-        if (typeof contracts != 'string')
-          this.events.publish('contract.list', contracts);
-        return contracts;
-      });
+    const contracts = await this.node.rpc.execute({
+      method: 'contract.list',
+      params: [type]
+    });
+    if (contracts) {
+      if (typeof contracts != 'string')
+        this.events.publish('contract.list', contracts);
+      return contracts;
+    }
   }
 
   // 查询我参与的交易对
   public async listMineContract(): Promise<any> {
-    this.wdb.rpc
-      .execute({
-        method: 'contract.mine',
-      })
-      .then(myContracts => {
-        this.events.publish('contract.mine', myContracts);
-        return myContracts;
-      });
+    const myContracts = await this.wdb.rpc.execute({
+      method: 'contract.mine',
+    });
+    if (myContracts) {
+      this.events.publish('contract.mine', myContracts);
+      return myContracts;
+    }
   }
 
   // 验证一个地址是否是我所有的
@@ -585,7 +575,6 @@ export class SpvNodeProvider {
     // 有可能为null输入..
     if (!addr)
       return false;
-
     let isMine = false;
     try {
       let base58Address: string = typeof addr === 'string' ? addr : addr.toString(addr.network);
