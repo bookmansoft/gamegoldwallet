@@ -36,6 +36,7 @@ export class MyWalletPage {
   public walletpassword: string;
   private index: boolean = false;
   public balance;
+  public unbalance;         // thomas:未确认余额
 
   constructor(
     private navCtrl: NavController,
@@ -234,6 +235,7 @@ export class MyWalletPage {
     this.events.subscribe('node:balance', balance => {
       this.walletBalance = balance;
       this.balance = this.utils.toKgUnit(this.walletBalance.confirmed);
+      this.unbalance = this.utils.toKgUnit(this.walletBalance.unconfirmed);
     });
 
     this.events.subscribe('node:cplist', cps => {

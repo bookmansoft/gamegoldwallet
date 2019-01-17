@@ -14,7 +14,8 @@
       *ngIf="walletBalance"
       style="font-size:16px;padding-left: 20px;"
     >
-      <span style="font-size:18px;">{{ balance }}</span> 千克
+      <span style="font-size:18px;">已确认{{ balance }}</span> 千克<br />
+      <span style="font-size:18px;">未确认{{ unbalance-balance }}</span> 千克
     </div>
   </ion-item>
   <ion-row
