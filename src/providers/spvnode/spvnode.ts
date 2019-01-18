@@ -304,7 +304,7 @@ export class SpvNodeProvider {
       })
       if (!!address) {
         let firstAddress = address;
-        this.events.publish('address.first', firstAddress);
+        this.events.publish('node:address.first', firstAddress);
         return firstAddress;
       }
     }
@@ -317,7 +317,7 @@ export class SpvNodeProvider {
     if (this.nodeOpened) {
       let address = this.wallet.createReceive();
       if (!!address) {
-        this.events.publish('address.new', address);
+        this.events.publish('node:address.new', address);
         return address;
       };
     }
@@ -340,7 +340,7 @@ export class SpvNodeProvider {
       ret.code = 1;
       ret.msg = err.message;
     }
-    this.events.publish('tx.send', ret);
+    this.events.publish('node:tx.send', ret);
     return ret;
   }
   /** 
@@ -349,7 +349,7 @@ export class SpvNodeProvider {
    */
   public async getTxDetails(page: number): Promise<any> {
     const txs = await this.wdb.rpc.execute({ method: 'tx.history', params: [page] });
-    this.events.publish('tx.history', txs);
+    this.events.publish('node:tx.history', txs);
     return txs;
   }
   /**
@@ -458,68 +458,142 @@ export class SpvNodeProvider {
     }
   }
 
-  // 获取背包中道具列表
-  public async getPropList(): Promise<any> {
+  /**
+   * 获取背包中道具列表-app应用,无需传openid
+   * @param page 查询的页码,默认为1
+   * @returns 当前页道具列表信息
+   */
+  public async getPropList(page = 1): Promise<any> {
     const props = await this.wdb.rpc.execute({
       method: 'prop.list',
-      params: []
+      params: [page]
     });
     if (props) {
       this.props = props;
-      this.events.publish('prop.list', props);
+      this.events.publish('node:prop.list', props);
       return this.props;
     }
   }
 
-  // 拍卖背包中道具,需要传入商品与价格
-  // 目前仅提供一口价的拍卖模式.
+
+  /**
+   * 拍卖背包中道具,需要传入商品与价格,目前仅提供一口价的拍卖模式.
+   * @param prop 要卖出的商品
+   * @param np 卖出的价格 
+   * @returns 卖出道具的交易信息
+   */
   public async saleProp(prop, np): Promise<any> {
     const tx = await this.wdb.rpc.execute({
       method: 'prop.sale',
       params: [prop.current.rev, prop.current.index, np]
     });
     if (tx) {
-      this.events.publish('prop.sale', tx);
+      this.events.publish('node:prop.sale', tx);
       return tx;
     }
   }
 
-  // 熔铸背包中道具,需要传入商品
+  /**
+   * 熔铸背包中道具,需要传入道具
+   * @param prop 要被熔铸的道具
+   * @returns 熔铸的交易信息
+   */
   public async foundProp(prop): Promise<any> {
     const tx = await this.wdb.rpc.execute({
       method: 'prop.found',
       params: [prop]
     });
     if (tx) {
-      this.events.publish('prop.found', tx);
+      this.events.publish('node:prop.found', tx);
       return tx;
     }
   }
 
-  // 参与竞价,需要传入商品与价格
-  public async buyProp(order, np): Promise<any> {
+
+  /**
+   * 参与竞价,需要传入商品与出价
+   * @param bid 拍卖中的商品订单
+   * @param np 出价
+   * @returns 新的拍卖的交易信息
+   */
+  public async buyProp(bid, np): Promise<any> {
     const tx = await this.wdb.rpc.execute({
       method: 'prop.buy',
-      params: [order.pid, // 拍卖物品编码
+      params: [bid.pid, // 拍卖物品编码
         np // 新的竞拍价格
       ]
     });
     if (tx) {
-      this.events.publish('prop.buy', tx);
+      this.events.publish('node:prop.buy', tx);
       return tx;
     }
   }
-  // 列出市场道具
-  public async listMarket(cp): Promise<any> {
+
+  /**
+   * 列出市场道具
+   * @param cp 需要查询的具体厂商
+   * @param page 页码,默认为1
+   * @param pids 指定的查询道具列表
+   * @returns 道具列表
+   */
+  public async listMarket(cid?: string, page = 1, pids = []): Promise<any> {
     const props = await this.node.rpc.execute({
       method: 'prop.list.market',
       params: [
-        cp.cid // 厂商编码
+        cid, page, pids
       ]
     });
     if (props) {
-      this.events.publish('prop.list.market', props);
+      this.events.publish('node:prop.list.market', props);
       return props;
+    }
+  }
+  /**
+   * 查询自己正在拍卖的道具信息
+   * @param page 查询的具体页码,默认为1
+   * @returns 道具列表
+   */
+  public async listAuction(page = 1): Promise<any> {
+    const props = await this.node.rpc.execute({
+      method: 'prop.list.auction',
+      params: [
+        page
+      ]
+    });
+    if (props) {
+      this.events.publish('node:prop.list.auction', props);
+      return props;
+    }
+  }
+  /**
+   * 查询自己正在拍卖的道具信息
+   * @param page 查询的具体页码,默认为1
+   * @returns 道具列表
+   */
+  public async listBid(page = 1): Promise<any> {
+    const props = await this.node.rpc.execute({
+      method: 'prop.list.bid',
+      params: [
+        page
+      ]
+    });
+    if (props) {
+      this.events.publish('node:prop.list.bid', props);
+      return props;
+    }
+  }
+
+  /**
+   * 计算自己所拥有的道具数量
+   */
+  public async getPropCount(): Promise<any> {
+    const count = await this.node.rpc.execute({
+      method: 'prop.count',
+      params: []
+    });
+    if (count) {
+      this.events.publish('prop.count', count);
+      return count;
     }
   }
 
@@ -530,7 +604,7 @@ export class SpvNodeProvider {
       params: [order.cid, order.uid, order.sn, order.price]
     });
     if (tx) {
-      this.events.publish('order.pay', tx);
+      this.events.publish('node:order.pay', tx);
       return tx;
     }
   }
@@ -542,7 +616,7 @@ export class SpvNodeProvider {
       params: [type, ggAmount, btcAmount, btcAddress]
     });
     if (contract) {
-      this.events.publish('contract.create', contract);
+      this.events.publish('node:contract.create', contract);
       return contract;
     }
   }
@@ -554,7 +628,7 @@ export class SpvNodeProvider {
       params: [contractId]
     });
     if (contract) {
-      this.events.publish('contract.promise', contract);
+      this.events.publish('node:contract.promise', contract);
       return contract;
     }
   }
@@ -578,12 +652,27 @@ export class SpvNodeProvider {
       method: 'contract.mine',
     });
     if (myContracts) {
-      this.events.publish('contract.mine', myContracts);
+      this.events.publish('node:contract.mine', myContracts);
       return myContracts;
     }
   }
 
-  // 验证一个地址是否是我所有的
+  // 执行交易对
+  public async executeContract(contracId, master: number): Promise<any> {
+    const contract = await this.node.rpc.execute({
+      method: 'contract.execute',
+      params: [contracId, master]
+    });
+    if (contract) {
+      this.events.publish('contract.execute', contract);
+      return contract;
+    }
+  }
+
+  /**
+   * 验证一个地址是否是我所有的
+   * @param addr 需要验证的地址-base58编码
+   */
   public async verifyMyAddress(addr: any): Promise<boolean> {
     // 有可能为null输入..
     if (!addr)
@@ -604,5 +693,86 @@ export class SpvNodeProvider {
       return isMine;
     }
     return isMine;
+  }
+  /**
+   * 根据编码查询厂商记录
+   * @param cpId 厂商Id
+   * @returns 厂商信息
+   * @usage 返回示例
+   * {                                                       
+   *   "cid": "eb9d03c0-0ff9-11e9-a575-21541098fe6c",        
+   *   "cls": "SLG",                                         
+   *   "name": "EatChicken",                                 
+   *   "url": "http://114.116.148.48:9701/mock/EatChicken",  
+   *   "ip": "",                                             
+   *   "grate": 15                                           
+   * }                                                       
+   */
+  public async getCpById(cpId: string): Promise<any> {
+    const cp = await this.wdb.rpc.execute({
+      method: 'cp.byId',
+      params: [cpId]
+    });
+    if (cp) {
+      this.events.publish('node:cp.byId', cp);
+      return cp;
+    }
+  }
+  /**
+   * 生成登录令牌,传递给游戏厂商cp进行验证
+   * 在钱包里面调用,不会用到openId
+   * @param cpId 游戏cpId
+   * @param gameUid 游戏内玩家Id
+   * @param referrer 推荐人地址,可为空
+   * @returns 生成的token令牌串
+   */
+  public async tokenUser(cpId: string, gameUid: string, referrer?: string): Promise<any> {
+    if (!cpId || !gameUid)
+      return null;
+    // 先判断地址合法性  
+    if (referrer) {
+      let verify = await this.verifyMyAddress(referrer);
+      if (!verify)
+        return null;
+    }
+    const token = await this.wdb.rpc.execute({
+      method: 'token.user',
+      params: [cpId, gameUid, referrer]
+    });
+    if (token) {
+      this.events.publish('node:token.user', token);
+      return token;
+    }
+  }
+  /**
+   * 获取支付订单列表
+   * @param cpId 厂商编码,可为空,查询全部
+   * @param page 页码,默认为1
+   * @returns 用户的订单列表
+   */
+  public async getOrder(cpId?: string, page = 1): Promise<any> {
+    const orders = await this.wdb.rpc.execute({
+      method: 'order.list',
+      params: [cpId, page]
+    });
+    if (orders) {
+      this.events.publish('node:order.list', orders);
+      return orders;
+    }
+  }
+  /**
+   * 接收捐赠道具-手机app不需要openid
+   * @param raw 捐赠的原始数据-通常通过二维码传递
+   * @returns 接收到的道具信息.
+   */
+  public async receiveProp(raw: string): Promise<any> {
+    const prop = await this.wdb.rpc.execute({
+      method: 'prop.receive',
+      params: [raw]
+    });
+    if (prop) {
+      this.events.publish('prop.receive', prop);
+      return prop;
+    }
   }
 }

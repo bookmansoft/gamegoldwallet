@@ -649,35 +649,28 @@ export class HomePage {
   }
 
   public goGame() {
-    let wdb = this.spvNodeProvider.getWdb();
-    if (wdb) {
-      wdb.rpc
-        .execute({
-          method: 'token.user',
-          params: [
-            'ca644ae0-d86f-11e8-af65-032906485980', // 游戏编号-从cplist获得
-            this.firstAddress // 游戏内玩家编号
-          ]
-        })
-        .then(token => {
-          // 打开浏览器.
-          this.logger.info(token);
-          var ts = encodeURIComponent(JSON.stringify(token));
-          setTimeout(() => {
-            let href = `${this.gameServer}/game/${ts}`;
-            this.externalLinkProvider.open(
-              href,
-              true,
-              'Game',
-              '打开游戏页面',
-              'OK',
-              'Cancel'
-            );
-          }, 1000);
-        })
-        .catch(err => {
-          this.logger.info(err);
-        });
-    }
+    this.spvNodeProvider.tokenUser(
+      'ca644ae0-d86f-11e8-af65-032906485980', // 游戏编号-从cplist获得
+      this.firstAddress // 游戏内玩家编号
+    ).then(token => {
+      // 打开浏览器.
+      this.logger.info(token);
+      var ts = encodeURIComponent(JSON.stringify(token));
+      setTimeout(() => {
+        let href = `${this.gameServer}/game/${ts}`;
+        this.externalLinkProvider.open(
+          href,
+          true,
+          'Game',
+          '打开游戏页面',
+          'OK',
+          'Cancel'
+        );
+      }, 1000);
+    })
+      .catch(err => {
+        this.logger.info(err);
+      });
   }
+
 }
