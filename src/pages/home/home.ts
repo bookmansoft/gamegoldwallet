@@ -129,9 +129,7 @@ export class HomePage {
     // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
     this.spvNodeProvider.open().then(() => {
       // 由于这里刚刚开启,需要等open之后才获取cpList
-      this.spvNodeProvider.getCpList().then(cps => {
-        this.logger.info("cplist: " + JSON.stringify(cps));
-      });
+      this.spvNodeProvider.getCpList(1);
     });
     this.gameServer = `http://${this.gameServerIP}:7555`;
     // 设置默认费率

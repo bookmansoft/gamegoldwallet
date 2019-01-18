@@ -441,15 +441,12 @@ export class SpvNodeProvider {
   // XXX:目前采用http方式,待spv方式修复后,可恢复为spv方式
   public async getCpList(page = 1): Promise<any> {
     if (this.nodeOpened) {
-      let reqOpts = {
-        params: new HttpParams()
-      };
-      reqOpts.params.set('page', String(page));
       try {
-        this.http.get(`http://${this.serverIP}:17332/public/cps`, reqOpts).subscribe(
+        this.http.get(`http://${this.serverIP}:17332/public/cps?page=${page}`).subscribe(
           cps => {
             this.cplist = cps;
             this.eventNotification.publish('node:cplist', cps);
+            return cps;
           },
           error => {
             this.logger.error(error);
