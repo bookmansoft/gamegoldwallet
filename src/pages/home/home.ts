@@ -125,7 +125,12 @@ export class HomePage {
     // });
     // XXX:End
     // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
-    this.spvNodeProvider.open();
+    this.spvNodeProvider.open().then(() => {
+      // 由于这里刚刚开启,需要等open之后才获取cpList
+      this.spvNodeProvider.getCpList().then(cps => {
+        this.logger.info("cplist: " + JSON.stringify(cps));
+      });
+    });
     this.gameServer = 'http://40.73.119.183:7555';
     // 设置默认费率
     this.storage.get('poundage').then(val => {
@@ -164,17 +169,20 @@ export class HomePage {
     // Update list of wallets, status and TXPs
     this.setWallets();
 
-    this.addressBookProvider
-      .list()
-      .then(ab => {
-        this.addressbook = ab || {};
-      })
-      .catch(err => {
-        this.logger.error(err);
-      });
+    // 地址簿功能,目前没有封装
+    // this.addressBookProvider
+    //   .list()
+    //   .then(ab => {
+    //     this.addressbook = ab || {};
+    //   })
+    //   .catch(err => {
+    //     this.logger.error(err);
+    //   });
 
     // Update Tx Notifications
     // this.getNotifications();
+
+
   }
 
   ionViewDidEnter() {
@@ -308,14 +316,14 @@ export class HomePage {
     this.homeTip = false;
   }
 
-  private async checkAnnouncement() {}
+  private async checkAnnouncement() { }
 
   public hideAnnouncement(): void {
     this.persistenceProvider.setShowAmazonJapanAnnouncement('hide');
     this.showAnnouncement = false;
   }
 
-  public openAnnouncement(): void {}
+  public openAnnouncement(): void { }
 
   private checkFeedbackInfo() {
     this.persistenceProvider.getFeedbackInfo().then(info => {

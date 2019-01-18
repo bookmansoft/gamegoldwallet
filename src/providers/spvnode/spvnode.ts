@@ -103,7 +103,7 @@ export class SpvNodeProvider {
       logger: nodeLogger,
       // 为当前的Cordava SPV节点传入seeds列表，当前节点在连接具体的seed时，将首先连接到其WS桥接端口上，透过该端口桥接其socket端口，进而实现数据交换
       seeds: ['40.73.114.235'],
-      only: ['40.73.119.67,40.73.119.131,40.73.119.142,40.73.119.127,40.73.119.154,40.73.114.235'],
+      // only: [''],
       'node-uri': 'http://40.73.114.235:17332',
       'api-key': 'bookmansoft',
       // 钱包的默认语言版本
@@ -130,6 +130,10 @@ export class SpvNodeProvider {
     });
     this.node.chain.on('block', (item, entry) => {
       this.logger.info('block in hash: ' + item.rhash());
+      this.events.publish('receive:block', item, entry);
+    });
+    this.node.chain.on('tx', (item, entry) => {
+      this.logger.info('tx in hash: ' + item.rhash());
       this.events.publish('receive:block', item, entry);
     });
     // 默认没有设置助记词
@@ -170,41 +174,42 @@ export class SpvNodeProvider {
       this.logger.info('primary:' + e);
     }
     await this.node.connect();
-    this.node.startSync();
+    await this.node.startSync();
     this.wallet = this.wdb.primary;
     this.wallet.name = '我的游戏钱包';
     this.wallet.corlor = '#647ce8';
     this.logger.info('wallet id:' + this.wallet.id);
     this.events.publish('node:open', this.wallet);
 
-    this.wdb.primary.on('balance', () => {
-      this.logger.info('primary:' + this.wdb.primary);
+    this.wdb.primary.on('balance', (balance) => {
+      // 此时wdb中已经更新了新的余额了
+      this.balance = balance;
+      this.events.publish('node:balance', balance);
       this.logger.info('get balance:' + JSON.stringify(this.balance));
     });
     // 登录成功,查询余额,保证余额始终可用
     await this.getBalance();
     // this.getFirstAddress();
     // 最后置上打开状态,保证后续动作的可靠性.
+    await this.node.rpc.execute({ method: 'miner.setsync', params: [] });
     this.nodeOpened = true;
   }
 
   // 根据配置创建一个钱包 -- 目前不需要使用
   public createWallet(opt): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.wdb
-        .isNewRecord()
-        .then(isNew => {
-          if (!isNew) {
-            // 目前仅登记一个游戏金钱包, 删除现有数据库
-            this.wdb.rpc
-              .execute({ method: 'destroywallet', params: [] })
-              .then(() => {
-                return resolve(this.doCreateDefaultWallet(opt));
-              });
-          } else {
-            return resolve(this.doCreateDefaultWallet(opt));
-          }
-        })
+      this.wdb.isNewRecord().then(isNew => {
+        if (!isNew) {
+          // 目前仅登记一个游戏金钱包, 删除现有数据库
+          this.wdb.rpc
+            .execute({ method: 'destroywallet', params: [] })
+            .then(() => {
+              return resolve(this.doCreateDefaultWallet(opt));
+            });
+        } else {
+          return resolve(this.doCreateDefaultWallet(opt));
+        }
+      })
         .catch(err => {
           this.logger.error(err);
         });
@@ -429,18 +434,19 @@ export class SpvNodeProvider {
       return false;
     }
   }
-  // 获取厂商列表,先要Flush,然后再List
+  // 获取厂商列表,List
   public async getCpList(): Promise<any> {
     if (this.nodeOpened) {
-      await this.node.rpc.execute({
-        method: 'cp.flush',
-        params: []
-      });
-      const cplist = this.node.rpc.execute({ method: 'cp.list', params: [] });
-      if (cplist) {
-        this.cplist = cplist;
-        this.events.publish('node:cplist', cplist);
-        return cplist;
+      try {
+        const cplist = await this.wdb.rpc.execute({ method: 'cp.list.wallet', params: [] });
+        if (cplist) {
+          this.cplist = cplist;
+          this.events.publish('node:cplist', cplist);
+          return cplist;
+        }
+      }
+      catch (err) {
+        this.logger.error("get CP List Err" + err);
       }
     }
   }
@@ -578,11 +584,10 @@ export class SpvNodeProvider {
     let isMine = false;
     try {
       let base58Address: string = typeof addr === 'string' ? addr : addr.toString(addr.network);
-      const privateKey = await this.wdb.rpc
-        .execute({
-          method: 'address.wif',
-          params: [base58Address]
-        });
+      const privateKey = await this.wdb.rpc.execute({
+        method: 'address.wif',
+        params: [base58Address]
+      });
       // 仅当能正确获取地址的私钥时,该地址属于自己
       if (!!privateKey) {
         isMine = true;
