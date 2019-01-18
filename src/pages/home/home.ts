@@ -82,6 +82,7 @@ export class HomePage {
   private onPauseSubscription: Subscription;
 
   public gameServer: string;
+  public gameServerIP: string;
   public firstAddress: string;
 
   constructor(
@@ -109,6 +110,7 @@ export class HomePage {
     private spvNodeProvider: SpvNodeProvider,
     private storage: Storage
   ) {
+    this.gameServerIP = '40.73.114.235';
     this.updatingWalletId = {};
     this.addressbook = {};
     this.cachedBalanceUpdateOn = '';
@@ -131,7 +133,7 @@ export class HomePage {
         this.logger.info("cplist: " + JSON.stringify(cps));
       });
     });
-    this.gameServer = 'http://40.73.119.183:7555';
+    this.gameServer = `http://${this.gameServerIP}:7555`;
     // 设置默认费率
     this.storage.get('poundage').then(val => {
       if (val == null) {
@@ -641,17 +643,11 @@ export class HomePage {
     this.events.subscribe('node:balance', balance => {
       // this.balance = balance;
     });
-
-    // 用地址簿的第一个地址作为游戏内ID
-    this.events.subscribe('address.first', address => {
-      this.firstAddress = address;
-    });
   }
 
   private unListenForEvents() {
     this.events.unsubscribe('node:open');
     this.events.unsubscribe('node:balance');
-    this.events.unsubscribe('address.first');
   }
 
   public goGame() {

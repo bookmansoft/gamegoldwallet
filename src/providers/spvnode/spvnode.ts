@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 // import * as gamegold from 'gamegold';
 // TODO: 用更为Typescirpt方式,而非全局变量引入
 declare var gamegold: any;
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { createContentChild } from '@angular/compiler/src/core';
 import { Events } from 'ionic-angular';
 import * as lodash from 'lodash';
@@ -34,7 +35,7 @@ export class SpvNodeProvider {
   private SAFE_CONFIRMATIONS: number = 6;
 
   private isPopupOpen: boolean;
-
+  private serverIP: string;
   // spv节点
   private node: any;
   private nodeOpened: boolean;
@@ -80,9 +81,11 @@ export class SpvNodeProvider {
     private onGoingProcessProvider: OnGoingProcessProvider,
     private events: Events,
     private feeProvider: FeeProvider,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public http: HttpClient
   ) {
     this.logger.info('SPVNode Service initialized.');
+    this.serverIP = '40.73.114.235';
     this.isPopupOpen = false;
     this.nodeOpened = false;
     this.eventNotification = events;
@@ -102,9 +105,9 @@ export class SpvNodeProvider {
       // logger: nodeLogger,
       logger: nodeLogger,
       // 为当前的Cordava SPV节点传入seeds列表，当前节点在连接具体的seed时，将首先连接到其WS桥接端口上，透过该端口桥接其socket端口，进而实现数据交换
-      seeds: ['40.73.114.235'],
+      seeds: [`${this.serverIP}`],
       // only: [''],
-      'node-uri': 'http://40.73.114.235:17332',
+      'node-uri': `http://${this.serverIP}:17332`,
       'api-key': 'bookmansoft',
       // 钱包的默认语言版本
       'wallet-language': 'simplified chinese',
@@ -434,16 +437,23 @@ export class SpvNodeProvider {
       return false;
     }
   }
-  // 获取厂商列表,List
-  public async getCpList(): Promise<any> {
+  // 获取厂商列表,List,
+  // XXX:目前采用http方式,待spv方式修复后,可恢复为spv方式
+  public async getCpList(page = 1): Promise<any> {
     if (this.nodeOpened) {
+      let reqOpts = {
+        params: new HttpParams()
+      };
+      reqOpts.params.set('page', String(page));
       try {
-        const cplist = await this.wdb.rpc.execute({ method: 'cp.list.wallet', params: [] });
-        if (cplist) {
-          this.cplist = cplist;
-          this.events.publish('node:cplist', cplist);
-          return cplist;
-        }
+        this.http.get(`http://${this.serverIP}:17332/public/cps`, reqOpts).subscribe(
+          cps => {
+            this.cplist = cps;
+            this.eventNotification.publish('node:cplist', cps);
+          },
+          error => {
+            this.logger.error(error);
+          });
       }
       catch (err) {
         this.logger.error("get CP List Err" + err);
