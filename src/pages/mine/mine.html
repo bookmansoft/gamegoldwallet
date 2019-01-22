@@ -1,42 +1,42 @@
 <ion-header>
-    <ion-navbar color="blank" style="padding:0;margin:0;height:50px !important;min-height: 50px !important;">
-        <ion-item no-lines style="border-bottom: 3px #ffffff solid;">
-            <img item-start src="assets/img/saoyisao.png" class="search-img" (click)="openScanPage()" />
-            <div item-end>
-                <img src="assets/img/{{importWallet ? 'close':'add'}}.png" class="search-img" style="margin-right:10px;" (click)="showImportWallet()" />
-                <img src="assets/img/xiaoxi.png" class="search-img" />
-            </div>
-        </ion-item>
-    </ion-navbar>
-    <ion-fab right *ngIf="importWallet">
-        <button ion-button class="btn" color="light" (click)="alertImportWallet()">
-                    导入钱包
-                  </button>
-
-    </ion-fab>
+  <ion-navbar color="blank" style="padding:0;margin:0;height:50px !important;min-height: 50px !important;">
+    <ion-item no-lines style="border-bottom: 3px #ffffff solid;">
+      <img item-start src="assets/img/saoyisao.png" class="search-img" (click)="openScanPage()" />
+      <div item-end>
+        <img src="assets/img/{{importWallet ? 'close':'add'}}.png" class="search-img" style="margin-right:10px;"
+          (click)="showImportWallet()" />
+        <img src="assets/img/xiaoxi.png" class="search-img" />
+      </div>
+    </ion-item>
+  </ion-navbar>
+  <ion-fab right *ngIf="importWallet">
+    <button ion-button class="btn" color="light" (click)="alertImportWallet()">
+      导入钱包
+    </button>
+  </ion-fab>
 </ion-header>
 <ion-content>
-    <ion-item no-lines style="background: #ffffff !important;">
-        钱包资产
-    </ion-item>
-    <ion-item no-lines detail-push style="background: #ffffff !important;">
-        <div item-start *ngIf="walletBalance" style="font-size:16px;">
-            {{ balance }} 千克
-        </div>
-        <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
-            进入钱包
-        </div>
-    </ion-item>
-    <ion-item detail-push style="margin-top:10px;background: #ffffff !important;" (click)="openMyGamePage()">
-        <img item-start class="icon-img" src="assets/img/icon_game.png" />
-        <ion-row style="font-size:16px;"> {{'My game' | translate}} </ion-row>
-    </ion-item>
-    <ion-item detail-push style="background: #ffffff !important;" (click)="openMyPropsPage()">
-        <img item-start class="icon-img" src="assets/img/icon_props.png" />
-        <ion-row style="font-size:16px;"> {{'My props' | translate}} </ion-row>
-    </ion-item>
-    <ion-item detail-push style="background: #ffffff !important;" (click)="openWalletSettingsPage()">
-        <img item-start class="icon-img" src="assets/img/seting.png" />
-        <ion-row style="font-size:16px;"> {{'Settings' | translate}} </ion-row>
-    </ion-item>
+  <ion-item no-lines style="background: #ffffff !important;">
+    钱包资产
+  </ion-item>
+  <ion-item no-lines detail-push style="background: #ffffff !important;">
+    <div item-start *ngIf="walletBalance" style="font-size:16px;">
+      {{ balance }} 千克
+    </div>
+    <div item-end style="font-size:16px;" (click)="gotoCreatewallet()">
+      进入钱包
+    </div>
+  </ion-item>
+  <ion-item detail-push style="margin-top:10px;background: #ffffff !important;" (click)="openMyGamePage()">
+    <img item-start class="icon-img" src="assets/img/icon_game.png" />
+    <ion-row style="font-size:16px;"> {{'My game' | translate}} </ion-row>
+  </ion-item>
+  <ion-item detail-push style="background: #ffffff !important;" (click)="openMyPropsPage()">
+    <img item-start class="icon-img" src="assets/img/icon_props.png" />
+    <ion-row style="font-size:16px;"> {{'My props' | translate}} </ion-row>
+  </ion-item>
+  <ion-item detail-push style="background: #ffffff !important;" (click)="openWalletSettingsPage()">
+    <img item-start class="icon-img" src="assets/img/seting.png" />
+    <ion-row style="font-size:16px;"> {{'Settings' | translate}} </ion-row>
+  </ion-item>
 </ion-content>
