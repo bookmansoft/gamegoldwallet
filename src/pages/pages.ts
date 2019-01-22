@@ -5,12 +5,10 @@ import { AddPage } from '../pages/add/add';
 import { JoinWalletPage } from '../pages/add/join-wallet/join-wallet';
 import { BackupGamePage } from '../pages/backup/backup-game/backup-game';
 import { BackupWarningPage } from '../pages/backup/backup-warning/backup-warning';
-import { ContractPage } from '../pages/contract/contract';
 import { FeedbackCompletePage } from '../pages/feedback/feedback-complete/feedback-complete';
 import { FeedbackPage } from '../pages/feedback/feedback/feedback';
 import { SendFeedbackPage } from '../pages/feedback/send-feedback/send-feedback';
 import { FinishModalPage } from '../pages/finish/finish';
-import { ContractDetailPage } from '../pages/goldmarket/contract-detail/contract-detail';
 import { BackupRequestPage } from '../pages/onboarding/backup-request/backup-request';
 import { CollectEmailPage } from '../pages/onboarding/collect-email/collect-email';
 import { DisclaimerPage } from '../pages/onboarding/disclaimer/disclaimer';
@@ -38,7 +36,6 @@ import { WalletItemPage } from '../pages/includes/wallet-item/wallet-item';
 import { WalletSelectorPage } from '../pages/includes/wallet-selector/wallet-selector';
 
 /* Tabs */
-import { GameMarketPage } from '../pages/gamemarket/gamemarket';
 import { GoldMarketPage } from '../pages/goldmarket/goldmarket';
 import { HomePage } from '../pages/home/home';
 import { PropMarketPage } from '../pages/propmarket/propmarket';
@@ -46,6 +43,7 @@ import { SettingsPage } from '../pages/settings/settings';
 
 /* Home */
 import { ActivityPage } from '../pages/home/activity/activity';
+import { GameDetailPage } from '../pages/home/game-detail/game-detail';
 import { ProposalsPage } from '../pages/home/proposals/proposals';
 import { ReceivePage } from '../pages/receive/receive';
 import { ScanPage } from '../pages/scan/scan';
@@ -116,11 +114,10 @@ import { PropListPage } from '../pages/propmarket/proplist/proplist';
 import { PropReleasePage } from '../pages/propmarket/propsrelease/proprelease';
 
 /* game */
-import { from } from 'rxjs/observable/from';
-import { BuysuccessPage } from '../pages/gamemarket/buysuccess/buysuccess';
-import { MarketListPage } from '../pages/gamemarket/market-list/market-list';
-import { SalePage } from '../pages/gamemarket/sale/sale';
-import { SellingDetailsPage } from '../pages/gamemarket/sellingdetails/sellingdetails';
+import { BuysuccessPage } from '../pages/goldmarket/buysuccess/buysuccess';
+import { MarketListPage } from '../pages/goldmarket/market-list/market-list';
+import { SalePage } from '../pages/goldmarket/sale/sale';
+import { SellingDetailsPage } from '../pages/goldmarket/sellingdetails/sellingdetails';
 
 export const PAGES = [
   WelcomePage,
@@ -174,9 +171,9 @@ export const PAGES = [
   OnboardingPage,
   PaperWalletPage,
   PayProPage,
+  GameDetailPage,
   ...PIN_COMPONENTS,
   ProposalsPage,
-  GameMarketPage,
   MarketListPage,
   SellingDetailsPage,
   SalePage,
@@ -218,7 +215,5 @@ export const PAGES = [
   WalletActivityPage,
   WalletSelectorPage,
   CardItemPage,
-  SlideToAcceptPage,
-  ContractDetailPage,
-  ContractPage
+  SlideToAcceptPage
 ];

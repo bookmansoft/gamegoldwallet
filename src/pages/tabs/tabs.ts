@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { GameMarketPage } from '../gamemarket/gamemarket';
 import { GoldMarketPage } from '../goldmarket/goldmarket';
 import { HomePage } from '../home/home';
 import { MinePage } from '../mine/mine';
@@ -12,10 +11,9 @@ export class TabsPage {
   @ViewChild('tabs') tabs;
 
   homeRoot = HomePage;
-  GameMarketRoot = GameMarketPage;
   PropMarketRoot = PropMarketPage;
   GoldMarketRoot = GoldMarketPage;
   mineRoot = MinePage;
 
-  constructor() {}
+  constructor() { }
 }

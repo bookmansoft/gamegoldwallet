@@ -1,22 +1,6 @@
 <ion-tabs #tabs>
-  <ion-tab
-    [root]="homeRoot"
-    tabTitle="{{ 'Home' | translate }}"
-    tabIcon="tab-home"
-  ></ion-tab>
-  <ion-tab
-    [root]="PropMarketRoot"
-    tabTitle="{{ 'PropMarket' | translate }}"
-    tabIcon="tab-propmarket"
-  ></ion-tab>
-  <ion-tab
-    [root]="GameMarketRoot"
-    tabTitle="{{ 'GameMarket' | translate }}"
-    tabIcon="tab-gamemarket"
-  ></ion-tab>
-  <ion-tab
-    [root]="mineRoot"
-    tabTitle="{{ 'Me' | translate }}"
-    tabIcon="tab-mine"
-  ></ion-tab>
+  <ion-tab [root]="homeRoot" tabTitle="{{ 'Home' | translate }}" tabIcon="tab-home"></ion-tab>
+  <ion-tab [root]="PropMarketRoot" tabTitle="{{ 'PropMarket' | translate }}" tabIcon="tab-propmarket"></ion-tab>
+  <ion-tab [root]="GoldMarketRoot" tabTitle="{{ 'GoldMarket' | translate }}" tabIcon="tab-gamemarket"></ion-tab>
+  <ion-tab [root]="mineRoot" tabTitle="{{ 'Me' | translate }}" tabIcon="tab-mine"></ion-tab>
 </ion-tabs>
