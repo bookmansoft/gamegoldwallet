@@ -25,11 +25,6 @@
       </div> -->
     </div>
   </ion-navbar>
-  <!--<ion-navbar>
-    <ion-title>
-      <img class="home-logo" src="assets/img/app/logo-negative.svg">
-    </ion-title>
-  </ion-navbar>-->
 </ion-header>
 
 <ion-content>
@@ -40,11 +35,11 @@
         <span style="margin-top:3px;margin-left: 10px;">(推荐)《Minecraft for Mobile》现已上线！</span>
         <span style="margin-top:5px;margin-left: 10px;color: #999999;">Mojang/Microsoft Studios</span>
       </div>
-      <ion-item *ngFor="let cp of cplist">
+      <button ion-item *ngFor="let cp of cplist" (click)="gotoGameDetail(cp)">
         <img item-start class="re-img" [src]="cp.game.icon_url" />
         <h3>{{cp.game.game_title}}</h3>
         <p style="margin-top: 10px;">{{cp.game.cp_type}}</p>
-      </ion-item>
+      </button>
 
     </ion-list>
     <!-- <ion-list *ngSwitchCase="'2'">

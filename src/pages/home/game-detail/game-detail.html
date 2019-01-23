@@ -1,17 +1,62 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{'Pending Proposals'|translate}}</ion-title>
+  <ion-navbar class="navbar-transparent">
+    <ion-title>{{cp.game.game_title}}</ion-title>
   </ion-navbar>
+  <div class="content-menu">
+    <div class="menu-item" style="border-right:2px #f5f5f9 solid;" tappable (click)="onSelect(1)">
+      <span [ngStyle]="{ color: index == 1 ? '#1abb9b' : '' }" style="color:#1abb9b;">详情</span>
+      <span [ngClass]="{ select: index == 1 }"></span>
+    </div>
+    <div class="menu-item" style="border-right:2px #f5f5f9 solid;" tappable (click)="onSelect(2)">
+      <span [ngStyle]="{ color: index == 2 ? '#1abb9b' : '' }">截图</span>
+      <span [ngClass]="{ select: index == 2 }"></span>
+    </div>
+    <div class="menu-item" tappable (click)="onSelect(3)">
+      <span [ngStyle]="{ color: index == 3 ? '#1abb9b' : '' }">游戏道具</span>
+      <span [ngClass]="{ select: index == 3 }"></span>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="txps && txps[0]">
-    <page-txp *ngFor="let txp of txps" [tx]="txp" [addressbook]="addressbook"></page-txp>
-  </ion-list>
+  <div [ngSwitch]="index">
+    <ion-list *ngSwitchCase="'1'">
+      <div class="rec-title" style="margin-top:10px;">
+        <img [src]="cp.game.large_img_url" class="rec-title-img" mode="widthFix" />
+      </div>
+      <ion-item>
+        <img [src]="cp.game.icon_url" class="re-img" />
+        <h3>{{cp.game.game_title}}</h3>
+        <p style="margin-top: 10px;">{{cp.game.provider}}</p>
+      </ion-item>
+      <button *ngIf="!authoried" (click)="authorizeGame()">
+        授权游戏
+      </button>
+      <button *ngIf="authoried" (click)="gotoGameMarket()">
+        购买道具
+      </button>
+    </ion-list>
+    <!-- 游戏截图页 -->
+    <ion-list *ngSwitchCase="'2'">
+      <ion-item>
+        敬请期待!
+      </ion-item>
+    </ion-list>
+    <!-- 游戏内购道具 -->
+    <ion-list *ngSwitchCase="'3'">
+      <ion-card *ngFor="let prop of cp.proplist">
+        <ion-item style="background:#ffffff !important;" no-lines (click)="gotoPropList(prop)">
+          <ion-avatar item-start class="game-img" style="margin-right:40px;">
+            <img [src]="prop.icon">
+          </ion-avatar>
 
-  <ion-list *ngIf="txps && !txps[0]">
-    <ion-item>
-      <span translate>No pending proposals</span>
-    </ion-item>
-  </ion-list>
+          <h1 style="font-size: 14px;">{{prop.props_name}}</h1>
+          <div class="btn-view">
+            <p class="item-btn">{{prop.props_rank}}</p>
+          </div>
+          <div style="color: red;font-size: 14px;height: 20px;margin-top: 8px;">{{prop.props_price}}-游戏金</div>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </div>
 </ion-content>
