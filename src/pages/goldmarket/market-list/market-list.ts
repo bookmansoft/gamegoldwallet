@@ -30,7 +30,6 @@ import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 })
 export class MarketListPage {
   private isCordova: boolean;
-  private game: any;
   public propType: string;
   public platformType: string;
   public server: string;
@@ -57,9 +56,7 @@ export class MarketListPage {
     private walletProvider: WalletProvider,
     private spvNodeProvider: SpvNodeProvider
   ) {
-    this.isCordova = this.platform.isCordova;
-    this.game = this.navParams.get('game');
-    this.logger.info(JSON.stringify(this.game));
+    this.isCordova = this.platform.isCordova;;
     // TODO:翻译
     this.buyButtonText = '购买';
     this.listenForEvents();
@@ -115,7 +112,8 @@ export class MarketListPage {
 
   ionViewWillEnter() {
     this.logger.info("ionViewWillEnter");
-    this.spvNodeProvider.listMarket(this.game.cpid);
+    // 获取在售道具列表
+    this.spvNodeProvider.listMarket();
   }
 
   ngOnDestroy() {
@@ -123,7 +121,7 @@ export class MarketListPage {
   }
 
   private listenForEvents() {
-    this.events.subscribe('prop.list.market', props => {
+    this.events.subscribe('node:prop.list.market', props => {
       this.logger.info("get market props " + JSON.stringify(props));
       this.proplist = this.tranformPropList(props);
       this.logger.info("tranformPropList " + JSON.stringify(this.proplist));

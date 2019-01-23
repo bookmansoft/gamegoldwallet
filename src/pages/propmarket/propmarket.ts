@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, VERSION, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -35,7 +36,7 @@ export class PropMarketPage {
   private isCordova: boolean;
   public searchButtonText: string;
   public showButtonText: string;
-  public gamelist: any;
+  public propList: any;
   public firstAddress: any;
 
   constructor(
@@ -50,7 +51,8 @@ export class PropMarketPage {
     private translate: TranslateService,
     private navParams: NavParams,
     private walletProvider: WalletProvider,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    private http: HttpClient
   ) {
     this.isCordova = this.platform.isCordova;
     // TODO:翻译
@@ -109,8 +111,7 @@ export class PropMarketPage {
 
   ionViewWillEnter() {
     this.logger.info('ionViewWillEnter');
-    this.spvNodeProvider.getCpList();
-    this.spvNodeProvider.getFirstAddress();
+    this.spvNodeProvider.listMarket();
   }
 
   ngOnDestroy() {
@@ -118,42 +119,41 @@ export class PropMarketPage {
   }
 
   private listenForEvents() {
-    this.events.subscribe('node:cplist', cps => {
-      this.gamelist = this.tranformGameList(cps);
-    });
-    // 用地址簿的第一个地址作为游戏内ID
-    this.events.subscribe('address.first', address => {
-      this.firstAddress = address;
+    this.events.subscribe('node:prop.list.market', props => {
+      this.logger.info("propmarketlist" + JSON.stringify(props));
+      this.tranformPropList(props);
     });
   }
 
   private unListenForEvents() {
-    this.events.unsubscribe('node:cplist');
-    this.events.unsubscribe('address.first');
+    this.events.unsubscribe('node:prop.list.market');
   }
 
-  // 转换返回的cp为可显示的gamelist
-  // TODO:cplist的modal.
-  private tranformGameList(cplist) {
-    let gameList = [];
-    if (cplist && cplist.list) {
-      cplist.list.forEach(cp => {
-        // TODO:应该根据URL从游戏服务器获取.
-        // boss特殊处理,不显示
-        // this.logger.info(cp);
-        if (cp.cid != 'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx') {
-          let nowGame = {
-            cpid: cp.cid,
-            img:
-              'http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png',
-            title: cp.name,
-            subtitle: '人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记',
-            version: '3.1.1'
-          };
-          gameList.push(nowGame);
-        }
-      });
+  /**
+   * 转换返回的道具信息为可显示的proplist
+   * 从链上获取了在售道具列表,还需要进行下面几步操作.
+   * 1.根据cid获取prop对应的cp信息
+   * 2.根据cp信息中url,拼接道具propurl,获取厂商prop信息
+   * 3.组合链上prop和厂商prop,形成prop的完整信息.
+   * @param proplist 链上的在售道具列表
+   */
+  private async tranformPropList(proplist) {
+    this.propList = [];
+    for (var i = 0; i < proplist.length; i++) {
+      let prop = proplist[i];
+      let cp = await this.spvNodeProvider.getCpById(prop.cid);
+      prop['cp'] = cp;
+      if (!!cp.url) {
+        this.http.get(cp.url + '/prop/' + prop.oid).subscribe(
+          propDetail => {
+            this.logger.info("propDetail: " + JSON.stringify(propDetail));
+            prop['detail'] = propDetail;
+            this.propList.push(prop);
+          },
+          error => {
+            this.logger.error("get PropDetail error :" + error);
+          });
+      }
     }
-    return gameList;
   }
 }
