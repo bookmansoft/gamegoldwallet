@@ -1,85 +1,73 @@
 <ion-header>
-    <ion-navbar
-      color="blank"
-      style="height:50px !important;min-height: 50px !important;"
-    >
-      <ion-title>游戏详情</ion-title>
-      <ion-buttons end>
-        <img src="assets/img/xiaoxi.png" class="search-img" />
-      </ion-buttons>
+    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+        <ion-title>游戏详情</ion-title>
+        <ion-buttons end>
+            <img src="assets/img/xiaoxi.png" class="search-img" />
+        </ion-buttons>
     </ion-navbar>
-  </ion-header>
+</ion-header>
 
 <ion-content>
     <div [ngSwitch]="index">
         <ion-list *ngSwitchCase="'1'">
-            <div class="rec-title" style="margin-top:10px;">
+            <div class="rec-title">
                 <img src="assets/img/u96.png" class="rec-title-img" mode="widthFix" />
-                <span style="margin-top:3px;margin-left: 10px;">《Minecraft for Mobile v1.23.14》游戏详情页</span
-        >
-        <span style="margin-top:5px;margin-left: 10px;color: #999999;"
-          >Mojang/Microsoft Studios</span
-        >
-      </div>
-      <ion-item>
-        <img item-start class="re-img" src="assets/img/u97.png" />
-        <h3>(推荐)《Assassin's Creed》现已上线！大家快来吧！</h3>
-        <p style="margin-top: 10px;">Action & adventure</p>
-      </ion-item>
-      <ion-item>
-        <img item-start class="re-img" src="assets/img/u98.png" />
-        <h3>(推荐)《Pick You Pet》现已上线！大家快来吧！</h3>
-        <p style="margin-top: 10px;">Simulation</p>
-      </ion-item>
-      <ion-item>
-        <img item-start class="re-img" src="assets/img/u99.png" />
-        <h3>(推荐)《The New-Age War》现已上线！大家快来吧！</h3>
-        <p style="margin-top: 10px;">Action & adventure</p>
-      </ion-item>
-      <ion-item>
-        <img item-start class="re-img" src="assets/img/u97.png" />
-        <h3>(推荐)《Assassin's Creed》现已上线！大家快来吧！</h3>
-        <p style="margin-top: 10px;">Action & adventure</p>
-      </ion-item>
-    </ion-list>
-    <ion-list *ngSwitchCase="'2'">
-      <ion-item
-        style="height: 40px;text-align: center; border-bottom: 3px #f5f5f9 solid;"
-      >
-        <button ion-button class="btn" color="#1abb9b">冒险</button>
-        <button ion-button class="btn" color="#1abb9b">生存</button>
-        <button ion-button class="btn" color="#1abb9b">角色扮演</button>
-        <button ion-button class="btn" color="#1abb9b">动作</button>
-        <button ion-button class="btn" color="#1abb9b">卡牌</button>
-      </ion-item>
-      <ion-list>
-        <ion-item
-          no-lines
-          detail-push
-          style="height:40px;border-bottom-width: 0px !important;"
-        >
-          <h3 style="font-size:15px;">角色扮演</h3>
-          <ion-note item-end style="font-size:15px;color: #e2e2e2;">
-            更多
-          </ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-avatar item-start class="game-img">
-            <img src="assets/img/u152.png" />
-            <span class="game-span">Forza Horizon 3</span>
-                </ion-avatar>
-                <ion-avatar item-start class="game-img">
-                    <img src="assets/img/u146.png" />
-                    <span class="game-span">Age of Empires: </span>
-                </ion-avatar>
-                <ion-avatar item-start class="game-img">
-                    <img src="assets/img/u145.png" />
-                    <span class="game-span">Rise of Nations:Ext</span>
-                </ion-avatar>
-                <ion-avatar item-start class="game-img">
-                    <img src="assets/img/u147.png" />
-                    <span class="game-span">ARK:Survival Evolved Games</span>
-                </ion-avatar>
+                <span style="margin-top:3px;margin-left: 10px;">《Minecraft for Mobile v1.23.14》游戏详情页</span>
+                <span style="margin-top:5px;margin-left: 10px;color: #999999;">Mojang/Microsoft Studios</span>
+            </div>
+            <ion-item>
+                <img item-start class="re-img" src="assets/img/u97.png" />
+                <h3>(推荐)《Assassin's Creed》现已上线！大家快来吧！</h3>
+                <p style="margin-top: 10px;">Action & adventure</p>
+            </ion-item>
+            <ion-item>
+                <img item-start class="re-img" src="assets/img/u98.png" />
+                <h3>(推荐)《Pick You Pet》现已上线！大家快来吧！</h3>
+                <p style="margin-top: 10px;">Simulation</p>
+            </ion-item>
+            <ion-item>
+                <img item-start class="re-img" src="assets/img/u99.png" />
+                <h3>(推荐)《The New-Age War》现已上线！大家快来吧！</h3>
+                <p style="margin-top: 10px;">Action & adventure</p>
+            </ion-item>
+            <ion-item>
+                <img item-start class="re-img" src="assets/img/u97.png" />
+                <h3>(推荐)《Assassin's Creed》现已上线！大家快来吧！</h3>
+                <p style="margin-top: 10px;">Action & adventure</p>
+            </ion-item>
+        </ion-list>
+        <ion-list *ngSwitchCase="'2'">
+            <ion-item style="height: 40px;text-align: center; border-bottom: 3px #f5f5f9 solid;">
+                <button ion-button class="btn" color="#1abb9b">冒险</button>
+                <button ion-button class="btn" color="#1abb9b">生存</button>
+                <button ion-button class="btn" color="#1abb9b">角色扮演</button>
+                <button ion-button class="btn" color="#1abb9b">动作</button>
+                <button ion-button class="btn" color="#1abb9b">卡牌</button>
+            </ion-item>
+            <ion-list>
+                <ion-item no-lines detail-push style="height:40px;border-bottom-width: 0px !important;">
+                    <h3 style="font-size:15px;">角色扮演</h3>
+                    <ion-note item-end style="font-size:15px;color: #e2e2e2;">
+                        更多
+                    </ion-note>
+                </ion-item>
+                <ion-item>
+                    <ion-avatar item-start class="game-img">
+                        <img src="assets/img/u152.png" />
+                        <span class="game-span">Forza Horizon 3</span>
+                    </ion-avatar>
+                    <ion-avatar item-start class="game-img">
+                        <img src="assets/img/u146.png" />
+                        <span class="game-span">Age of Empires: </span>
+                    </ion-avatar>
+                    <ion-avatar item-start class="game-img">
+                        <img src="assets/img/u145.png" />
+                        <span class="game-span">Rise of Nations:Ext</span>
+                    </ion-avatar>
+                    <ion-avatar item-start class="game-img">
+                        <img src="assets/img/u147.png" />
+                        <span class="game-span">ARK:Survival Evolved Games</span>
+                    </ion-avatar>
                 </ion-item>
                 <ion-item no-lines detail-push style="height:40px;border-bottom-width: 0px !important;">
                     <h3 style="font-size:15px;">动作</h3>
@@ -177,20 +165,20 @@
                         <span class="game-span">ARK:Survival Evolved Games</span>
                     </ion-avatar>
                 </ion-item>
-        </ion-list>
+            </ion-list>
         </ion-list>
         <ion-list *ngSwitchCase="'3'">
             <ion-item style="height: 40px;text-align: center; border-bottom: 3px #f5f5f9 solid;display: flex;flex-direction: row;justify-content: space-between;">
                 <button ion-button class="btn">好评</button>
                 <button ion-button class="btn" style="margin-left:7.4%" color="light" outline>
-          热玩榜
-        </button>
+                    热玩榜
+                </button>
                 <button ion-button class="btn" style="margin-left:7.4%;" color="light" outline>
-          下载榜
-        </button>
+                    下载榜
+                </button>
                 <button ion-button class="btn" style="margin-left:7.4%;" color="light" outline>
-          预约榜
-        </button>
+                    预约榜
+                </button>
             </ion-item>
             <ion-list style="width:100%;">
                 <ion-item style="height:90px;position: relative;">
@@ -213,8 +201,8 @@
                         </div>
                     </ion-item>
                     <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;">
-            进入
-          </button>
+                        进入
+                    </button>
                 </ion-item>
                 <ion-item style="height:90px;">
                     <ion-avatar item-start style="margin:0px;padding:0px;">
@@ -236,8 +224,8 @@
                         </div>
                     </ion-item>
                     <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;">
-            进入
-          </button>
+                        进入
+                    </button>
                 </ion-item>
                 <ion-item style="height:90px;">
                     <ion-avatar item-start style="margin:0px;padding:0px;">
@@ -258,9 +246,10 @@
                             <p class="item-btn">角色扮演</p>
                         </div>
                     </ion-item>
-                    <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;" outline>
-            下载
-          </button>
+                    <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;"
+                        outline>
+                        下载
+                    </button>
                 </ion-item>
                 <ion-item style="height:90px;">
                     <ion-avatar item-start style="display:flex;margin:0px;padding:0px;align-items: center;width: 50px;height: 50px;justify-content: center;">
@@ -282,9 +271,10 @@
                             <p class="item-btn">战争</p>
                         </div>
                     </ion-item>
-                    <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;" outline>
-            下载
-          </button>
+                    <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;"
+                        outline>
+                        下载
+                    </button>
                 </ion-item>
                 <ion-item style="height:90px;">
                     <ion-avatar item-start style="display:flex;margin:0px;padding:0px;align-items: center;width: 50px;height: 50px;justify-content: center;">
@@ -305,9 +295,10 @@
                             <p class="item-btn">模拟</p>
                         </div>
                     </ion-item>
-                    <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;" outline>
-            下载
-          </button>
+                    <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;"
+                        outline>
+                        下载
+                    </button>
                 </ion-item>
                 <ion-item style="height:90px;">
                     <ion-avatar item-start style="display:flex;margin:0px;padding:0px;align-items: center;width: 50px;height: 50px;justify-content: center;">
@@ -329,8 +320,8 @@
                         </div>
                     </ion-item>
                     <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;">
-            进入
-          </button>
+                        进入
+                    </button>
                 </ion-item>
                 <ion-item style="height:90px;">
                     <ion-avatar item-start style="display:flex;margin:0px;padding:0px;align-items: center;width: 50px;height: 50px;justify-content: center;">
@@ -352,8 +343,8 @@
                         </div>
                     </ion-item>
                     <button item-end ion-button class="btn" style="position: absolute;right: 2%;width: 45px;min-width: 45px;">
-            进入
-          </button>
+                        进入
+                    </button>
                 </ion-item>
             </ion-list>
             <!--<ion-item>
@@ -376,5 +367,5 @@
             </ion-item>
             -->
         </ion-list>
-        </div>
+    </div>
 </ion-content>
