@@ -38,13 +38,12 @@ import { ReplaceParametersProvider } from '../../providers/replace-parameters/re
 import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 import { ScanPage } from '../scan/scan';
-import { GameDetailPage } from '../home/game-detail';
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-game-detail',
+  templateUrl: 'game-detail.html'
 })
-export class HomePage {
+export class GameDetailPage {
   public searchInput: string;
   index: number = 1;
 
@@ -156,8 +155,7 @@ export class HomePage {
 
   // 扫一扫
   public openScanPage(): void {
-    //this.navCtrl.push(ScanPage, {});
-    this.navCtrl.push(GameDetailPage,{});
+    this.navCtrl.push(ScanPage, {});
   }
 
   ionViewWillEnter() {
@@ -189,7 +187,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.logger.info('ionViewDidLoad HomePage');
+    this.logger.info('ionViewDidLoad GameDetailPage');
 
     this.checkEmailLawCompliance();
 
