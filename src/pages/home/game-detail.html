@@ -1,20 +1,46 @@
 <ion-header>
     <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>游戏详情</ion-title>
+        <ion-title>Minecraft for Mobile</ion-title>
         <ion-buttons end>
-            <img src="assets/img/xiaoxi.png" class="search-img" />
+            <img src="assets/img/u369.png" class="search-img" />
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
     <div [ngSwitch]="index">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-12><img src="assets/img/u96.png" mode="widthFix" /></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3>
+                    <img src="assets/img/u145.png" mode="widthFix" /><br />
+                    <ion-row>
+                        <ion-col col-4>
+                            <img src="assets/img/u35.png" mode="widthFix" />
+                        </ion-col>
+                        <ion-col col-8>
+                            <span style="font-size:10px;color:#18bb9a">推荐</span>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+                <ion-col col-6>
+                    <span align="center" style="margin-top:3px;margin-left: 10px;font-weight:bold;font-size:14px">Minecraft
+                        for Mobile</span><br />
+                    <span style="margin-top:5px;margin-left: 0px;color: #999999;">
+                        发行商： Mojang / Microsoft内容内容内容怎样怎样怎样</span><br />
+                    <ion-badge color="light" style="font-size:10px;color:#999999">动作</ion-badge>
+                    <ion-badge color="light" style="font-size:10px;color:#999999">冒险</ion-badge>
+                </ion-col>
+                <ion-col col-3>
+                    <!-- <ion-badge color="info" style="font-size:16px;color:#ffffff" round>进入</ion-badge> -->
+                    <button ion-button color="info" small round style="font-size:10px;width:80%">进入</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
         <ion-list *ngSwitchCase="'1'">
-            <div class="rec-title">
-                <img src="assets/img/u96.png" class="rec-title-img" mode="widthFix" />
-                <span style="margin-top:3px;margin-left: 10px;">《Minecraft for Mobile v1.23.14》游戏详情页</span>
-                <span style="margin-top:5px;margin-left: 10px;color: #999999;">Mojang/Microsoft Studios</span>
-            </div>
+
             <ion-item>
                 <img item-start class="re-img" src="assets/img/u97.png" />
                 <h3>(推荐)《Assassin's Creed》现已上线！大家快来吧！</h3>
