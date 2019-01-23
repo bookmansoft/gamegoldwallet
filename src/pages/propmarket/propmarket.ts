@@ -20,7 +20,7 @@ import { WalletProvider } from '../../providers/wallet/wallet';
 import { ScanPage } from '../scan/scan';
 import { AmountPage } from '../send/amount/amount';
 import { AddressbookAddPage } from '../settings/addressbook/add/add';
-import { PropListPage } from './proplist/proplist';
+import { PropDetailPage } from './prop-detail/prop-detail';
 import { PropReleasePage } from './propsrelease/proprelease';
 
 import env from '../../environments';
@@ -56,18 +56,6 @@ export class PropMarketPage {
     // TODO:翻译
     this.searchButtonText = '搜索';
     this.showButtonText = '查看';
-    // // 获取游戏列表数据,目前为json
-    // this.api
-    //   .get('assets/mock/gamelist.json')
-    //   .toPromise()
-    //   .then(data => {
-    //     this.gamelist = data;
-    //   })
-    //   .catch(e => this.logger.info(e));
-    // this.spvNodeProvider.getCpList().then(cps => {
-    //   this.gamelist = cps;
-    //   this.logger.info(this.gamelist);
-    // });
     // 进行事件监听
     this.listenForEvents();
   }
@@ -92,20 +80,22 @@ export class PropMarketPage {
       infiniteScroll.complete();
     }, 2000);
   }
+
   // 用于跳转到道具发布页面
-  gotoPropRelease(gameinfo) {
-    // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
-    this.navCtrl.push(PropReleasePage, {
-      game: gameinfo,
-      userId: this.firstAddress
-    });
-    this.logger.info('页面跳转gotoList' + gameinfo);
-  }
-  // 用于跳转到道具页面
-  gotoPropList(gameinfo) {
+  // gotoPropRelease(gameinfo) {
+  //   // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
+  //   this.navCtrl.push(PropReleasePage, {
+  //     game: gameinfo,
+  //     userId: this.firstAddress
+  //   });
+  //   this.logger.info('页面跳转gotoList' + gameinfo);
+  // }
+
+  // 跳转到道具页面
+  gotoPropDetail(gameinfo) {
     // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
     // 这个地址应该存储到storage中.
-    this.navCtrl.push(PropListPage, {
+    this.navCtrl.push(PropDetailPage, {
       game: gameinfo,
       userId: this.firstAddress
     });

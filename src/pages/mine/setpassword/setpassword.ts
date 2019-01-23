@@ -23,7 +23,7 @@ import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
 
 import env from '../../../environments';
-import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
+import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 @Component({
   selector: 'page-setpassword',
   templateUrl: './setpassword.html'
@@ -35,7 +35,7 @@ export class SetPasswordPage {
     private navCtrl: NavController,
     private logger: Logger,
     private storage: Storage
-  ) {}
+  ) { }
   /**
    * 获取输入
    * @param password

@@ -20,15 +20,14 @@ import { WalletProvider } from '../../../providers/wallet/wallet';
 // pages
 import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
-import { PropDetailPage } from '../propdetail/propdetail';
 
 import env from '../../../environments';
 
 @Component({
-  selector: 'page-proplist',
-  templateUrl: './proplist.html'
+  selector: 'page-prop-detail',
+  templateUrl: './prop-detail.html'
 })
-export class PropListPage {
+export class PropDetailPage {
   private isCordova: boolean;
   private game: any;
   private userid: string;
@@ -101,12 +100,6 @@ export class PropListPage {
       this.logger.info('Async operation has ended');
       infiniteScroll.complete();
     }, 2000);
-  }
-
-  gotoProp(propid) {
-    this.navCtrl.push(PropDetailPage, {
-      prop: propid
-    });
   }
 
   buyProp(prop) {
@@ -227,11 +220,11 @@ export class PropListPage {
       buttons: [
         {
           text: '取消',
-          handler: () => {}
+          handler: () => { }
         },
         {
           text: '确定',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });

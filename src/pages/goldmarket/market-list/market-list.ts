@@ -22,7 +22,7 @@ import { AmountPage } from '../../send/amount/amount';
 import { AddressbookAddPage } from '../../settings/addressbook/add/add';
 
 import env from '../../../environments';
-import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
+import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 
 @Component({
   selector: 'page-market-list',

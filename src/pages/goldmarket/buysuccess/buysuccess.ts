@@ -18,7 +18,7 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 
 import env from '../../../environments';
-import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
+import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 @Component({
   selector: 'page-buysuccess',
   templateUrl: './buysuccess.html'

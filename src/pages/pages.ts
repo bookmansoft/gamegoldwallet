@@ -109,8 +109,7 @@ import { ConfirmSendPage } from '../pages/send/confirmsend/confirmsend';
 import { CustomAmountPage } from '../pages/receive/custom-amount/custom-amount';
 
 /* PropMarket */
-import { PropDetailPage } from '../pages/propmarket/propdetail/propdetail';
-import { PropListPage } from '../pages/propmarket/proplist/proplist';
+import { PropDetailPage } from '../pages/propmarket/prop-detail/prop-detail';
 import { PropReleasePage } from '../pages/propmarket/propsrelease/proprelease';
 
 /* game */
@@ -180,7 +179,6 @@ export const PAGES = [
   BuysuccessPage,
   GoldMarketPage,
   PropMarketPage,
-  PropListPage,
   PropDetailPage,
   PropReleasePage,
   SettingsPage,

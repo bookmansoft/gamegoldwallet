@@ -20,13 +20,13 @@ import { SetPasswordPage } from '../setpassword/setpassword';
 
 import { from } from 'rxjs/observable/from';
 import env from '../../../environments';
-import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
+import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 @Component({
   selector: 'page-createwallet',
   templateUrl: './createwallet.html'
 })
 export class CreateWalletPage {
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController) { }
   // 跳转新建钱包
   gotoSetPassword() {
     this.navCtrl.push(SetPasswordPage, {});
