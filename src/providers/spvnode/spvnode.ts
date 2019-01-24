@@ -441,21 +441,18 @@ export class SpvNodeProvider {
   // 获取厂商列表,List,
   // XXX:目前采用http方式,待spv方式修复后,可恢复为spv方式
   public async getCpList(page = 1): Promise<any> {
-    if (this.nodeOpened) {
-      try {
-        this.http.get(`http://${this.serverIP}:17332/public/cps?page=${page}`).subscribe(
-          cps => {
-            this.cplist = cps;
-            this.eventNotification.publish('node:cplist', cps);
-            return cps;
-          },
-          error => {
-            this.logger.error(error);
-          });
+    try {
+      let cps = await this.node.rpc.execute({
+        method: 'cp.list',
+        params: [page]
+      });
+      if (cps) {
+        this.events.publish('node:cp.list', cps);
+        return cps;
       }
-      catch (err) {
-        this.logger.error("get CP List Err" + err);
-      }
+    }
+    catch (err) {
+      this.logger.error("get CP List Err" + err);
     }
   }
 

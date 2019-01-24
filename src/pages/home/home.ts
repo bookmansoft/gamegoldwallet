@@ -130,8 +130,7 @@ export class HomePage {
     // XXX:End
     // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
     this.spvNodeProvider.open().then(() => {
-      // 由于这里刚刚开启,需要等open之后才获取cpList
-      this.spvNodeProvider.getCpList(1);
+
     });
     // 设置默认费率
     this.storage.get('poundage').then(val => {
@@ -169,7 +168,7 @@ export class HomePage {
   // 先从链上获取cp列表,然后根据url
   ionViewWillEnter() {
     this.recentTransactionsEnabled = this.configProvider.get().recentTransactions.enabled;
-    this.events.subscribe('node:cplist', cps => {
+    this.events.subscribe('node:cp.list', cps => {
       this.cps = cps;
       for (var i = 0; i < cps.list.length; i++) {
         let cp = cps.list[i];
@@ -187,6 +186,11 @@ export class HomePage {
         }
       }
     });
+    setTimeout(() => {
+      // 由于这里刚刚开启,需要等open之后才获取cpList
+      this.spvNodeProvider.getCpList(1);
+    }, 1200);
+
   }
 
   ionViewDidEnter() {
