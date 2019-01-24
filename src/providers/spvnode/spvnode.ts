@@ -111,6 +111,7 @@ export class SpvNodeProvider {
       'api-key': 'bookmansoft',
       // 钱包的默认语言版本
       'wallet-language': 'simplified chinese',
+      'http-remote-host': `${this.serverIP}`,
       // 插件列表
       plugins: [
         // 2018.5.3 当前版本要求：钱包插件最后载入
@@ -464,7 +465,7 @@ export class SpvNodeProvider {
    * @returns 当前页道具列表信息
    */
   public async getPropList(page = 1): Promise<any> {
-    const props = await this.wdb.rpc.execute({
+    const props = await this.node.rpc.execute({
       method: 'prop.list',
       params: [page]
     });
@@ -483,7 +484,7 @@ export class SpvNodeProvider {
    * @returns 卖出道具的交易信息
    */
   public async saleProp(prop, np): Promise<any> {
-    const tx = await this.wdb.rpc.execute({
+    const tx = await this.node.rpc.execute({
       method: 'prop.sale',
       params: [prop.current.rev, prop.current.index, np]
     });
@@ -499,7 +500,7 @@ export class SpvNodeProvider {
    * @returns 熔铸的交易信息
    */
   public async foundProp(prop): Promise<any> {
-    const tx = await this.wdb.rpc.execute({
+    const tx = await this.node.rpc.execute({
       method: 'prop.found',
       params: [prop]
     });
@@ -517,7 +518,7 @@ export class SpvNodeProvider {
    * @returns 新的拍卖的交易信息
    */
   public async buyProp(bid, np): Promise<any> {
-    const tx = await this.wdb.rpc.execute({
+    const tx = await this.node.rpc.execute({
       method: 'prop.buy',
       params: [bid.pid, // 拍卖物品编码
         np // 新的竞拍价格
@@ -599,7 +600,7 @@ export class SpvNodeProvider {
 
   // 支付订单
   public async orderPay(order): Promise<any> {
-    const tx = await this.wdb.rpc.execute({
+    const tx = await this.node.rpc.execute({
       method: 'order.pay',
       params: [order.cid, order.uid, order.sn, order.price]
     });
@@ -611,7 +612,7 @@ export class SpvNodeProvider {
 
   // 创建交易对-目前仅btc,type默认1
   public async createContract(ggAmount, btcAmount, btcAddress, type = 1): Promise<any> {
-    const contract = await this.wdb.rpc.execute({
+    const contract = await this.node.rpc.execute({
       method: 'contract.create',
       params: [type, ggAmount, btcAmount, btcAddress]
     });
@@ -623,7 +624,7 @@ export class SpvNodeProvider {
 
   // 承诺兑换交易对-目前仅btc,type默认1
   public async promiseContract(contractId): Promise<any> {
-    const contract = await this.wdb.rpc.execute({
+    const contract = await this.node.rpc.execute({
       method: 'contract.promise',
       params: [contractId]
     });
@@ -648,7 +649,7 @@ export class SpvNodeProvider {
 
   // 查询我参与的交易对
   public async listMineContract(): Promise<any> {
-    const myContracts = await this.wdb.rpc.execute({
+    const myContracts = await this.node.rpc.execute({
       method: 'contract.mine',
     });
     if (myContracts) {
@@ -680,7 +681,7 @@ export class SpvNodeProvider {
     let isMine = false;
     try {
       let base58Address: string = typeof addr === 'string' ? addr : addr.toString(addr.network);
-      const privateKey = await this.wdb.rpc.execute({
+      const privateKey = await this.node.rpc.execute({
         method: 'address.wif',
         params: [base58Address]
       });
@@ -709,7 +710,7 @@ export class SpvNodeProvider {
    * }                                                       
    */
   public async getCpById(cpId: string): Promise<any> {
-    const cp = await this.wdb.rpc.execute({
+    const cp = await this.node.rpc.execute({
       method: 'cp.byId',
       params: [cpId]
     });
@@ -735,7 +736,7 @@ export class SpvNodeProvider {
       if (!verify)
         return null;
     }
-    const token = await this.wdb.rpc.execute({
+    const token = await this.node.rpc.execute({
       method: 'token.user',
       params: [cpId, gameUid, referrer]
     });
@@ -751,7 +752,7 @@ export class SpvNodeProvider {
    * @returns 用户的订单列表
    */
   public async getOrder(cpId?: string, page = 1): Promise<any> {
-    const orders = await this.wdb.rpc.execute({
+    const orders = await this.node.rpc.execute({
       method: 'order.list',
       params: [cpId, page]
     });
@@ -766,7 +767,7 @@ export class SpvNodeProvider {
    * @returns 接收到的道具信息.
    */
   public async receiveProp(raw: string): Promise<any> {
-    const prop = await this.wdb.rpc.execute({
+    const prop = await this.node.rpc.execute({
       method: 'prop.receive',
       params: [raw]
     });
