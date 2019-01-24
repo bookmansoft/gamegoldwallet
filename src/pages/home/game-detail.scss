@@ -126,7 +126,16 @@ page-game-detail {
         width: 110px;
         height: 75px;
     }
+    //---------------------------
     .center {
         text-align: center;align-content: center;
     }
+    .imc-scroll {
+        width: 100%;
+        height: 140px;
+        white-space: nowrap;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch /*iOS 滚动弹簧效果 */
+      }
 }
