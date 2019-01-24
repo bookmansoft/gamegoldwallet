@@ -139,4 +139,19 @@ page-game-detail {
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch /*iOS 滚动弹簧效果 */
       }
+
+    .game-img {
+        width: 75px;
+        height: 75px;
+    }
+    .game-img img {
+        width: 75px;
+        height: 75px;
+        border-radius: 0;
+    }
+    .btn {
+        border-radius: 15px;
+        width: 17.73%;
+        min-width: 17.73%;
+    }
 }
