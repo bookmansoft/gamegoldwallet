@@ -27,6 +27,7 @@ import { EmailNotificationsProvider } from '../../providers/email-notifications/
 import { ErrorProvider } from '../../providers/error/error';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { FeedbackProvider } from '../../providers/feedback/feedback';
+import { GameDetailPage } from '../home/game-detail';
 import { Logger } from '../../providers/logger/logger';
 import { OnGoingProcessProvider } from '../../providers/on-going-process/on-going-process';
 import { PersistenceProvider } from '../../providers/persistence/persistence';
@@ -38,7 +39,7 @@ import { ReplaceParametersProvider } from '../../providers/replace-parameters/re
 import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 import { ScanPage } from '../scan/scan';
-import { GameDetailPage } from '../home/game-detail';
+
 
 @Component({
   selector: 'page-home',
@@ -156,7 +157,7 @@ export class HomePage {
 
   // 扫一扫
   public openScanPage(): void {
-    //this.navCtrl.push(ScanPage, {});
+    // this.navCtrl.push(ScanPage, {});
     this.navCtrl.push(GameDetailPage,{});
   }
 

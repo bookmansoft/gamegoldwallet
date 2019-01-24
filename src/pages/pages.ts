@@ -46,8 +46,8 @@ import { SettingsPage } from '../pages/settings/settings';
 
 /* Home */
 import { ActivityPage } from '../pages/home/activity/activity';
-import { ProposalsPage } from '../pages/home/proposals/proposals';
 import { GameDetailPage } from '../pages/home/game-detail';
+import { ProposalsPage } from '../pages/home/proposals/proposals';
 import { ReceivePage } from '../pages/receive/receive';
 import { ScanPage } from '../pages/scan/scan';
 import { SendPage } from '../pages/send/send';
