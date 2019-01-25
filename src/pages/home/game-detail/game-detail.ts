@@ -93,7 +93,7 @@ export class GameDetailPage {
 
   }
 
-  gotoPropList(prop) {
+  gotoPropDetail(prop) {
 
   }
 

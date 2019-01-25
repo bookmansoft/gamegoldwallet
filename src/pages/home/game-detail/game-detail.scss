@@ -1,23 +1,157 @@
-
 page-game-detail {
-  .re-img {
-    width: 110px;
-    height: 75px;
-  }
-  .content-menu {
-    display: flex;
-    flex-direction: row;
-    height: 42px;
-    box-sizing: border-box;
-    border-bottom: 3px #f5f5f9 solid;
-    justify-content: space-between;
-    font-size: 15px;
-  }
-  .menu-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-  }
+    background: transparent none;
+    &>ion-content.content {
+        background: #fff;
+    }
+    .navbar-transparent,
+    .toolbar-background {
+        background: #fff;
+        padding: 0px;
+    }
+    .toolbar .searchbar-ios .searchbar-input {
+        border-radius: 15px;
+    }
+    button {
+        background: rgba(0, 0, 0, 0);
+    }
+    .btn {
+        border-radius: 15px;
+        width: 17.73%;
+        min-width: 17.73%;
+    }
+    .item-ios ion-avatar img {
+        width: 120px;
+        height: 70px;
+        border-radius: 0;
+    }
+    .item-ios ion-avatar img {
+        width: 120px;
+        height: 70px;
+        border-radius: 0;
+    }
+    .item-search {
+        display: flex;
+        height: 45px;
+        flex-direction: row;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0px 10px 0px 10px;
+        border-bottom: 3px #f5f5f9 solid;
+    }
+    .search-img {
+        width: 24px;
+        height: 24px;
+    }
+    .content-menu {
+        display: flex;
+        flex-direction: row;
+        height: 42px;
+        box-sizing: border-box;
+        border-bottom: 3px #f5f5f9 solid;
+        justify-content: space-between;
+        font-size: 15px;
+    }
+    .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .select {
+        background: #1abb9b;
+        width: 40px;
+        height: 4px;
+        margin-top: 3px;
+        border-radius: 8px;
+    }
+    .select-on {
+        display: none;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+    .content-rec {
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+    }
+    .rec-title {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-bottom: 5px #f5f5f9 solid;
+    }
+    .game-img {
+        width: 100%;
+        height: 100%;
+    }
+    .game-img img {
+        width: 75px;
+        height: 75px;
+        border-radius: 0;
+    }
+    .game-span {
+        font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 24px;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        display: block;
+    }
+    .item-btn {
+        border-radius: 8px;
+        max-width: 60px;
+        min-width: 30px;
+        color: #888888;
+        font-size: 11px;
+        padding: 2px 4px 2px 4px;
+        background: #f4f4f4;
+        margin-right: 10px;
+        text-align: center;
+    }
+    .btn-view {
+        display: flex;
+        flex-direction: row;
+        margin-top: 4px;
+    }
+    .re-img {
+        width: 110px;
+        height: 75px;
+    }
+    //---------------------------
+    .center {
+        text-align: center;align-content: center;
+    }
+
+    .imc-scroll {
+        width: 100%;
+        height: 140px;
+        white-space: nowrap;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch /*iOS 滚动弹簧效果 */
+      }
+
+    .game-img {
+        width: 75px;
+        height: 75px;
+    }
+    .game-img img {
+        width: 75px;
+        height: 75px;
+        border-radius: 0;
+    }
+    .btn {
+        border-radius: 15px;
+        width: 17.73%;
+        min-width: 17.73%;
+    }
 }

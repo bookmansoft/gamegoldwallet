@@ -173,7 +173,8 @@ export class HomePage {
       for (var i = 0; i < cps.list.length; i++) {
         let cp = cps.list[i];
         // this.logger.info("this cp " + i + " : " + JSON.stringify(cp));
-        if (!!cp.url) {
+        // 增加过滤boos的cp
+        if (!!cp.url && !!cp.cid && cp.cid != "xxxxxxxx-game-gold-boss-xxxxxxxxxxxx") {
           this.http.get(cp.url).subscribe(
             cpDetail => {
               this.logger.info("cpDetail: " + JSON.stringify(cpDetail));
@@ -221,7 +222,7 @@ export class HomePage {
   }
 
   ionViewWillLeave() {
-    this.events.unsubscribe('node:cplist');
+    this.events.unsubscribe('node:cp.list');
   }
 
   private subscribeBwsEvents() {
