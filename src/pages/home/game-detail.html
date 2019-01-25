@@ -2,7 +2,7 @@
     <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
         <ion-title>Minecraft for Mobile</ion-title>
         <ion-buttons end>
-            <img src="assets/img/u369.png" class="search-img" />
+            <img src="assets/img/u369.png" class="search-img"/>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
@@ -11,7 +11,7 @@
     <div [ngSwitch]="index">
         <ion-grid>
             <ion-row>
-                <ion-col col-12><img src="assets/img/u96.png" mode="widthFix" /></ion-col>
+                <ion-col col-12><img src="assets/img/u96.png" mode="widthFix"  (click)="getGameInfo()"/></ion-col>
             </ion-row>
             <ion-row>
                 <ion-col col-3>

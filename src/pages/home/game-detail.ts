@@ -27,6 +27,7 @@ import { EmailNotificationsProvider } from '../../providers/email-notifications/
 import { ErrorProvider } from '../../providers/error/error';
 import { ExternalLinkProvider } from '../../providers/external-link/external-link';
 import { FeedbackProvider } from '../../providers/feedback/feedback';
+import { HttpClient } from '@angular/common/http';
 import { Logger } from '../../providers/logger/logger';
 import { OnGoingProcessProvider } from '../../providers/on-going-process/on-going-process';
 import { PersistenceProvider } from '../../providers/persistence/persistence';
@@ -107,32 +108,10 @@ export class GameDetailPage {
     private emailProvider: EmailNotificationsProvider,
     private replaceParametersProvider: ReplaceParametersProvider,
     private spvNodeProvider: SpvNodeProvider,
-    private storage: Storage
+    private storage: Storage,
+    private http: HttpClient,
   ) {
-    this.updatingWalletId = {};
-    this.addressbook = {};
-    this.cachedBalanceUpdateOn = '';
-    this.isNW = this.platformProvider.isNW;
-    this.showReorderBtc = false;
-    this.showReorderBch = false;
-    this.zone = new NgZone({ enableLongStackTrace: false });
-    // XXX:演示用代码,这段代码应该移动到启动页里面
-    // this.storage.get('firstStart').then(val => {
-    //   if (val == null) {
-    //     if (this.spvNodeProvider.setMnemonic('顾 看 乳 初 锐 继 劳 蓝 确 炭 败 沟'))
-    //       this.storage.set('firstStart', 'false');
-    //   }
-    // });
-    // XXX:End
-    // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
-    this.spvNodeProvider.open();
-    this.gameServer = 'http://40.73.119.183:7555';
-    // 设置默认费率
-    this.storage.get('poundage').then(val => {
-      if (val == null) {
-        this.storage.set('poundage', 'conventional');
-      }
-    });
+
   }
   // 用于实时搜索,提示
   onInput(inputEvent: Event) {
@@ -159,54 +138,16 @@ export class GameDetailPage {
   }
 
   ionViewWillEnter() {
-    this.recentTransactionsEnabled = this.configProvider.get().recentTransactions.enabled;
 
-    // Update list of wallets, status and TXPs
-    this.setWallets();
-
-    this.addressBookProvider
-      .list()
-      .then(ab => {
-        this.addressbook = ab || {};
-      })
-      .catch(err => {
-        this.logger.error(err);
-      });
-
-    // Update Tx Notifications
-    // this.getNotifications();
   }
 
   ionViewDidEnter() {
-    if (this.isNW) this.checkUpdate();
-    this.checkHomeTip();
-    this.checkFeedbackInfo();
-    this.checkAnnouncement();
 
-    this.subscribeBwsEvents();
   }
 
   ionViewDidLoad() {
     this.logger.info('ionViewDidLoad GameDetailPage');
 
-    this.checkEmailLawCompliance();
-
-    this.subscribeStatusEvents();
-
-    this.onResumeSubscription = this.plt.resume.subscribe(() => {
-      this.getNotifications();
-      this.updateTxps();
-      this.setWallets();
-      this.subscribeBwsEvents();
-      this.subscribeStatusEvents();
-    });
-
-    this.onPauseSubscription = this.plt.pause.subscribe(() => {
-      this.events.unsubscribe('bwsEvent');
-      this.events.unsubscribe('status:updated');
-    });
-
-    this.listenForEvents();
   }
 
   ngOnDestroy() {
@@ -218,464 +159,474 @@ export class GameDetailPage {
     this.events.unsubscribe('bwsEvent');
   }
 
-  private subscribeBwsEvents() {
-    // BWS Events: Update Status per Wallet
-    // NewBlock, NewAddress, NewTxProposal, TxProposalAcceptedBy, TxProposalRejectedBy, txProposalFinallyRejected,
-    // txProposalFinallyAccepted, TxProposalRemoved, NewIncomingTx, NewOutgoingTx
-    this.events.subscribe('bwsEvent', (walletId: string) => {
-      this.getNotifications();
-      this.updateWallet(walletId);
+  public getGameInfo(): void {
+    let url = 'http://114.116.148.48:9701/mock/cp0104';
+    this.http.get(url).subscribe(response => {
+      console.log("165");
+      console.log(response);
+
+
     });
   }
 
-  private subscribeStatusEvents() {
-    // Create, Join, Import and Delete -> Get Wallets -> Update Status for All Wallets
-    this.events.subscribe('status:updated', () => {
-      this.updateTxps();
-      this.setWallets();
-    });
-  }
+  // private subscribeBwsEvents() {
+  //   // BWS Events: Update Status per Wallet
+  //   // NewBlock, NewAddress, NewTxProposal, TxProposalAcceptedBy, TxProposalRejectedBy, txProposalFinallyRejected,
+  //   // txProposalFinallyAccepted, TxProposalRemoved, NewIncomingTx, NewOutgoingTx
+  //   this.events.subscribe('bwsEvent', (walletId: string) => {
+  //     this.getNotifications();
+  //     this.updateWallet(walletId);
+  //   });
+  // }
 
-  private openEmailDisclaimer() {
-    let message = this.translate.instant(
-      'By providing your email address, you give explicit consent to BitPay to use your email address to send you email notifications about payments.'
-    );
-    let title = this.translate.instant('Privacy Policy update');
-    let okText = this.translate.instant('Accept');
-    let cancelText = this.translate.instant('Disable notifications');
-    this.popupProvider
-      .ionicConfirm(title, message, okText, cancelText)
-      .then(ok => {
-        if (ok) {
-          // Accept new Privacy Policy
-          this.persistenceProvider.setEmailLawCompliance('accepted');
-        } else {
-          // Disable email notifications
-          this.persistenceProvider.setEmailLawCompliance('rejected');
-          this.emailProvider.updateEmail({
-            enabled: false,
-            email: 'null@email'
-          });
-        }
-      });
-  }
+  // private subscribeStatusEvents() {
+  //   // Create, Join, Import and Delete -> Get Wallets -> Update Status for All Wallets
+  //   this.events.subscribe('status:updated', () => {
+  //     this.updateTxps();
+  //     this.setWallets();
+  //   });
+  // }
 
-  private checkEmailLawCompliance(): void {
-    setTimeout(() => {
-      if (this.emailProvider.getEmailIfEnabled()) {
-        this.persistenceProvider.getEmailLawCompliance().then(value => {
-          if (!value) this.openEmailDisclaimer();
-        });
-      }
-    }, 2000);
-  }
+  // private openEmailDisclaimer() {
+  //   let message = this.translate.instant(
+  //     'By providing your email address, you give explicit consent to BitPay to use your email address to send you email notifications about payments.'
+  //   );
+  //   let title = this.translate.instant('Privacy Policy update');
+  //   let okText = this.translate.instant('Accept');
+  //   let cancelText = this.translate.instant('Disable notifications');
+  //   this.popupProvider
+  //     .ionicConfirm(title, message, okText, cancelText)
+  //     .then(ok => {
+  //       if (ok) {
+  //         // Accept new Privacy Policy
+  //         this.persistenceProvider.setEmailLawCompliance('accepted');
+  //       } else {
+  //         // Disable email notifications
+  //         this.persistenceProvider.setEmailLawCompliance('rejected');
+  //         this.emailProvider.updateEmail({
+  //           enabled: false,
+  //           email: 'null@email'
+  //         });
+  //       }
+  //     });
+  // }
 
-  private startUpdatingWalletId(walletId: string) {
-    this.updatingWalletId[walletId] = true;
-  }
+  // private checkEmailLawCompliance(): void {
+  //   setTimeout(() => {
+  //     if (this.emailProvider.getEmailIfEnabled()) {
+  //       this.persistenceProvider.getEmailLawCompliance().then(value => {
+  //         if (!value) this.openEmailDisclaimer();
+  //       });
+  //     }
+  //   }, 2000);
+  // }
 
-  private stopUpdatingWalletId(walletId: string) {
-    setTimeout(() => {
-      this.updatingWalletId[walletId] = false;
-    }, 10000);
-  }
+  // private startUpdatingWalletId(walletId: string) {
+  //   this.updatingWalletId[walletId] = true;
+  // }
 
-  private setWallets = _.debounce(
-    () => {
-      this.wallets = this.profileProvider.getWallets();
-      this.walletsBtc = _.filter(this.wallets, (x: any) => {
-        return x.credentials.coin == 'btc';
-      });
-      this.walletsBch = _.filter(this.wallets, (x: any) => {
-        return x.credentials.coin == 'bch';
-      });
-      this.updateAllWallets();
-    },
-    5000,
-    {
-      leading: true
-    }
-  );
+  // private stopUpdatingWalletId(walletId: string) {
+  //   setTimeout(() => {
+  //     this.updatingWalletId[walletId] = false;
+  //   }, 10000);
+  // }
 
-  public checkHomeTip(): void {
-    this.persistenceProvider.getHomeTipAccepted().then((value: string) => {
-      this.homeTip = value == 'accepted' ? false : true;
-    });
-  }
+  // private setWallets = _.debounce(
+  //   () => {
+  //     this.wallets = this.profileProvider.getWallets();
+  //     this.walletsBtc = _.filter(this.wallets, (x: any) => {
+  //       return x.credentials.coin == 'btc';
+  //     });
+  //     this.walletsBch = _.filter(this.wallets, (x: any) => {
+  //       return x.credentials.coin == 'bch';
+  //     });
+  //     this.updateAllWallets();
+  //   },
+  //   5000,
+  //   {
+  //     leading: true
+  //   }
+  // );
 
-  public hideHomeTip(): void {
-    this.persistenceProvider.setHomeTipAccepted('accepted');
-    this.homeTip = false;
-  }
+  // public checkHomeTip(): void {
+  //   this.persistenceProvider.getHomeTipAccepted().then((value: string) => {
+  //     this.homeTip = value == 'accepted' ? false : true;
+  //   });
+  // }
 
-  private async checkAnnouncement() {}
+  // public hideHomeTip(): void {
+  //   this.persistenceProvider.setHomeTipAccepted('accepted');
+  //   this.homeTip = false;
+  // }
 
-  public hideAnnouncement(): void {
-    this.persistenceProvider.setShowAmazonJapanAnnouncement('hide');
-    this.showAnnouncement = false;
-  }
+  // private async checkAnnouncement() { }
 
-  public openAnnouncement(): void {}
+  // public hideAnnouncement(): void {
+  //   this.persistenceProvider.setShowAmazonJapanAnnouncement('hide');
+  //   this.showAnnouncement = false;
+  // }
 
-  private checkFeedbackInfo() {
-    this.persistenceProvider.getFeedbackInfo().then(info => {
-      if (!info) {
-        this.initFeedBackInfo();
-      } else {
-        let feedbackInfo = info;
-        // Check if current version is greater than saved version
-        let currentVersion = this.releaseProvider.getCurrentAppVersion();
-        let savedVersion = feedbackInfo.version;
-        let isVersionUpdated = this.feedbackProvider.isVersionUpdated(
-          currentVersion,
-          savedVersion
-        );
-        if (!isVersionUpdated) {
-          this.initFeedBackInfo();
-          return;
-        }
-        let now = moment().unix();
-        let timeExceeded = now - feedbackInfo.time >= 24 * 7 * 60 * 60;
-      }
-    });
-  }
+  // public openAnnouncement(): void { }
 
-  private initFeedBackInfo() {
-    this.persistenceProvider.setFeedbackInfo({
-      time: moment().unix(),
-      version: this.releaseProvider.getCurrentAppVersion(),
-      sent: false
-    });
-    this.showRateCard = false;
-  }
+  // private checkFeedbackInfo() {
+  //   this.persistenceProvider.getFeedbackInfo().then(info => {
+  //     if (!info) {
+  //       this.initFeedBackInfo();
+  //     } else {
+  //       let feedbackInfo = info;
+  //       // Check if current version is greater than saved version
+  //       let currentVersion = this.releaseProvider.getCurrentAppVersion();
+  //       let savedVersion = feedbackInfo.version;
+  //       let isVersionUpdated = this.feedbackProvider.isVersionUpdated(
+  //         currentVersion,
+  //         savedVersion
+  //       );
+  //       if (!isVersionUpdated) {
+  //         this.initFeedBackInfo();
+  //         return;
+  //       }
+  //       let now = moment().unix();
+  //       let timeExceeded = now - feedbackInfo.time >= 24 * 7 * 60 * 60;
+  //     }
+  //   });
+  // }
 
-  private updateWallet(walletId: string): void {
-    if (this.updatingWalletId[walletId]) return;
-    this.startUpdatingWalletId(walletId);
-    let wallet = this.profileProvider.getWallet(walletId);
-    this.walletProvider
-      .getStatus(wallet, {})
-      .then(status => {
-        wallet.status = status;
-        wallet.error = null;
-        this.profileProvider.setLastKnownBalance(
-          wallet.id,
-          wallet.status.availableBalanceStr
-        );
-        this.updateTxps();
-        this.stopUpdatingWalletId(walletId);
-      })
-      .catch(err => {
-        this.logger.error(err);
-        this.stopUpdatingWalletId(walletId);
-      });
-  }
+  // private initFeedBackInfo() {
+  //   this.persistenceProvider.setFeedbackInfo({
+  //     time: moment().unix(),
+  //     version: this.releaseProvider.getCurrentAppVersion(),
+  //     sent: false
+  //   });
+  //   this.showRateCard = false;
+  // }
 
-  private updateTxps = _.debounce(
-    () => {
-      this.profileProvider
-        .getTxps({ limit: 3 })
-        .then(data => {
-          this.zone.run(() => {
-            this.txps = data.txps;
-            this.txpsN = data.n;
-          });
-        })
-        .catch(err => {
-          this.logger.error(err);
-        });
-    },
-    5000,
-    {
-      leading: true
-    }
-  );
+  // private updateWallet(walletId: string): void {
+  //   if (this.updatingWalletId[walletId]) return;
+  //   this.startUpdatingWalletId(walletId);
+  //   let wallet = this.profileProvider.getWallet(walletId);
+  //   this.walletProvider
+  //     .getStatus(wallet, {})
+  //     .then(status => {
+  //       wallet.status = status;
+  //       wallet.error = null;
+  //       this.profileProvider.setLastKnownBalance(
+  //         wallet.id,
+  //         wallet.status.availableBalanceStr
+  //       );
+  //       this.updateTxps();
+  //       this.stopUpdatingWalletId(walletId);
+  //     })
+  //     .catch(err => {
+  //       this.logger.error(err);
+  //       this.stopUpdatingWalletId(walletId);
+  //     });
+  // }
 
-  private getNotifications = _.debounce(
-    () => {
-      if (!this.recentTransactionsEnabled) return;
-      this.profileProvider
-        .getNotifications({ limit: 3 })
-        .then(data => {
-          this.zone.run(() => {
-            this.notifications = data.notifications;
-            this.notificationsN = data.total;
-          });
-        })
-        .catch(err => {
-          this.logger.error(err);
-        });
-    },
-    5000,
-    {
-      leading: true
-    }
-  );
+  // private updateTxps = _.debounce(
+  //   () => {
+  //     this.profileProvider
+  //       .getTxps({ limit: 3 })
+  //       .then(data => {
+  //         this.zone.run(() => {
+  //           this.txps = data.txps;
+  //           this.txpsN = data.n;
+  //         });
+  //       })
+  //       .catch(err => {
+  //         this.logger.error(err);
+  //       });
+  //   },
+  //   5000,
+  //   {
+  //     leading: true
+  //   }
+  // );
 
-  private updateAllWallets(): void {
-    let foundMessage = false;
+  // private getNotifications = _.debounce(
+  //   () => {
+  //     if (!this.recentTransactionsEnabled) return;
+  //     this.profileProvider
+  //       .getNotifications({ limit: 3 })
+  //       .then(data => {
+  //         this.zone.run(() => {
+  //           this.notifications = data.notifications;
+  //           this.notificationsN = data.total;
+  //         });
+  //       })
+  //       .catch(err => {
+  //         this.logger.error(err);
+  //       });
+  //   },
+  //   5000,
+  //   {
+  //     leading: true
+  //   }
+  // );
 
-    if (_.isEmpty(this.wallets)) return;
+  // private updateAllWallets(): void {
+  //   let foundMessage = false;
 
-    let i = this.wallets.length;
-    let j = 0;
+  //   if (_.isEmpty(this.wallets)) return;
 
-    let pr = ((wallet, cb) => {
-      this.walletProvider
-        .getStatus(wallet, {})
-        .then(status => {
-          wallet.status = status;
-          wallet.error = null;
+  //   let i = this.wallets.length;
+  //   let j = 0;
 
-          if (!foundMessage && !_.isEmpty(status.serverMessage)) {
-            this.serverMessage = status.serverMessage;
-            foundMessage = true;
-          }
+  //   let pr = ((wallet, cb) => {
+  //     this.walletProvider
+  //       .getStatus(wallet, {})
+  //       .then(status => {
+  //         wallet.status = status;
+  //         wallet.error = null;
 
-          this.profileProvider.setLastKnownBalance(
-            wallet.id,
-            wallet.status.availableBalanceStr
-          );
-          return cb();
-        })
-        .catch(err => {
-          wallet.error =
-            err === 'WALLET_NOT_REGISTERED'
-              ? 'Wallet not registered'
-              : this.errorProvider.msg(err);
-          this.logger.warn(
-            this.errorProvider.msg(
-              err,
-              'Error updating status for ' + wallet.name
-            )
-          );
-          return cb();
-        });
-    }).bind(this);
+  //         if (!foundMessage && !_.isEmpty(status.serverMessage)) {
+  //           this.serverMessage = status.serverMessage;
+  //           foundMessage = true;
+  //         }
 
-    _.each(this.wallets, wallet => {
-      pr(wallet, () => {
-        if (++j == i) {
-          this.updateTxps();
-        }
-      });
-    });
-  }
+  //         this.profileProvider.setLastKnownBalance(
+  //           wallet.id,
+  //           wallet.status.availableBalanceStr
+  //         );
+  //         return cb();
+  //       })
+  //       .catch(err => {
+  //         wallet.error =
+  //           err === 'WALLET_NOT_REGISTERED'
+  //             ? 'Wallet not registered'
+  //             : this.errorProvider.msg(err);
+  //         this.logger.warn(
+  //           this.errorProvider.msg(
+  //             err,
+  //             'Error updating status for ' + wallet.name
+  //           )
+  //         );
+  //         return cb();
+  //       });
+  //   }).bind(this);
 
-  private checkUpdate(): void {
-    this.releaseProvider
-      .getLatestAppVersion()
-      .toPromise()
-      .then(version => {
-        this.logger.debug('Current app version:', version);
-        var result = this.releaseProvider.checkForUpdates(version);
-        this.logger.debug('Update available:', result.updateAvailable);
-        if (result.updateAvailable) {
-          this.newRelease = true;
-          this.updateText = this.replaceParametersProvider.replace(
-            this.translate.instant(
-              'There is a new version of {{nameCase}} available'
-            ),
-            { nameCase: this.appProvider.info.nameCase }
-          );
-        }
-      })
-      .catch(err => {
-        this.logger.error('Error getLatestAppVersion', err);
-      });
-  }
+  //   _.each(this.wallets, wallet => {
+  //     pr(wallet, () => {
+  //       if (++j == i) {
+  //         this.updateTxps();
+  //       }
+  //     });
+  //   });
+  // }
 
-  public openServerMessageLink(): void {
-    let url = this.serverMessage.link;
-    this.externalLinkProvider.open(url);
-  }
+  // private checkUpdate(): void {
+  //   this.releaseProvider
+  //     .getLatestAppVersion()
+  //     .toPromise()
+  //     .then(version => {
+  //       this.logger.debug('Current app version:', version);
+  //       var result = this.releaseProvider.checkForUpdates(version);
+  //       this.logger.debug('Update available:', result.updateAvailable);
+  //       if (result.updateAvailable) {
+  //         this.newRelease = true;
+  //         this.updateText = this.replaceParametersProvider.replace(
+  //           this.translate.instant(
+  //             'There is a new version of {{nameCase}} available'
+  //           ),
+  //           { nameCase: this.appProvider.info.nameCase }
+  //         );
+  //       }
+  //     })
+  //     .catch(err => {
+  //       this.logger.error('Error getLatestAppVersion', err);
+  //     });
+  // }
 
-  public goToAddView(): void {
-    this.navCtrl.push(AddPage);
-  }
+  // public openServerMessageLink(): void {
+  //   let url = this.serverMessage.link;
+  //   this.externalLinkProvider.open(url);
+  // }
 
-  public goToWalletDetails(wallet): void {
-    if (this.showReorderBtc || this.showReorderBch) return;
-    if (!wallet.isComplete()) {
-      return;
-    }
-    this.navCtrl.push(WalletDetailsPage, {
-      walletId: wallet.credentials.walletId
-    });
-  }
+  // public goToAddView(): void {
+  //   this.navCtrl.push(AddPage);
+  // }
 
-  public openNotificationModal(n) {
-    let wallet = this.profileProvider.getWallet(n.walletId);
+  // public goToWalletDetails(wallet): void {
+  //   if (this.showReorderBtc || this.showReorderBch) return;
+  //   if (!wallet.isComplete()) {
+  //     return;
+  //   }
+  //   this.navCtrl.push(WalletDetailsPage, {
+  //     walletId: wallet.credentials.walletId
+  //   });
+  // }
 
-    if (n.txid) {
-      this.navCtrl.push(TxDetailsPage, { walletId: n.walletId, txid: n.txid });
-    } else {
-      var txp = _.find(this.txps, {
-        id: n.txpId
-      });
-      if (txp) {
-        this.openTxpModal(txp);
-      } else {
-        this.onGoingProcessProvider.set('loadingTxInfo');
-        this.walletProvider
-          .getTxp(wallet, n.txpId)
-          .then(txp => {
-            var _txp = txp;
-            this.onGoingProcessProvider.clear();
-            this.openTxpModal(_txp);
-          })
-          .catch(() => {
-            this.onGoingProcessProvider.clear();
-            this.logger.warn('No txp found');
-            let title = this.translate.instant('Error');
-            let subtitle = this.translate.instant('Transaction not found');
-            return this.popupProvider.ionicAlert(title, subtitle);
-          });
-      }
-    }
-  }
+  // public openNotificationModal(n) {
+  //   let wallet = this.profileProvider.getWallet(n.walletId);
 
-  public reorderBtc(): void {
-    this.showReorderBtc = !this.showReorderBtc;
-  }
+  //   if (n.txid) {
+  //     this.navCtrl.push(TxDetailsPage, { walletId: n.walletId, txid: n.txid });
+  //   } else {
+  //     var txp = _.find(this.txps, {
+  //       id: n.txpId
+  //     });
+  //     if (txp) {
+  //       this.openTxpModal(txp);
+  //     } else {
+  //       this.onGoingProcessProvider.set('loadingTxInfo');
+  //       this.walletProvider
+  //         .getTxp(wallet, n.txpId)
+  //         .then(txp => {
+  //           var _txp = txp;
+  //           this.onGoingProcessProvider.clear();
+  //           this.openTxpModal(_txp);
+  //         })
+  //         .catch(() => {
+  //           this.onGoingProcessProvider.clear();
+  //           this.logger.warn('No txp found');
+  //           let title = this.translate.instant('Error');
+  //           let subtitle = this.translate.instant('Transaction not found');
+  //           return this.popupProvider.ionicAlert(title, subtitle);
+  //         });
+  //     }
+  //   }
+  // }
 
-  public reorderBch(): void {
-    this.showReorderBch = !this.showReorderBch;
-  }
+  // public reorderBtc(): void {
+  //   this.showReorderBtc = !this.showReorderBtc;
+  // }
 
-  public reorderWalletsBtc(indexes): void {
-    let element = this.walletsBtc[indexes.from];
-    this.walletsBtc.splice(indexes.from, 1);
-    this.walletsBtc.splice(indexes.to, 0, element);
-    _.each(this.walletsBtc, (wallet, index: number) => {
-      this.profileProvider.setWalletOrder(wallet.id, index);
-    });
-  }
+  // public reorderBch(): void {
+  //   this.showReorderBch = !this.showReorderBch;
+  // }
 
-  public reorderWalletsBch(indexes): void {
-    let element = this.walletsBch[indexes.from];
-    this.walletsBch.splice(indexes.from, 1);
-    this.walletsBch.splice(indexes.to, 0, element);
-    _.each(this.walletsBch, (wallet, index: number) => {
-      this.profileProvider.setWalletOrder(wallet.id, index);
-    });
-  }
+  // public reorderWalletsBtc(indexes): void {
+  //   let element = this.walletsBtc[indexes.from];
+  //   this.walletsBtc.splice(indexes.from, 1);
+  //   this.walletsBtc.splice(indexes.to, 0, element);
+  //   _.each(this.walletsBtc, (wallet, index: number) => {
+  //     this.profileProvider.setWalletOrder(wallet.id, index);
+  //   });
+  // }
 
-  public goToDownload(): void {
-    let url = 'https://github.com/bitpay/copay/releases/latest';
-    let optIn = true;
-    let title = this.translate.instant('Update Available');
-    let message = this.translate.instant(
-      'An update to this app is available. For your security, please update to the latest version.'
-    );
-    let okText = this.translate.instant('View Update');
-    let cancelText = this.translate.instant('Go Back');
-    this.externalLinkProvider.open(
-      url,
-      optIn,
-      title,
-      message,
-      okText,
-      cancelText
-    );
-  }
+  // public reorderWalletsBch(indexes): void {
+  //   let element = this.walletsBch[indexes.from];
+  //   this.walletsBch.splice(indexes.from, 1);
+  //   this.walletsBch.splice(indexes.to, 0, element);
+  //   _.each(this.walletsBch, (wallet, index: number) => {
+  //     this.profileProvider.setWalletOrder(wallet.id, index);
+  //   });
+  // }
 
-  public openTxpModal(tx): void {
-    let modal = this.modalCtrl.create(
-      TxpDetailsPage,
-      { tx },
-      { showBackdrop: false, enableBackdropDismiss: false }
-    );
-    modal.present();
-  }
+  // public goToDownload(): void {
+  //   let url = 'https://github.com/bitpay/copay/releases/latest';
+  //   let optIn = true;
+  //   let title = this.translate.instant('Update Available');
+  //   let message = this.translate.instant(
+  //     'An update to this app is available. For your security, please update to the latest version.'
+  //   );
+  //   let okText = this.translate.instant('View Update');
+  //   let cancelText = this.translate.instant('Go Back');
+  //   this.externalLinkProvider.open(
+  //     url,
+  //     optIn,
+  //     title,
+  //     message,
+  //     okText,
+  //     cancelText
+  //   );
+  // }
 
-  public openProposalsPage(): void {
-    this.navCtrl.push(ProposalsPage);
-  }
+  // public openTxpModal(tx): void {
+  //   let modal = this.modalCtrl.create(
+  //     TxpDetailsPage,
+  //     { tx },
+  //     { showBackdrop: false, enableBackdropDismiss: false }
+  //   );
+  //   modal.present();
+  // }
 
-  public openActivityPage(): void {
-    this.navCtrl.push(ActivityPage);
-  }
+  // public openProposalsPage(): void {
+  //   this.navCtrl.push(ProposalsPage);
+  // }
 
-  public doRefresh(refresher) {
-    refresher.pullMin = 90;
-    this.updateAllWallets();
-    this.getNotifications();
-    setTimeout(() => {
-      refresher.complete();
-    }, 2000);
-  }
+  // public openActivityPage(): void {
+  //   this.navCtrl.push(ActivityPage);
+  // }
 
-  private listenForEvents() {
-    // BWS Events: Update Status per Wallet
-    // NewBlock, NewCopayer, NewAddress, NewTxProposal, TxProposalAcceptedBy, TxProposalRejectedBy, txProposalFinallyRejected,
-    // txProposalFinallyAccepted, TxProposalRemoved, NewIncomingTx, NewOutgoingTx
-    // this.events.subscribe('bwsEvent', (walletId: string) => {
-    //   if (this.recentTransactionsEnabled) this.getNotifications();
-    //   this.updateWallet(walletId);
-    // });
+  // public doRefresh(refresher) {
+  //   refresher.pullMin = 90;
+  //   this.updateAllWallets();
+  //   this.getNotifications();
+  //   setTimeout(() => {
+  //     refresher.complete();
+  //   }, 2000);
+  // }
 
-    // // Create, Join, Import and Delete -> Get Wallets -> Update Status for All Wallets
-    // this.events.subscribe('status:updated', () => {
-    //   this.updateTxps();
-    //   this.setWallets();
-    // });
+  // private listenForEvents() {
+  //   // BWS Events: Update Status per Wallet
+  //   // NewBlock, NewCopayer, NewAddress, NewTxProposal, TxProposalAcceptedBy, TxProposalRejectedBy, txProposalFinallyRejected,
+  //   // txProposalFinallyAccepted, TxProposalRemoved, NewIncomingTx, NewOutgoingTx
+  //   // this.events.subscribe('bwsEvent', (walletId: string) => {
+  //   //   if (this.recentTransactionsEnabled) this.getNotifications();
+  //   //   this.updateWallet(walletId);
+  //   // });
 
-    this.events.subscribe('node:open', wallet => {
-      // this.ggWallet = wallet;
-      // this.profileProvider.needsBackup(wallet).then(value => {
-      //   this.needsBackup = value;
-      // });
-      // for test
-      // this.needsBackup = true;
-    });
+  //   // // Create, Join, Import and Delete -> Get Wallets -> Update Status for All Wallets
+  //   // this.events.subscribe('status:updated', () => {
+  //   //   this.updateTxps();
+  //   //   this.setWallets();
+  //   // });
 
-    this.events.subscribe('node:balance', balance => {
-      // this.balance = balance;
-    });
+  //   this.events.subscribe('node:open', wallet => {
+  //     // this.ggWallet = wallet;
+  //     // this.profileProvider.needsBackup(wallet).then(value => {
+  //     //   this.needsBackup = value;
+  //     // });
+  //     // for test
+  //     // this.needsBackup = true;
+  //   });
 
-    // 用地址簿的第一个地址作为游戏内ID
-    this.events.subscribe('address.first', address => {
-      this.firstAddress = address;
-    });
-  }
+  //   this.events.subscribe('node:balance', balance => {
+  //     // this.balance = balance;
+  //   });
 
-  private unListenForEvents() {
-    this.events.unsubscribe('node:open');
-    this.events.unsubscribe('node:balance');
-    this.events.unsubscribe('address.first');
-  }
+  //   // 用地址簿的第一个地址作为游戏内ID
+  //   this.events.subscribe('address.first', address => {
+  //     this.firstAddress = address;
+  //   });
+  // }
 
-  public goGame() {
-    let wdb = this.spvNodeProvider.getWdb();
-    if (wdb) {
-      wdb.rpc
-        .execute({
-          method: 'token.user',
-          params: [
-            'ca644ae0-d86f-11e8-af65-032906485980', // 游戏编号-从cplist获得
-            this.firstAddress // 游戏内玩家编号
-          ]
-        })
-        .then(token => {
-          // 打开浏览器.
-          this.logger.info(token);
-          var ts = encodeURIComponent(JSON.stringify(token));
-          setTimeout(() => {
-            let href = `${this.gameServer}/game/${ts}`;
-            this.externalLinkProvider.open(
-              href,
-              true,
-              'Game',
-              '打开游戏页面',
-              'OK',
-              'Cancel'
-            );
-          }, 1000);
-        })
-        .catch(err => {
-          this.logger.info(err);
-        });
-    }
-  }
+  // private unListenForEvents() {
+  //   this.events.unsubscribe('node:open');
+  //   this.events.unsubscribe('node:balance');
+  //   this.events.unsubscribe('address.first');
+  // }
+
+  // public goGame() {
+  //   let wdb = this.spvNodeProvider.getWdb();
+  //   if (wdb) {
+  //     wdb.rpc
+  //       .execute({
+  //         method: 'token.user',
+  //         params: [
+  //           'ca644ae0-d86f-11e8-af65-032906485980', // 游戏编号-从cplist获得
+  //           this.firstAddress // 游戏内玩家编号
+  //         ]
+  //       })
+  //       .then(token => {
+  //         // 打开浏览器.
+  //         this.logger.info(token);
+  //         var ts = encodeURIComponent(JSON.stringify(token));
+  //         setTimeout(() => {
+  //           let href = `${this.gameServer}/game/${ts}`;
+  //           this.externalLinkProvider.open(
+  //             href,
+  //             true,
+  //             'Game',
+  //             '打开游戏页面',
+  //             'OK',
+  //             'Cancel'
+  //           );
+  //         }, 1000);
+  //       })
+  //       .catch(err => {
+  //         this.logger.info(err);
+  //       });
+  //   }
+  // }
 }
