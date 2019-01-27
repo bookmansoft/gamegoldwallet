@@ -83,25 +83,12 @@ export class PropMarketPage {
     }, 2000);
   }
 
-  // 用于跳转到道具发布页面
-  // gotoPropRelease(gameinfo) {
-  //   // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
-  //   this.navCtrl.push(PropReleasePage, {
-  //     game: gameinfo,
-  //     userId: this.firstAddress
-  //   });
-  //   this.logger.info('页面跳转gotoList' + gameinfo);
-  // }
-
   // 跳转到道具页面
-  gotoPropDetail(gameinfo) {
-    // TODO: 此时应该获取存储的游戏内用户id,目前先固定一个值,便于测试
-    // 这个地址应该存储到storage中.
+  gotoPropDetail(propDetail) {
     this.navCtrl.push(PropDetailPage, {
-      game: gameinfo,
-      userId: this.firstAddress
+      'prop': propDetail,
+      'fromMarket': true
     });
-    this.logger.info('页面跳转gotoList' + gameinfo);
   }
 
   // 扫一扫
@@ -141,17 +128,23 @@ export class PropMarketPage {
     this.propList = [];
     for (var i = 0; i < proplist.length; i++) {
       let prop = proplist[i];
-      let cp = await this.spvNodeProvider.getCpById(prop.cid);
-      prop['cp'] = cp;
-      if (!!cp.url) {
-        this.http.get(cp.url + '/prop/' + prop.oid).subscribe(
+      let cpChain = await this.spvNodeProvider.getCpById(prop.cid);
+      // for test 
+      if (prop.cid == 'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx') {
+        cpChain.url = 'http://114.116.148.48:9701/mock/cp0104';
+      }
+      if (!!cpChain.url) {
+        let propDetailUrl = `${cpChain.url}/prop/${prop.oid}`;
+        this.logger.info("Prop url" + JSON.stringify(propDetailUrl));
+        this.http.get(propDetailUrl).subscribe(
           propDetail => {
+            propDetail['game'] = cpChain;
+            propDetail['detailOnChain'] = prop;
+            this.propList.push(propDetail);
             this.logger.info("propDetail: " + JSON.stringify(propDetail));
-            prop['detail'] = propDetail;
-            this.propList.push(prop);
           },
           error => {
-            this.logger.error("get PropDetail error :" + error);
+            this.logger.error("get PropDetail error :" + JSON.stringify(error));
           });
       }
     }

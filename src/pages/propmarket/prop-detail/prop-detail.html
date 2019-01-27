@@ -1,62 +1,58 @@
 <ion-header>
-    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>
-            商品详情
-        </ion-title>
-        <ion-buttons end>
-            <img end src="assets/img/u369.png" class="search-img" />
-        </ion-buttons>
+  <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+    <ion-title>
+      商品详情
+    </ion-title>
+    <ion-buttons end>
+      <img end src="assets/img/u369.png" class="search-img" />
+    </ion-buttons>
 
-        <!-- TODO:动态 -->
-    </ion-navbar>
+    <!-- TODO:动态 -->
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-item style="background:#ffffff !important;" no-lines (click)="gotoPropList(game)">
-        <ion-avatar item-start class="game-img" style="margin-right:40px;">
-            <img src="assets/img/test6.png">
-        </ion-avatar>
+  <ion-item style="background:#ffffff !important;" no-lines (click)="gotoPropList(game)">
+    <ion-avatar item-start class="game-img" style="margin-right:40px;">
+      <img src="assets/img/test6.png">
+    </ion-avatar>
 
-        <h1 style="font-size: 14px;">冰霜大剑</h1>
-        <div class="btn-view">
-            <p class="item-btn">魔兽世界</p>
-        </div>
-        <div style="color: red;font-size: 14px;height: 20px;margin-top: 8px;">10 游戏金</div>
-    </ion-item>
-    <ion-item no-lines style="background:#ffffff !important;">
-        <ion-row>
-            <p style="width:22%;">道具类型</p>
-            <p style="width:78%;">装备</p>
-        </ion-row>
-        <ion-row style="margin-top:8px;">
-            <p style="width:22%;">道具说明</p>
-            <p style="width:78%;">显示完整道具说明，支持换行。显示完整道具说明，支持换行。显示完整道具说明，支持换行。</p>
-        </ion-row>
-    </ion-item>
-    <ion-item no-lines style='text-align:center;align-items: center;min-height: 35px !important;height: 35px !important;'>
-        <ion-row style='align-items: center;'>
-            <img src="assets/img/u816.png" style="width:35%;height: 2px;">
-            <p style="width:30%;">道具信息</p>
-            <img src="assets/img/u816.png" style="width:35%;height: 2px;">
-        </ion-row>
-    </ion-item>
-    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
-        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+    <h1 style="font-size: 14px;">{{prop.props_name}}</h1>
+    <div class="btn-view">
+      <p class="item-btn">{{prop.game.name}}</p>
+    </div>
+    <div style="color: red;font-size: 14px;height: 20px;margin-top: 8px;">{{prop.detailOnChain.fixed}} 尘游戏金</div>
+  </ion-item>
+  <ion-item no-lines style="background:#ffffff !important;">
+    <ion-row>
+      <p style="width:22%;">道具类型</p>
+      <p style="width:78%;">{{prop.props_type}}</p>
     </ion-row>
-    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
-        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+    <ion-row style="margin-top:8px;">
+      <p style="width:22%;">道具说明</p>
+      <p style="width:78%;">{{prop.props_desc}}</p>
     </ion-row>
-    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
-        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
+  </ion-item>
+  <ion-item no-lines style='text-align:center;align-items: center;min-height: 35px !important;height: 35px !important;'>
+    <ion-row style='align-items: center;'>
+      <img src="assets/img/u816.png" style="width:35%;height: 2px;">
+      <p style="width:30%;">道具信息</p>
+      <img src="assets/img/u816.png" style="width:35%;height: 2px;">
     </ion-row>
-    <ion-row style="border-bottom: 3px #f5f5f9 solid;">
-        <img no-lines src="assets/img/description.png" style="width:100%;height:188px;">
-    </ion-row>
+  </ion-item>
+  <ion-row *ngFor="let pic of prop.more_icon" style="border-bottom: 3px #f5f5f9 solid;">
+    <img no-lines [src]="pic" style="width:100%;height:188px;">
+  </ion-row>
+
 </ion-content>
 <ion-footer>
-    <ion-toolbar>
-        <ion-title>
-            <button ion-button class="btn" (click)="showConfirm()">立即购买</button>
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>
+      <button *ngIf="fromCp||fromMarket" ion-button class="btn" (click)="showBuyConfirm()">立即购买</button>
+      <div *ngIf="fromMine">
+        <button ion-button class="btn" (click)="showFoundConfirm()">熔铸</button>
+        <button ion-button class="btn" (click)="showSaleConfirm()">出售</button>
+      </div>
+    </ion-title>
+  </ion-toolbar>
 </ion-footer>

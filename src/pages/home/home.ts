@@ -178,7 +178,8 @@ export class HomePage {
           this.http.get(cp.url).subscribe(
             cpDetail => {
               this.logger.info("cpDetail: " + JSON.stringify(cpDetail));
-              cpDetail["game"]["cpId"] = cp.cid;
+              cpDetail["game"]["cid"] = cp.cid;
+              cpDetail["game"]["url"] = cp.url;
               this.cplist.push(cpDetail);
             },
             error => {
@@ -229,30 +230,6 @@ export class HomePage {
   }
 
   private subscribeStatusEvents() {
-  }
-
-  private openEmailDisclaimer() {
-    let message = this.translate.instant(
-      'By providing your email address, you give explicit consent to BitPay to use your email address to send you email notifications about payments.'
-    );
-    let title = this.translate.instant('Privacy Policy update');
-    let okText = this.translate.instant('Accept');
-    let cancelText = this.translate.instant('Disable notifications');
-    this.popupProvider
-      .ionicConfirm(title, message, okText, cancelText)
-      .then(ok => {
-        if (ok) {
-          // Accept new Privacy Policy
-          this.persistenceProvider.setEmailLawCompliance('accepted');
-        } else {
-          // Disable email notifications
-          this.persistenceProvider.setEmailLawCompliance('rejected');
-          this.emailProvider.updateEmail({
-            enabled: false,
-            email: 'null@email'
-          });
-        }
-      });
   }
 
   public checkHomeTip(): void {

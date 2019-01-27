@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, VERSION, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -19,7 +20,6 @@ import { WalletProvider } from '../../../providers/wallet/wallet';
 
 // pages
 import { AmountPage } from '../../send/amount/amount';
-import { AddressbookAddPage } from '../../settings/addressbook/add/add';
 
 import env from '../../../environments';
 
@@ -29,10 +29,8 @@ import env from '../../../environments';
 })
 export class PropDetailPage {
   private isCordova: boolean;
-  private game: any;
-  private userid: string;
-  private gameid: string;
-  public propType: string;
+  private prop: any;
+  public propDetail: any;
   public platformType: string;
   public server: string;
   public advance: string;
@@ -42,6 +40,9 @@ export class PropDetailPage {
   public saleButtonText: string;
   public proplist: any;
   public orderList: any;
+  public fromCp: boolean;
+  public fromMarket: boolean;
+  public fromMine: boolean;
 
   constructor(
     private navCtrl: NavController,
@@ -56,146 +57,45 @@ export class PropDetailPage {
     private translate: TranslateService,
     private navParams: NavParams,
     private walletProvider: WalletProvider,
-    private spvNodeProvider: SpvNodeProvider
+    private spvNodeProvider: SpvNodeProvider,
+    private http: HttpClient
   ) {
     this.isCordova = this.platform.isCordova;
-    this.game = this.navParams.get('game');
-    this.userid = this.navParams.get('userId');
-    // this.logger.info(this.gameid);
+    // 表明页面来源
+    this.fromCp = false;
+    this.fromMarket = false;
+    this.fromMine = false;
 
     // TODO:翻译
     this.buyButtonText = '购买';
     this.showButtonText = '查看';
     this.foundButtonText = '熔铸';
     this.saleButtonText = '出售';
-    // 获取游戏列表数据,目前为json
-    // this.api
-    //   .get('assets/mock/proplist.json')
-    //   .toPromise()
-    //   .then(data => {
-    //     this.proplist = data;
-    //   })
-    //   .catch(e => this.logger.info(e));
-    // 从模拟游戏获取游戏列表数据,目前为json
-    this.api.get<GameProps>('order/list/1', {}, undefined, true).subscribe(
-      response => {
-        if (response) {
-          let strings = JSON.stringify(response);
-          this.logger.info(response);
-          let gameProps: any = JSON.parse(strings);
-          this.orderList = this.tranformOrderList(gameProps.data);
-          // this.logger.info("orderlist" + JSON.stringify(this.orderList));
-        }
-      },
-      err => {
-        this.logger.info(err);
-      }
-    );
+    // 从参数获取属性
+    this.prop = this.navParams.get('prop');
+    let paramFrom = null;
+    paramFrom = this.navParams.get('fromCp');
+    if (!!paramFrom)
+      this.fromCp = paramFrom;
+    paramFrom = null;
+    paramFrom = this.navParams.get('fromMarket');
+    if (!!paramFrom)
+      this.fromMarket = paramFrom;
+    paramFrom = null;
+    paramFrom = this.navParams.get('fromMine');
+    if (!!paramFrom)
+      this.fromCp = paramFrom;
+    // 开始事件监听
     this.listenForEvents();
-  }
 
-  // 滚动到最下面时候加载新的
-  doInfinite(infiniteScroll) {
-    setTimeout(() => {
-      this.logger.info('Async operation has ended');
-      infiniteScroll.complete();
-    }, 2000);
-  }
-
-  buyProp(prop) {
-    let wdb = this.spvNodeProvider.getWdb();
-    wdb.rpc
-      .execute({
-        method: 'order.pay',
-        params: [prop.cid, this.userid, prop.propid, prop.price]
-        // params: ["4e2eee20-d84d-11e8-8f4f-554ee13bb529", "10008", "asdasgasdgasd", 30000]
-      })
-      .then(tx => {
-        this.navCtrl.pop();
-      })
-      .catch(err => {
-        this.logger.info('bugPropErr:' + err);
-      });
-  }
-
-  foundProp(prop) {
-    let wdb = this.spvNodeProvider.getWdb();
-    wdb.rpc
-      .execute({
-        method: 'prop.found',
-        params: [prop.current.rev, prop.current.index]
-      })
-      .then(tx => {
-        this.logger.info(tx);
-      })
-      .catch(err => {
-        this.logger.info('found PropErr:' + err);
-      });
-    this.navCtrl.pop();
-  }
-
-  saleProp(prop) {
-    let wdb = this.spvNodeProvider.getWdb();
-    let price = prop.price * 2;
-    wdb.rpc
-      .execute({
-        method: 'prop.sale',
-        params: [prop.current.rev, prop.current.index, price]
-      })
-      .then(tx => {
-        this.logger.info(tx);
-      })
-      .catch(err => {
-        this.logger.info('salePropErr:' + err);
-      });
-    this.navCtrl.pop();
-  }
-
-  private tranformOrderList(orders) {
-    let orderList = [];
-    orders.forEach(order => {
-      // TODO:应该根据URL从游戏服务器获取.
-      // /{"cid":"a6589120-c2ed-11e8-a66f-7b3ab06b2b56","uid":"10000009",
-      // "sn":"e1b61920-c2ef-11e8-ae5e-ef505d8de521","pid":"3",
-      // "content":"3|3001|20000|区块剑","price":20000,"confirm":100
-      this.logger.info('order' + JSON.stringify(order));
-      if (order.uid == this.userid && order.confirm < 6) {
-        orderList.push({
-          propid: order.sn,
-          cid: order.cid,
-          img: 'assets/img/prop/monkey.jpg',
-          name: '巨力神猿',
-          content: order.content,
-          price: order.price,
-          confirm: order.confirm,
-          pid: order.pid
-        });
-      }
-    });
-    return orderList;
-  }
-
-  private tranformPropList(props) {
-    let propList = [];
-    props.forEach(prop => {
-      propList.push({
-        propid: prop.pid,
-        cid: prop.cid,
-        oid: prop.oid,
-        img: 'assets/img/prop/nightman.jpg',
-        name: '区块剑',
-        price: prop.gold,
-        status: prop.status,
-        cp: prop.cp,
-        current: prop.current
-      });
-    });
-    return propList;
+    this.logger.info('get prop:' + JSON.stringify(this.prop));
+    this.logger.info('fromCp:' + JSON.stringify(this.fromCp));
+    this.logger.info('fromMarket:' + JSON.stringify(this.fromMarket));
   }
 
   ionViewWillEnter() {
-    this.logger.info('ionViewWillEnter');
-    this.spvNodeProvider.getPropList();
+    this.logger.info('prop-detail get Prop Detail From Server');
+
   }
 
   ngOnDestroy() {
@@ -203,17 +103,78 @@ export class PropDetailPage {
   }
 
   private listenForEvents() {
-    this.events.subscribe('prop.list', props => {
-      this.proplist = this.tranformPropList(props);
-      this.logger.info('get props ' + JSON.stringify(this.proplist));
-    });
+
   }
 
   private unListenForEvents() {
-    this.events.unsubscribe('prop.list');
+
   }
 
-  showConfirm() {
+  /**
+   * 从CP购买调用道具
+   */
+  buyPropFromCP() {
+
+  }
+  /**
+   * 从道具市场购买道具
+   */
+  buyPropFromMarket() {
+
+  }
+  /**
+   * 熔铸道具
+   */
+  foundProp() {
+
+  }
+
+  /**
+   * 出售道具
+   */
+  saleProp() {
+
+  }
+
+  /**
+   * 提示购买道具
+   */
+  showBuyConfirm() {
+    let propPrice;
+    if (this.fromCp)
+      propPrice = this.prop.props_price;
+    else if (this.fromMarket)
+      propPrice = this.prop.detailOnChain.fixed;
+    const confirm = this.alertCtrl.create({
+      title: '提示',
+      message: `确定以${propPrice}游戏金购买此道具吗？`,
+      buttons: [
+        {
+          text: '取消',
+          handler: () => { }
+        },
+        {
+          text: '确定',
+          handler: () => {
+            if (this.fromCp) {
+
+            }
+            else if (this.fromMarket) {
+              this.spvNodeProvider.buyProp(this.prop.detailOnChain, this.prop.detailOnChain.fixed);
+            }
+            // 退到上一页.
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  /**
+   * 提示出售道具
+   */
+  showSaleConfirm() {
     const confirm = this.alertCtrl.create({
       title: '提示',
       message: '确定以0.05游戏金购买此道具吗？',
@@ -230,9 +191,24 @@ export class PropDetailPage {
     });
     confirm.present();
   }
-}
-
-class GameProps {
-  code: number;
-  data: any;
+  /**
+   * 提示熔铸道具
+   */
+  showFoundConfirm() {
+    const confirm = this.alertCtrl.create({
+      title: '提示',
+      message: '确定熔铸道具吗？',
+      buttons: [
+        {
+          text: '取消',
+          handler: () => { }
+        },
+        {
+          text: '确定',
+          handler: () => { }
+        }
+      ]
+    });
+    confirm.present();
+  }
 }

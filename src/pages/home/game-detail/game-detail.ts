@@ -1,4 +1,5 @@
 import { JsonPipe } from '@angular/common';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,6 +30,7 @@ export class GameDetailPage {
     private spvNodeProvider: SpvNodeProvider,
     private storage: Storage,
     private alertCtrl: AlertController,
+    private http: HttpClient
   ) {
     this.cp = this.navParams.get('cpDeatail');
     this.authoried = false;
@@ -115,13 +117,23 @@ export class GameDetailPage {
    * @param prop 玩家想购买的道具
    */
   gotoPropDetail(prop) {
-    let propDetail = prop;
-    propDetail['cp'] = this.cp.game;
-    this.logger.info("prop Deatil:" + JSON.stringify(propDetail));
-    this.navCtrl.push(PropDetailPage,
-      {
-        prop: propDetail,
-        fromCp: true
+    let propDetail;
+    // 在跳转之前,获取道具详细信息
+    let propUrl = `${prop.cp.url}/prop/${prop.id}`;
+    this.http.get(propUrl).subscribe(
+      propDetail => {
+        this.logger.info("Get Http prop Detail: " + JSON.stringify(propDetail));
+        propDetail['cp'] = this.cp.game;
+        this.logger.info("prop Deatil:" + JSON.stringify(propDetail));
+        // 拉取成功,此时才能进入道具明细页
+        this.navCtrl.push(PropDetailPage,
+          {
+            'prop': propDetail,
+            'fromCp': true
+          });
+      },
+      error => {
+        this.logger.error("get CPDetai error :" + error);
       });
   }
 
