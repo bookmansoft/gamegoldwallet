@@ -9,6 +9,8 @@ import { Logger } from '../../../providers/logger/logger';
 import { OnGoingProcessProvider } from '../../../providers/on-going-process/on-going-process';
 import { ProfileProvider } from '../../../providers/profile/profile';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
+// pages
+import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 
 @Component({
   selector: 'game-detail',
@@ -88,13 +90,39 @@ export class GameDetailPage {
   }
 
   // 已经授权过游戏,可以进入游戏了.
-  // 由于目前没有游戏,直接购买道具了.
-  gotoGameMarket(prop) {
-
+  // 由于目前没有游戏,只能直接购买道具了.
+  gotoGame() {
+    const prompt = this.alertCtrl.create({
+      message: '敬请期待游戏跳转功能',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: '确定'
+        }
+      ]
+    });
+    prompt.present();
   }
 
+  enterGame() {
+    if (this.authoried)
+      this.gotoGame()
+    else
+      this.authorizeGame();
+  }
+  /**
+   * 跳转到游戏道具详情,引导用户购买道具
+   * @param prop 玩家想购买的道具
+   */
   gotoPropDetail(prop) {
-
+    let propDetail = prop;
+    propDetail['cp'] = this.cp.game;
+    this.logger.info("prop Deatil:" + JSON.stringify(propDetail));
+    this.navCtrl.push(PropDetailPage,
+      {
+        prop: propDetail,
+        fromCp: true
+      });
   }
 
   // 选项卡切换

@@ -178,7 +178,7 @@ export class HomePage {
           this.http.get(cp.url).subscribe(
             cpDetail => {
               this.logger.info("cpDetail: " + JSON.stringify(cpDetail));
-              cpDetail["cpId"] = cp.cid;
+              cpDetail["game"]["cpId"] = cp.cid;
               this.cplist.push(cpDetail);
             },
             error => {

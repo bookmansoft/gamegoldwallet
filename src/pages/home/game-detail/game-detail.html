@@ -44,7 +44,7 @@
           </ion-row>
           <ion-row>
             <ion-col col-12 class="center">
-              <button ion-button color="info" small round style="font-size:10px;width:50%">
+              <button ion-button (click)="enterGame()" color="info" small round style="font-size:10px;width:50%">
                 <span *ngIf="authoried">进入游戏</span>
                 <span *ngIf="!authoried">授权游戏</span>
               </button>
@@ -367,8 +367,8 @@
         <div style="color: red;font-size: 13px;height: 18px;margin-top: 5px;">
           {{prop.props_price}} 尘游戏金
         </div>
-        <button item-end ion-button class="btn" color="btn" click="gotoPropDetail(prop)" style="position: absolute;right: 2%;width: 50px;min-width: 50px;">
-          {{ 'Buy' | translate }}
+        <button item-end ion-button class="btn" color="btn" (click)="gotoPropDetail(prop)" style="position: absolute;right: 2%;width: 50px;min-width: 50px;">
+          {{ 'buy' | translate }}
         </button>
       </ion-item>
 
