@@ -67,6 +67,12 @@ export class GameDetailPage {
       ],
       buttons: [
         {
+          text: '取消',
+          role: null,
+          handler: data => {
+          }
+        },
+        {
           text: '确定',
           role: null,
           handler: data => {

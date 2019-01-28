@@ -76,6 +76,7 @@ export class MinePage {
   public walletBalance;
   public walletpassword: string;
   public balance;
+  public blockCount;
   constructor(
     private navCtrl: NavController,
     private app: AppProvider,
@@ -97,6 +98,7 @@ export class MinePage {
     this.appName = this.app.info.nameCase;
     this.walletsBtc = [];
     this.isCordova = this.platformProvider.isCordova;
+    this.blockCount = "";
   }
 
   ionViewDidLoad() {
@@ -171,6 +173,7 @@ export class MinePage {
 
   ionViewDidEnter() {
     this.spvNodeProvider.getBalance();
+    this.spvNodeProvider.getBlockCount();
   }
 
   ionViewWillLeave() {
@@ -303,6 +306,10 @@ export class MinePage {
 
     this.events.subscribe('node:cplist', cps => {
       // this.cpList = cps;
+    });
+
+    this.events.subscribe('node:block.count', count => {
+      this.blockCount = count
     });
   }
 

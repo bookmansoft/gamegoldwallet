@@ -286,8 +286,19 @@ export class SpvNodeProvider {
   }
 
   /**
+   * 获取当前以获取的块高度
+   * 
+   */
+  public async getBlockCount(): Promise<any> {
+    if (this.nodeOpened) {
+      const count = await this.node.rpc.execute({ method: 'block.count', params: [] });
+      this.events.publish('node:block.count', count);
+      return count;
+    }
+  }
+  /**
    * 获取当前钱包余额
-   * --TODO:移动到wallet中
+   * 
    */
   public async getBalance(): Promise<any> {
     if (this.nodeOpened) {
@@ -312,7 +323,7 @@ export class SpvNodeProvider {
   }
   /**
    * 获取一个未使用的新地址
-   * --TODO:移动到wallet中
+   * 
    */
   public async getNewAddress(): Promise<any> {
     if (this.nodeOpened) {
