@@ -84,7 +84,7 @@ export class PropDetailPage {
     paramFrom = null;
     paramFrom = this.navParams.get('fromMine');
     if (!!paramFrom)
-      this.fromCp = paramFrom;
+      this.fromMine = paramFrom;
     // 开始事件监听
     this.listenForEvents();
 
@@ -107,32 +107,6 @@ export class PropDetailPage {
   }
 
   private unListenForEvents() {
-
-  }
-
-  /**
-   * 从CP购买调用道具
-   */
-  buyPropFromCP() {
-
-  }
-  /**
-   * 从道具市场购买道具
-   */
-  buyPropFromMarket() {
-
-  }
-  /**
-   * 熔铸道具
-   */
-  foundProp() {
-
-  }
-
-  /**
-   * 出售道具
-   */
-  saleProp() {
 
   }
 
@@ -176,9 +150,10 @@ export class PropDetailPage {
    * 提示出售道具
    */
   showSaleConfirm() {
+    let fixedPrice = Math.floor(this.prop.props_price * 1.5);
     const confirm = this.alertCtrl.create({
       title: '提示',
-      message: '确定以0.05游戏金购买此道具吗？',
+      message: `确定以${fixedPrice}游戏金购买此道具吗？`,
       buttons: [
         {
           text: '取消',
@@ -186,7 +161,13 @@ export class PropDetailPage {
         },
         {
           text: '确定',
-          handler: () => { }
+          handler: async () => {
+            let saleTx = await this.spvNodeProvider.saleProp(this.prop.detailOnChain, fixedPrice);
+            this.logger.info("sale prop tx:" + JSON.stringify(saleTx));
+            // 退到上一页.
+            this.navCtrl.pop();
+
+          }
         }
       ]
     });
@@ -206,7 +187,12 @@ export class PropDetailPage {
         },
         {
           text: '确定',
-          handler: () => { }
+          handler: async () => {
+            let foundTx = await this.spvNodeProvider.foundProp(this.prop.detailOnChain);
+            this.logger.info("found prop tx:" + JSON.stringify(foundTx));
+            // 退到上一页.
+            this.navCtrl.pop();
+          }
         }
       ]
     });

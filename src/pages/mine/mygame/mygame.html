@@ -1,16 +1,16 @@
 <ion-header>
-    <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
-        <ion-title>{{ 'My game' | translate }}</ion-title>
-    </ion-navbar>
+  <ion-navbar color="blank" style="height:50px !important;min-height: 50px !important;">
+    <ion-title>{{ 'My game' | translate }}</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <ion-item *ngFor="let item of datas">
-        <img item-start src="{{item.src}}">
-        <div>
-            <div class="view-text">{{item.gamename}}</div>
-            <div style="font-size:13px;color: #999999;margin-top: 13px;">{{item.publisher}}</div>
-        </div>
-        <button item-end ion-button class="btn">进入</button>
-    </ion-item>
+  <ion-item *ngFor="let cp of authoriedGames">
+    <img item-start [src]="cp.game.icon_url">
+    <div>
+      <div class="view-text">{{cp.game.cp_name}}</div>
+      <div style="font-size:13px;color: #999999;margin-top: 13px;">{{cp.game.provider}}</div>
+    </div>
+    <button item-end ion-button class="btn">进入</button>
+  </ion-item>
 </ion-content>

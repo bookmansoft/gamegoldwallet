@@ -499,7 +499,7 @@ export class SpvNodeProvider {
   public async foundProp(prop): Promise<any> {
     const tx = await this.node.rpc.execute({
       method: 'prop.found',
-      params: [prop]
+      params: [prop.current.rev]
     });
     if (tx) {
       this.events.publish('node:prop.found', tx);

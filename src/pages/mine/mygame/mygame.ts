@@ -16,8 +16,8 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
   selector: 'page-mygame',
   templateUrl: './mygame.html'
 })
-export class MyGamePage {
-  private datas: any;
+export class MyGamePage { 
+  private authoriedGames: any;
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
@@ -27,37 +27,14 @@ export class MyGamePage {
     private storage: Storage,
     public navParams: NavParams
   ) {
-    this.datas = [
-      {
-        gamename: 'Forza Horizon 3',
-        publisher: 'Playground Games',
-        src: 'assets/img/u146.png',
-        address: ''
-      },
-      {
-        gamename: 'Age of Empires: Definitive test',
-        publisher: 'Forgotten Empires',
-        src: 'assets/img/u145.png',
-        address: ''
-      },
-      {
-        gamename: 'ARK:Survival Evolved',
-        publisher: 'Studio Wildcard',
-        src: 'assets/img/u147.png',
-        address: ''
-      },
-      {
-        gamename: 'Rise of Nations:Extended E Test',
-        publisher: 'Big Huge Game & SkyBox Labs',
-        src: 'assets/img/u152.png',
-        address: ''
-      },
-      {
-        gamename: 'Paradise City Island Sim',
-        publisher: 'Sparkling Society Game B.V',
-        src: 'assets/img/u147.png',
-        address: ''
+    this.storage.get('authorizedGame').then(val => {
+      if (val == null) {
+        this.storage.set('authorizedGame', '');
+        this.authoriedGames = [];
       }
-    ];
+      else {
+        this.authoriedGames = val;
+      }
+    });   
   }
 }
