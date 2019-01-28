@@ -40,9 +40,9 @@ export class GameDetailPage {
         this.authoriedGames = [];
       }
       else {
-        this.authoriedGames = val.split(",");
+        this.authoriedGames = val;
         this.authoriedGames.forEach(game => {
-          if (game == this.cp.game.cp_name) {
+          if (game.game.cp_name == this.cp.game.cp_name) {
             this.authoried = true;
           }
         });
@@ -71,14 +71,14 @@ export class GameDetailPage {
           role: null,
           handler: data => {
             if (data.phone != '') {
-              this.authoriedGames.push(this.cp.game.cp_name);
               this.logger.info("this.Autho" + JSON.stringify(this.authoriedGames));
               // 记录已授权的游戏
-              this.storage.set('authorizedGame', this.authoriedGames.join(','));
+              this.authoriedGames.push(this.cp);
+              this.storage.set('authorizedGame', this.authoriedGames);
               // 记录游戏账号
               this.storage.set('authorizedGame' + this.cp.game.cp_name, data.phone);
               // 调用SPV,获取游戏的登录token,并且记录下来,下次可以直接登录游戏
-              this.spvNodeProvider.tokenUser(this.cp.cpId, data.phone).then(token => {
+              this.spvNodeProvider.tokenUser(this.cp.game.cid, data.phone).then(token => {
                 this.logger.info("getToken" + JSON.stringify(token));
                 this.storage.set('authorizedToken' + this.cp.game.cp_name, JSON.stringify(token));
               });

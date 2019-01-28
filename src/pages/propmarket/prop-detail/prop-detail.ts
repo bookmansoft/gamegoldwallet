@@ -155,12 +155,13 @@ export class PropDetailPage {
         },
         {
           text: '确定',
-          handler: () => {
+          handler: async () => {
             if (this.fromCp) {
 
             }
             else if (this.fromMarket) {
-              this.spvNodeProvider.buyProp(this.prop.detailOnChain, this.prop.detailOnChain.fixed);
+              let bytx = await this.spvNodeProvider.buyProp(this.prop.detailOnChain, this.prop.detailOnChain.fixed);
+              this.logger.info("buy prop tx:" + JSON.stringify(bytx));
             }
             // 退到上一页.
             this.navCtrl.pop();

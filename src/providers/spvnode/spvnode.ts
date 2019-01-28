@@ -515,16 +515,22 @@ export class SpvNodeProvider {
    * @returns 新的拍卖的交易信息
    */
   public async buyProp(bid, np): Promise<any> {
-    const tx = await this.node.rpc.execute({
-      method: 'prop.buy',
-      params: [bid.pid, // 拍卖物品编码
-        np // 新的竞拍价格
-      ]
-    });
-    if (tx) {
-      this.events.publish('node:prop.buy', tx);
-      return tx;
+    try {
+      const tx = await this.node.rpc.execute({
+        method: 'prop.buy',
+        params: [bid.pid, // 拍卖物品编码
+          np // 新的竞拍价格
+        ]
+      });
+      if (tx) {
+        this.events.publish('node:prop.buy', tx);
+        return tx;
+      }
     }
+    catch (error) {
+      this.logger.error("buy prop error" + JSON.stringify(error));
+    }
+
   }
 
   /**

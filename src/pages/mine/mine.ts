@@ -27,9 +27,9 @@ import { from } from 'rxjs/observable/from';
 import { ContractPage } from '../contract/contract';
 import { FeedbackCompletePage } from '../feedback/feedback-complete/feedback-complete';
 import { SendFeedbackPage } from '../feedback/send-feedback/send-feedback';
-import { CreateWalletPage } from '../mine/createwallet/createwallet';
 import { ImportWalletPage } from '../mine/importwallet/importwallet';
 import { MyGamePage } from '../mine/mygame/mygame';
+import { AllPropsPage } from '../mine/myprops/allprops/allprops';
 import { MyPropsPage } from '../mine/myprops/myprops';
 import { MyWalletPage } from '../mine/mywallet/mywallet';
 import { PinModalPage } from '../pin/pin-modal/pin-modal';
@@ -149,7 +149,7 @@ export class MinePage {
         {
           text: '取消导入',
           cssClass: 'alert-btn',
-          handler: data => {}
+          handler: data => { }
         },
         {
           text: '开始导入',
@@ -331,7 +331,7 @@ export class MinePage {
   }
   // 我的道具
   public openMyPropsPage(): void {
-    this.navCtrl.push(MyPropsPage);
+    this.navCtrl.push(AllPropsPage);
   }
 
   // XXX:加密解密钱包例子函数..没有实际调用
