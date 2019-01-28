@@ -153,7 +153,7 @@ export class PropDetailPage {
     let fixedPrice = Math.floor(this.prop.props_price * 1.5);
     const confirm = this.alertCtrl.create({
       title: '提示',
-      message: `确定以${fixedPrice}游戏金购买此道具吗？`,
+      message: `确定以${fixedPrice}游戏金出售此道具吗？`,
       buttons: [
         {
           text: '取消',
