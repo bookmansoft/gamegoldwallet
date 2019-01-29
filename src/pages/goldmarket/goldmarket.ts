@@ -17,22 +17,26 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 
 // pages
-import { ScanPage } from '../scan/scan';
-import { MarketListPage } from './market-list/market-list';
-import { SalePage } from './sale/sale';
-import { SellingDetailsPage } from './sellingdetails/sellingdetails';
+import { PaperWalletPage } from '../paper-wallet/paper-wallet';
+import { AmountPage } from '../send/amount/amount';
+import { ContractDetailPage } from './contract-detail/contract-detail';
 
 import env from '../../environments';
 
 @Component({
-  selector: 'page-gamemarket',
+  selector: 'page-goldmarket',
   templateUrl: 'goldmarket.html'
 })
 export class GoldMarketPage {
   ngVersion = VERSION.full;
   public isCordova: boolean;
-  public showButtonText: string;
-  public gamelist: any;
+  // 币种代码
+  changeType: string;
+  // 买卖开关
+  sellSwitch: string;
+  // 买单列表
+  contracts: any;
+
 
   constructor(
     private navCtrl: NavController,
@@ -49,15 +53,14 @@ export class GoldMarketPage {
     private spvNodeProvider: SpvNodeProvider
   ) {
     this.isCordova = this.platform.isCordova;
-    this.showButtonText = '查看';
-    this.logger.info('ionViewWillEnter' + '221');
+    this.sellSwitch = 'buy';
+    this.changeType = 'BTC';
     // 进行事件监听
     this.listenForEvents();
   }
 
-  ionViewWillEnter() {
-    this.logger.info('ionViewWillEnter' + '221');
-    this.spvNodeProvider.getCpList();
+  ionViewDidEnter() {
+    this.spvNodeProvider.listContract();
   }
 
   ngOnDestroy() {
@@ -65,126 +68,30 @@ export class GoldMarketPage {
   }
 
   private listenForEvents() {
-    this.events.subscribe('node:cplist', cps => {
-      this.gamelist = this.tranformGameList(cps);
+    this.events.subscribe('contract.list', contracts => {
+      this.logger.info(JSON.stringify(contracts));
+      this.contracts = contracts;
     });
   }
 
   private unListenForEvents() {
-    this.events.unsubscribe('node:cplist');
+    this.events.unsubscribe('contract.list');
   }
 
-  // 用于跳转到道具市场页面
-  gotoMaketList(gameinfo) {
-    this.navCtrl.push(MarketListPage, {
-      game: gameinfo
-    });
-  }
-  // 用于跳转到出售详情页面
-  gotoSellingDetails(gameinfo) {
-    this.navCtrl.push(SellingDetailsPage, {
-      game: gameinfo
-    });
-  }
-  // 跳转到发布
-  gotoSale(gameinfo) {
-    this.navCtrl.push(SalePage, {
-      game: gameinfo
-    });
+  // 选择币种时候,重新加载买卖列表
+  switchType(value) {
+    this.logger.info("changed: " + value);
   }
 
-  // 扫一扫
-  public openScanPage(): void {
-    this.navCtrl.push(ScanPage, {});
+  // 跳转到新增交易对页面
+  createContract() {
+    this.navCtrl.push(ContractDetailPage);
   }
 
-  // 显示熔铸的确认窗
-  showFound(prop: any) {
-    const defaultValue = 1;
-    const foundPrompt = this.alertCtrl.create({
-      title: this.translate.instant('Warning'),
-      message: this.translate.instant('Are you sure you want Found this?'),
-      buttons: [
-        {
-          text: this.translate.instant('Cancel'),
-          handler: data => { }
-        },
-        {
-          text: this.translate.instant('Ok'),
-          handler: data => {
-            // data里面包含input的信息.是一个hashmap
-            // 熔铸信息已经包含在prop中了.
-            this.spvNodeProvider.foundProp(prop);
-          }
-        }
-      ]
-    });
-    foundPrompt.present();
-  }
-
-  // 显示拍卖的提示窗
-  showSale(prop: any) {
-    const defaultValue = 1;
-    const foundPrompt = this.alertCtrl.create({
-      title: this.translate.instant('Warning'),
-      message: this.translate.instant('Are you sure you want Found this?'),
-      inputs: [
-        {
-          // 保底价
-          name: 'minValue',
-          placeholder: '1',
-          type: 'number',
-          value: '1'
-        },
-        {
-          // 一口价
-          name: 'maxValue',
-          placeholder: '12',
-          type: 'number',
-          value: '12'
-        }
-      ],
-      buttons: [
-        {
-          text: this.translate.instant('Cancel'),
-          handler: data => { }
-        },
-        {
-          text: this.translate.instant('Ok'),
-          handler: data => {
-            // data里面包含input的信息.是一个hashmap
-            this.logger.info('minValue' + data.minValue);
-            this.logger.info('maxValue' + data.maxValue);
-            this.spvNodeProvider.saleProp(prop, data.maxValue);
-          }
-        }
-      ]
-    });
-    foundPrompt.present();
-  }
-
-  // 转换返回的cp为可显示的gamelist
-  // TODO:cplist的modal.
-  private tranformGameList(cplist) {
-    let gameList = [];
-    if (cplist && cplist.list) {
-      cplist.list.forEach(cp => {
-        // TODO:应该根据URL从游戏服务器获取.
-        // boss特殊处理,不显示
-        // this.logger.info(cp);
-        if (cp.cid != 'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx') {
-          let nowGame = {
-            cpid: cp.cid,
-            img:
-              'http://img.d.cn/netgame/hdlogo/4903_1510723591714_DMyLJKIQ.png',
-            title: cp.name,
-            subtitle: '人有千面，妖具万相。 极具灵韵之美，新生代国创卡牌妖神记',
-            version: '3.1.1'
-          };
-          gameList.push(nowGame);
-        }
-      });
-    }
-    return gameList;
+  promiseContract(contract) {
+    this.logger.info("承诺交易对");
+    this.spvNodeProvider.promiseContract(contract.id);
+    // 刷新列表
+    this.spvNodeProvider.listContract();
   }
 }

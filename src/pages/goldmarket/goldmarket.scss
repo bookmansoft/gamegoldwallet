@@ -1,40 +1,37 @@
-page-gamemarket {
-    background: transparent none;
-    &>ion-content.content {
-        background: #f5f5f9;
-    }
-    .ion-item {
-        background: #f5f5f9;
-    }
-    .navbar-transparent,
-    .toolbar-background {
-        background: #fff;
-        padding: 0px;
-    }
-    .search-img {
-        width: 24px;
-        height: 24px;
-    }
-    .title {
-        font-size: 15px;
-        color: #000000;
-    }
-    .btn {
-        border-radius: 15px;
-        width: 20%;
-        min-width: 20%;
-    }
-    .test {
-        display: flex;
-        align-items: center;
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        justify-content: center;
-        border: 2px #ffcc00 solid;
-        box-sizing: border-box;
-        color: #ffcc00;
-        font-size: 30px;
-        font-weight: bold;
-    }
+page-goldmarket {
+  .navbar-transparent,
+  .toolbar-background {
+    background: $toolbar-scanner;
+  }
+  color: #fff;
+  ion-select {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+  .item-inner {
+    border-radius: 0 !important;
+    border: none !important;
+    height: 40px !important;
+    width: 40px !important;
+    background-size: 40px 40px !important;
+    background-repeat: no-repeat;   
+  }
+  .change-price {
+    text-align: center;
+    font: 1.4em sans-serif;
+  }
+
+  .alert-radio-inner {
+    background-color: transparent !important;
+  }
+
+  .item-img {
+    width: 20%;
+    display: inline-block;
+  }
+
+  .change-price {
+    display: block;
+  }
 }
