@@ -133,7 +133,7 @@ export class PropMarketPage {
       if (prop.cid == 'xxxxxxxx-game-gold-boss-xxxxxxxxxxxx') {
         cpChain.url = 'http://114.116.148.48:9701/mock/cp0104';
       }
-      if (!!cpChain.url) {
+      if (!!cpChain && !!cpChain.url) {
         let propDetailUrl = `${cpChain.url}/prop/${prop.oid}`;
         this.logger.info("Prop url" + JSON.stringify(propDetailUrl));
         this.http.get(propDetailUrl).subscribe(

@@ -139,7 +139,7 @@ export class GameDetailPage {
           });
       },
       error => {
-        this.logger.error("get CPDetai error :" + error);
+        this.logger.error("get CPDetai error :" + JSON.stringify(error));
       });
   }
 

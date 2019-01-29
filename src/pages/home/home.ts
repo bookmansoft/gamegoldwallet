@@ -138,8 +138,6 @@ export class HomePage {
         this.storage.set('poundage', 'conventional');
       }
     });
-    this.cps = {};
-    this.cplist = [];
   }
   // 用于实时搜索,提示
   onInput(inputEvent: Event) {
@@ -183,12 +181,15 @@ export class HomePage {
               this.cplist.push(cpDetail);
             },
             error => {
-              this.logger.error("get CPDetai error :" + error);
+              this.logger.error("get CPDetai error :" + JSON.stringify(error));
             });
         }
       }
     });
     setTimeout(() => {
+      // TODO:应该分页加载的,目前先只加载一页
+      this.cps = {};
+      this.cplist = [];
       // 由于这里刚刚开启,需要等open之后才获取cpList
       this.spvNodeProvider.getCpList(1);
     }, 1200);

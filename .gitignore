@@ -76,3 +76,4 @@ Session.vim
 *~
 package-lock.json
 .vscode/plugins.json
+.vscode/launch.json

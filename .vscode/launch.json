@@ -2,6 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Run android",
+      "type": "cordova",
+      "request": "launch",
+      "platform": "android",
+      "target": "devicer",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}"
+    },
+    {
       "name": "Debug App in Chrome",
       "type": "chrome",
       "request": "launch",
