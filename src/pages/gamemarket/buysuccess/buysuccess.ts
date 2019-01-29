@@ -23,7 +23,7 @@ import { AddressbookAddPage } from '../../settings/addressbook/add/add';
 import { GameMarketPage } from '../gamemarket';
 
 import env from '../../../environments';
-import { PropDetailPage } from '../../propmarket/propdetail/propdetail';
+import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 @Component({
   selector: 'page-buysuccess',
   templateUrl: './buysuccess.html'
@@ -67,11 +67,11 @@ export class BuysuccessPage {
       buttons: [
         {
           text: '取消',
-          handler: () => {}
+          handler: () => { }
         },
         {
           text: '确定',
-          handler: () => {}
+          handler: () => { }
         }
       ]
     });
