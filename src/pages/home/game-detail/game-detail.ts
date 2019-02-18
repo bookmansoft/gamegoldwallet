@@ -14,7 +14,7 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 import { PropDetailPage } from '../../propmarket/prop-detail/prop-detail';
 
 @Component({
-  selector: 'game-detail',
+  selector: 'page-game-detail',
   templateUrl: 'game-detail.html'
 })
 export class GameDetailPage {
