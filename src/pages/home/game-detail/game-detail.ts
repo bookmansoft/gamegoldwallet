@@ -36,7 +36,7 @@ export class GameDetailPage {
     this.authoried = false;
     this.storage.get('authorizedGame').then(val => {
       if (val == null) {
-        this.storage.set('authorizedGame', '');
+        this.storage.set('authorizedGame', []);
         this.authoriedGames = [];
       }
       else {
