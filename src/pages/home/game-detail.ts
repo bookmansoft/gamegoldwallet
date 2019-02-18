@@ -118,8 +118,8 @@ export class GameDetailPage {
   public getGameInfo(): void {
     let url = 'http://114.116.148.48:9701/mock/cp0104';
     this.http.get(url).subscribe(response => {
-      console.log("165");
-      console.log(response);
+      //console.log("165");
+      //console.log(response);
 
 
     });
