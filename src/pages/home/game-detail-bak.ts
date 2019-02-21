@@ -18,8 +18,8 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { ScanPage } from '../scan/scan';
 
 @Component({
-  selector: 'page-game-detail',
-  templateUrl: 'game-detail.html'
+  selector: 'page-game-detail-bak',
+  templateUrl: 'game-detail-bak.html'
 })
 export class GameDetailPage {
   public searchInput: string;
@@ -118,12 +118,12 @@ export class GameDetailPage {
   public getGameInfo(): void {
     let url = 'http://114.116.148.48:9701/mock/cp0104';
     this.http.get(url).subscribe(response => {
-      //console.log("165");
-      //console.log(response);
+      // console.log("165");
+      // console.log(response);
 
 
     });
   }
 
- 
+
 }
