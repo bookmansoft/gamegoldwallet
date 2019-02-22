@@ -85,7 +85,7 @@ export class SpvNodeProvider {
     public http: HttpClient
   ) {
     this.logger.info('SPVNode Service initialized.');
-    this.serverIP = '40.73.114.235';
+    this.serverIP = '114.116.150.75';
     this.isPopupOpen = false;
     this.nodeOpened = false;
     this.eventNotification = events;
@@ -548,14 +548,23 @@ export class SpvNodeProvider {
    * 列出市场道具
    * @param cp 需要查询的具体厂商
    * @param page 页码,默认为1
-   * @param pids 指定的查询道具列表
+   * @param pid 指定的查询道具ID
    * @returns 道具列表
    */
-  public async listMarket(cid?: string, page = 1, pids = []): Promise<any> {
+  public async listMarket(page = 1, cid?: string, pid?: string): Promise<any> {
+    let cod = [];
+    if (!!cid) {
+      cod.push(['cid', cid]);
+    }
+    if (!!pid) {
+      cod.push(['pid', pid]);
+    }
+    cod.push(['page', page]);
+    cod.push(['pst', 2]);
     const props = await this.node.rpc.execute({
-      method: 'prop.list.market',
+      method: 'prop.remoteQuery',
       params: [
-        cid, page, pids
+        cod
       ]
     });
     if (props) {
