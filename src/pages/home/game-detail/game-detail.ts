@@ -22,6 +22,11 @@ export class GameDetailPage {
   private authoried: boolean;
   private authoriedGames: any[];
   private index: number = 1;
+
+  //论坛的游戏和评论信息
+  private forumGame: any;
+  private forumDiscuss: any;
+  //构造器
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
@@ -51,8 +56,31 @@ export class GameDetailPage {
   }
 
   ionViewWillEnter() {
+    this.logger.info("进入游戏详情页");
+    this.getForumGame();
+    this.getForumDiscuss();
+  }
+
+  // 获取论坛中的游戏信息数据（评分、星级等）
+  getForumGame() {
+    this.logger.info("获取论坛中的游戏信息数据（评分、星级等）");
+    let url = `http://127.0.0.1:8081/gamegoldWeb/port/game/get?game.gameName=${this.cp.game.cp_name}`;
+    // let url = `http://114.116.148.48:9701/mock/cp0104`;
+    this.http.get(url).subscribe(
+      data => {
+        this.logger.info("Get forumGameInfo: " + JSON.stringify(data));
+        this.forumGame = data;
+      },
+      error => {
+        this.logger.error("Get forumGameInfo: " + JSON.stringify(error));
+      });
+  }
+  // 获取论坛中的评价信息数据（评价、点赞数）
+  getForumDiscuss() {
+    this.logger.info("获取论坛中的评价信息数据（评价、点赞数）");
 
   }
+
   // 用来授权游戏,需要和链交互,获取登录游戏的token和地址.
   authorizeGame() {
     const prompt = this.alertCtrl.create({
