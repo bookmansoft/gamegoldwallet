@@ -23,9 +23,9 @@ export class GameDetailPage {
   private authoriedGames: any[];
   private index: number = 1;
 
-  //论坛的游戏和评论信息
+  // 论坛的游戏和评论信息
   private forumGame: any;
-  private forumDiscuss: any;
+  private forumDiscuss: object;
   private percent5: string;
   private percent4: string;
   private percent3: string;
@@ -39,7 +39,7 @@ export class GameDetailPage {
   private discussRowInfo: string;
 
   private starArray: any;
-  //构造器
+  // 构造器
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
@@ -76,40 +76,40 @@ export class GameDetailPage {
 
   }
 
-  moreDiscuss() {
-    this.logger.info("显示更多评论，在页面加载时也将调用一次");
-    var data = "";
-    data += "<ion-row>";
-    data += "<ion-col col-2>"
-    data += "  <div style='float:right'><img src='assets/img/u85.png' mode='widthFix' /></div>";
-    data += "</ion-col>";
-    data += "<ion-col col-4>";
-    data += "  Naruto<br />";
-    data += "  <img src='assets/img/u86.png' mode='widthFix' /><img src='assets/img/u86.png' mode='widthFix' /><img src='assets/img/u86.png' mode='widthFix' />";
-    data += "</ion-col>";
-    data += "<ion-col col-2></ion-col>";
-    data += "<ion-col col-4>";
-    data += "  <div style='float:right;padding-top: 10px;padding-right: 5px'><img src='assets/img/u114.png' style='width:16px;height:16px' mode='widthFix' />&nbsp;6623</div>";
-    data += "</ion-col>";
-    data += "</ion-row>";
-    data += "<ion-row>";
-    data += "<ion-col col-12>";
-    data += "  这游戏是我玩过最耐玩的，在第一个地图我玩了半年时间，升到了71级，然后来看评论才知道居然后面还有那么多地图。为什么早没有人告诉我，我很难...";
-    data += "</ion-col>";
-    data += "<ion-col col-12 class='center'>";
-    data += "  <span style='margin-top:3px;margin-left: 10px;font-size:14px;color:#18bb9a'>显示全部</span>";
-    data += "</ion-col>";
-    data += "</ion-row>";
-    data += "<ion-row>";
-    data += "<ion-col col-12>";
-    data += "  <div style='border-bottom:1px #bbbbbb solid'></div>";
-    data += "</ion-col>";
-    data += "</ion-row>";
-    this.logger.info(data);
-    this.discussRowInfo = data;
+  // moreDiscuss() {
+  //   this.logger.info("显示更多评论，在页面加载时也将调用一次");
+  //   var data = "";
+  //   data += "<ion-row>";
+  //   data += "<ion-col col-2>"
+  //   data += "  <div style='float:right'><img src='assets/img/u85.png' mode='widthFix' /></div>";
+  //   data += "</ion-col>";
+  //   data += "<ion-col col-4>";
+  //   data += "  Naruto<br />";
+  //   data += "  <img src='assets/img/u86.png' mode='widthFix' /><img src='assets/img/u86.png' mode='widthFix' /><img src='assets/img/u86.png' mode='widthFix' />";
+  //   data += "</ion-col>";
+  //   data += "<ion-col col-2></ion-col>";
+  //   data += "<ion-col col-4>";
+  //   data += "  <div style='float:right;padding-top: 10px;padding-right: 5px'><img src='assets/img/u114.png' style='width:16px;height:16px' mode='widthFix' />&nbsp;6623</div>";
+  //   data += "</ion-col>";
+  //   data += "</ion-row>";
+  //   data += "<ion-row>";
+  //   data += "<ion-col col-12>";
+  //   data += "  这游戏是我玩过最耐玩的，在第一个地图我玩了半年时间，升到了71级，然后来看评论才知道居然后面还有那么多地图。为什么早没有人告诉我，我很难...";
+  //   data += "</ion-col>";
+  //   data += "<ion-col col-12 class='center'>";
+  //   data += "  <span style='margin-top:3px;margin-left: 10px;font-size:14px;color:#18bb9a'>显示全部</span>";
+  //   data += "</ion-col>";
+  //   data += "</ion-row>";
+  //   data += "<ion-row>";
+  //   data += "<ion-col col-12>";
+  //   data += "  <div style='border-bottom:1px #bbbbbb solid'></div>";
+  //   data += "</ion-col>";
+  //   data += "</ion-row>";
+  //   this.logger.info(data);
+  //   this.discussRowInfo = data;
 
 
-  }
+  // }
   // 获取论坛中的游戏信息数据（评分、星级等）
   getForumGame() {
     this.logger.info("获取论坛中的游戏信息数据（评分、星级等）");
@@ -119,7 +119,7 @@ export class GameDetailPage {
         this.logger.info("Get forumGameInfo: " + response);
         this.forumGame = response;
         this.logger.info(this.forumGame.gameText);
-        //设置百分比
+        // 设置百分比
         var theTotal = (this.forumGame.totalStar1 + this.forumGame.totalStar2 + this.forumGame.totalStar3 + this.forumGame.totalStar4 + this.forumGame.totalStar5);
         this.percent1 = parseInt(this.forumGame.totalStar1 * 100 / theTotal + '', 10) + '%';
         this.percent2 = parseInt(this.forumGame.totalStar2 * 100 / theTotal + '', 10) + '%';
@@ -145,10 +145,7 @@ export class GameDetailPage {
     this.http.get(url).subscribe(
       response => {
         this.logger.info("Get forumDiscussInfo: " + response);
-        this.forumDiscuss = response;
-        this.logger.info(this.forumDiscuss.list[0].columns.DISCUSS_NAME);
-        //不需要了
-
+        this.forumDiscuss = response.list; // 跳到集合这一层
       },
       error => {
         this.logger.error("Get forumGameInfo: " + JSON.stringify(error));
