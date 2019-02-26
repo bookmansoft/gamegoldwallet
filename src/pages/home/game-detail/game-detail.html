@@ -119,7 +119,7 @@
                         mode='widthFix' /></div>
                   </ion-col>
                   <ion-col col-4>
-                    Naruto<br />
+                    {{discuss.columns.USER_TEXT}}<br />
                     <span *ngFor="let i of starArray.slice(0,discuss.columns.SCORE)">
                       <img src='assets/img/u86.png' mode='widthFix' />
                     </span>
@@ -314,7 +314,7 @@
         <ion-col col-12 style="padding-left: 10px;padding-right: 10px; padding-top: 10px; padding-bottom: 10px">
           <div style="background-color:#f5f5f9">
             <!-- 开始 -->
-            <ion-row *ngFor="let discuss of forumDiscuss">
+            <ion-row *ngFor="let discuss of forumDiscuss.slice(0,discussRowShow)">
               <ion-col col-12>
                 <ion-row>
                   <ion-col col-2>
@@ -322,7 +322,7 @@
                         mode='widthFix' /></div>
                   </ion-col>
                   <ion-col col-4>
-                    Naruto<br />
+                    {{discuss.columns.USER_TEXT}}<br />
                     <span *ngFor="let i of starArray.slice(0,discuss.columns.SCORE)">
                       <img src='assets/img/u86.png' mode='widthFix' />
                     </span>
@@ -349,7 +349,7 @@
               </ion-col>
             </ion-row>
             <!-- 结束 -->
-            <ion-row id="rowMore" (click)="moreDiscuss()">
+            <ion-row id="rowMore" (click)="moreDiscuss()" [ngStyle]="{ display: discussRowShow < forumDiscuss.length ? 'block' : 'none' }">
               <ion-col col-12 style="text-align:center">
                 <div>更多</div>
               </ion-col>

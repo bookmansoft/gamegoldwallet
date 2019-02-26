@@ -23,7 +23,9 @@ export class GameDetailPage {
   private authoriedGames: any[];
   private index: number = 1;
 
+
   // 论坛的游戏和评论信息
+  private discussRowShow: number;
   private forumGame: any;
   private forumDiscuss: object;
   private percent5: string;
@@ -66,6 +68,8 @@ export class GameDetailPage {
         });
       }
     });
+    //这里
+    this.discussRowShow = 2;
   }
 
   ionViewWillEnter() {
@@ -76,40 +80,11 @@ export class GameDetailPage {
 
   }
 
-  // moreDiscuss() {
-  //   this.logger.info("显示更多评论，在页面加载时也将调用一次");
-  //   var data = "";
-  //   data += "<ion-row>";
-  //   data += "<ion-col col-2>"
-  //   data += "  <div style='float:right'><img src='assets/img/u85.png' mode='widthFix' /></div>";
-  //   data += "</ion-col>";
-  //   data += "<ion-col col-4>";
-  //   data += "  Naruto<br />";
-  //   data += "  <img src='assets/img/u86.png' mode='widthFix' /><img src='assets/img/u86.png' mode='widthFix' /><img src='assets/img/u86.png' mode='widthFix' />";
-  //   data += "</ion-col>";
-  //   data += "<ion-col col-2></ion-col>";
-  //   data += "<ion-col col-4>";
-  //   data += "  <div style='float:right;padding-top: 10px;padding-right: 5px'><img src='assets/img/u114.png' style='width:16px;height:16px' mode='widthFix' />&nbsp;6623</div>";
-  //   data += "</ion-col>";
-  //   data += "</ion-row>";
-  //   data += "<ion-row>";
-  //   data += "<ion-col col-12>";
-  //   data += "  这游戏是我玩过最耐玩的，在第一个地图我玩了半年时间，升到了71级，然后来看评论才知道居然后面还有那么多地图。为什么早没有人告诉我，我很难...";
-  //   data += "</ion-col>";
-  //   data += "<ion-col col-12 class='center'>";
-  //   data += "  <span style='margin-top:3px;margin-left: 10px;font-size:14px;color:#18bb9a'>显示全部</span>";
-  //   data += "</ion-col>";
-  //   data += "</ion-row>";
-  //   data += "<ion-row>";
-  //   data += "<ion-col col-12>";
-  //   data += "  <div style='border-bottom:1px #bbbbbb solid'></div>";
-  //   data += "</ion-col>";
-  //   data += "</ion-row>";
-  //   this.logger.info(data);
-  //   this.discussRowInfo = data;
+  moreDiscuss() {
+    this.logger.info("显示更多评论，在页面加载时也将调用一次");
+    this.discussRowShow = this.discussRowShow + 2;
 
-
-  // }
+  }
   // 获取论坛中的游戏信息数据（评分、星级等）
   getForumGame() {
     this.logger.info("获取论坛中的游戏信息数据（评分、星级等）");
