@@ -272,7 +272,7 @@
         <ion-col col-3>
           <ion-row>
             <ion-col col-12 class="center" style="color:#18bb9a;font-size:36px;margin-top: 20px;margin-bottom: 10px">
-              {{forumGame.averageScore}}
+              {{forumGame!=null && forumGame.averageScore}}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -293,8 +293,8 @@
                 </div>
               </td>
               <td style="width:80%;">
-                <img src="assets/img/note_true.jpg" style="height:5px;width:37%" /><img src="assets/img/note_false.jpg"
-                  style="height:5px;width:63%" />
+                <img src="assets/img/note_true.jpg" style="height:5px" [ngStyle]="{ width:percent5 }" /><img src="assets/img/note_false.jpg"
+                  style="height:5px" [ngStyle]="{ width: out_percent5 }" />
               </td>
             </tr>
             <tr>
@@ -307,8 +307,8 @@
                 </div>
               </td>
               <td style="width:80%;">
-                <img src="assets/img/note_true.jpg" style="height:5px;width:10%" /><img src="assets/img/note_false.jpg"
-                  style="height:5px;width:90%" />
+                <img src="assets/img/note_true.jpg" style="height:5px" [ngStyle]="{ width:percent4 }" /><img src="assets/img/note_false.jpg"
+                  style="height:5px" [ngStyle]="{ width: out_percent4 }" />
               </td>
             </tr>
             <tr>
@@ -321,8 +321,8 @@
                 </div>
               </td>
               <td style="width:80%;">
-                <img src="assets/img/note_true.jpg" style="height:5px;width:10%" /><img src="assets/img/note_false.jpg"
-                  style="height:5px;width:90%" />
+                <img src="assets/img/note_true.jpg" style="height:5px" [ngStyle]="{ width:percent3 }" /><img src="assets/img/note_false.jpg"
+                  style="height:5px" [ngStyle]="{ width: out_percent3 }" />
               </td>
             </tr>
             <tr>
@@ -335,8 +335,8 @@
                 </div>
               </td>
               <td style="width:80%;">
-                <img src="assets/img/note_true.jpg" style="height:5px;width:10%" /><img src="assets/img/note_false.jpg"
-                  style="height:5px;width:90%" />
+                <img src="assets/img/note_true.jpg" style="height:5px" [ngStyle]="{ width:percent2 }" /><img src="assets/img/note_false.jpg"
+                  style="height:5px" [ngStyle]="{ width: out_percent2}" />
               </td>
             </tr>
             <tr>
@@ -349,8 +349,8 @@
                 </div>
               </td>
               <td style="width:80%;">
-                <img src="assets/img/note_true.jpg" style="height:5px;width:10%" /><img src="assets/img/note_false.jpg"
-                  style="height:5px;width:90%" />
+                <img src="assets/img/note_true.jpg" style="height:5px" [ngStyle]="{ width:percent1 }" /><img src="assets/img/note_false.jpg"
+                  style="height:5px" [ngStyle]="{ width: out_percent1 }" />
               </td>
             </tr>
           </table>

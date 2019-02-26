@@ -25,6 +25,17 @@ export class GameDetailPage {
 
   //论坛的游戏和评论信息
   private forumGame: any;
+  private percent5: string;
+  private percent4: string;
+  private percent3: string;
+  private percent2: string;
+  private percent1: string;
+  private out_percent5: string;
+  private out_percent4: string;
+  private out_percent3: string;
+  private out_percent2: string;
+  private out_percent1: string;
+
   private forumDiscuss: any;
   //构造器
   constructor(
@@ -67,9 +78,25 @@ export class GameDetailPage {
     let url = `http://127.0.0.1:8081/gamegoldWeb/port/game/get?game.gameName=${this.cp.game.cp_name}`;
     // let url = `http://114.116.148.48:9701/mock/cp0104`;
     this.http.get(url).subscribe(
-      data => {
-        this.logger.info("Get forumGameInfo: " + JSON.stringify(data));
-        this.forumGame = data;
+      response => {
+        this.logger.info("Get forumGameInfo: " + response);
+        this.forumGame = response;
+        this.logger.info(this.forumGame.gameText);
+        this.forumGame = response;
+        //设置百分比
+        var theTotal = (this.forumGame.totalStar1 + this.forumGame.totalStar2 + this.forumGame.totalStar3 + this.forumGame.totalStar4 + this.forumGame.totalStar5);
+        this.percent1 = parseInt(this.forumGame.totalStar1 * 100 / theTotal + '', 10) + '%';
+        this.percent2 = parseInt(this.forumGame.totalStar2 * 100 / theTotal + '', 10) + '%';
+        this.percent3 = parseInt(this.forumGame.totalStar3 * 100 / theTotal + '', 10) + '%';
+        this.percent4 = parseInt(this.forumGame.totalStar4 * 100 / theTotal + '', 10) + '%';
+        this.percent5 = parseInt(this.forumGame.totalStar5 * 100 / theTotal + '', 10) + '%';
+        this.logger.info(this.percent5);
+        this.out_percent1 = (100 - parseInt(this.forumGame.totalStar1 * 100 / theTotal + '', 10)) + '%';
+        this.out_percent2 = (100 - parseInt(this.forumGame.totalStar2 * 100 / theTotal + '', 10)) + '%';
+        this.out_percent3 = (100 - parseInt(this.forumGame.totalStar3 * 100 / theTotal + '', 10)) + '%';
+        this.out_percent4 = (100 - parseInt(this.forumGame.totalStar4 * 100 / theTotal + '', 10)) + '%';
+        this.out_percent5 = (100 - parseInt(this.forumGame.totalStar5 * 100 / theTotal + '', 10)) + '%';
+        this.logger.info(this.out_percent5);
       },
       error => {
         this.logger.error("Get forumGameInfo: " + JSON.stringify(error));
