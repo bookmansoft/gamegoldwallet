@@ -68,7 +68,7 @@ export class GameDetailPage {
         });
       }
     });
-    //这里
+    // 这里
     this.discussRowShow = 2;
   }
 
@@ -119,8 +119,11 @@ export class GameDetailPage {
     let url = `http://127.0.0.1:8081/gamegoldWeb/port/discuss/page?game.gameName=${this.cp.game.cp_name}`;
     this.http.get(url).subscribe(
       response => {
+        if (response == null) {
+          return;
+        }
         this.logger.info("Get forumDiscussInfo: " + response);
-        this.forumDiscuss = response.list; // 跳到集合这一层
+        this.forumDiscuss = response['list']; // 跳到集合这一层
       },
       error => {
         this.logger.error("Get forumGameInfo: " + JSON.stringify(error));
