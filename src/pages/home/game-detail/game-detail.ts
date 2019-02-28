@@ -230,26 +230,6 @@ export class GameDetailPage {
       {
         'discussStar': discussStar
       });
-
-
-    // let propDetail;
-    // // 在跳转之前,获取道具详细信息
-    // let propUrl = `${prop.cp.url}/prop/${prop.id}`;
-    // this.http.get(propUrl).subscribe(
-    //   propDetail => {
-    //     this.logger.info("Get Http prop Detail: " + JSON.stringify(propDetail));
-    //     propDetail['cp'] = this.cp.game;
-    //     this.logger.info("prop Deatil:" + JSON.stringify(propDetail));
-    //     // 拉取成功,此时才能进入道具明细页
-    //     this.navCtrl.push(PropDetailPage,
-    //       {
-    //         'prop': propDetail,
-    //         'fromCp': true
-    //       });
-    //   },
-    //   error => {
-    //     this.logger.error("get CPDetai error :" + JSON.stringify(error));
-    //   });
   }
 
   // 选项卡切换
