@@ -44,6 +44,7 @@ import { SettingsPage } from '../pages/settings/settings';
 /* Home */
 import { ActivityPage } from '../pages/home/activity/activity';
 import { GameDetailPage } from '../pages/home/game-detail/game-detail';
+import { GameDiscussPage } from '../pages/home/game-discuss/game-discuss';
 import { ProposalsPage } from '../pages/home/proposals/proposals';
 import { ReceivePage } from '../pages/receive/receive';
 import { ScanPage } from '../pages/scan/scan';
@@ -213,5 +214,6 @@ export const PAGES = [
   WalletActivityPage,
   WalletSelectorPage,
   CardItemPage,
-  SlideToAcceptPage
+  SlideToAcceptPage,
+  GameDiscussPage
 ];
