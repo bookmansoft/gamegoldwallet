@@ -15,8 +15,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-12 style="padding-left: 10px;padding-right: 10px; padding-top: 10px; padding-bottom: 10px">
-
+      <ion-col col-8 style="padding-left: 10px;padding-right: 10px; padding-top: 10px; padding-bottom: 10px">
         <div>
           <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
           <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
@@ -25,9 +24,25 @@
           <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
           <div style='font-size:14px'>点击打分</div>
         </div>
+      </ion-col>
+      <ion-col col-4 style="padding-left: 10px;padding-right: 10px; padding-top: 10px; padding-bottom: 10px">
+        <div align='right'>
+          <button ion-button (click)="saveDiscuss()" color="info" small round style="font-size:10px;width:50%">
+            <span>发表</span>
+          </button>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <div style='border-bottom:1px #bbbbbb solid'></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <textarea style='width:100%;height:100px' placeholder='丰富的评论内容更容易收到小伙伴点赞哦'></textarea>
 
       </ion-col>
     </ion-row>
-
   </div>
 </ion-content>

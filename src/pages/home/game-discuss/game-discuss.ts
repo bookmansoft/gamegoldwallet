@@ -53,11 +53,34 @@ export class GameDiscussPage {
     private http: HttpClient
   ) {
 
-    }
+  }
   ionViewWillEnter() {
     this.logger.info("进入游戏评论页");
+  }
+
+  /**
+   * 保存评论
+   */
+  saveDiscuss() {
+    let gameName = 'cp0219';
+    let score = 4;
+    let userId = 4;
+    let content = '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容';
+    content = encodeURIComponent(encodeURIComponent(content));
+    let url = `http://127.0.0.1:8081/gamegoldWeb/port/discuss/save?gameName=${gameName}&score=${score}&userId=${userId}&content=${content}`;
 
 
+
+
+
+    this.http.get(url).subscribe(
+      result => {
+        this.logger.info("post discuss ok: " + JSON.stringify(result));
+
+      },
+      error => {
+        this.logger.error("post discuss error :" + JSON.stringify(error));
+      });
   }
 
 
