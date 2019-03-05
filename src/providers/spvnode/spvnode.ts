@@ -184,6 +184,9 @@ export class SpvNodeProvider {
     }
     await this.node.connect();
     await this.node.startSync();
+    if (!this.wdb.primary) {
+      this.logger.info('wallet primary:' + JSON.stringify(this.wdb));
+    }
     this.wallet = this.wdb.primary;
     // this.wallet.name = '我的游戏钱包';
     // this.wallet.corlor = '#647ce8';
