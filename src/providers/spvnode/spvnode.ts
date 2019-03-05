@@ -90,6 +90,9 @@ export class SpvNodeProvider {
     this.nodeOpened = false;
     this.eventNotification = events;
     var nodeLogger = new gamegold.logger({ level: 'debug', console: true });
+    // 暂时去掉gamegold自身的日志
+    nodeLogger.writeConsole = (level, module, args) => {
+    };
     // TODO:这些配置可以放config里面,特别是语种.
     this.node = new gamegold.spvnode({
       hash: true,
@@ -173,7 +176,9 @@ export class SpvNodeProvider {
       // 设置wdb的语言环境--TODO:语种可切换
       this.wdb.setlanguage('simplified chinese');
     }
-    try { await this.node.open(); }
+    try {
+      await this.node.open();
+    }
     catch (e) {
       this.logger.info('primary:' + e);
     }
