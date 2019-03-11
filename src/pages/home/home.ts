@@ -113,6 +113,8 @@ export class HomePage {
     private storage: Storage,
     private http: HttpClient
   ) {
+    this.logger.info("进入home.ts页面，初始化开始");
+
     this.updatingWalletId = {};
     this.addressbook = {};
     this.cachedBalanceUpdateOn = '';
@@ -138,6 +140,7 @@ export class HomePage {
         this.storage.set('poundage', 'conventional');
       }
     });
+    this.logger.info("进入home.ts页面，初始化完成");
   }
   // 用于实时搜索,提示
   onInput(inputEvent: Event) {
@@ -165,6 +168,7 @@ export class HomePage {
 
   // 先从链上获取cp列表,然后根据url
   ionViewWillEnter() {
+    this.logger.info('ionViewWillEnter HomePage');
     this.recentTransactionsEnabled = this.configProvider.get().recentTransactions.enabled;
     this.events.subscribe('node:cp.list', cps => {
       this.cps = cps;
@@ -194,6 +198,7 @@ export class HomePage {
       this.spvNodeProvider.getCpList(1);
     }, 1200);
 
+    this.logger.info('ionViewWillEnter HomePage 完成');
   }
 
   ionViewDidEnter() {
@@ -216,6 +221,7 @@ export class HomePage {
     });
 
     this.listenForEvents();
+    this.logger.info('ionViewDidLoad HomePage 完成');
   }
 
   ngOnDestroy() {

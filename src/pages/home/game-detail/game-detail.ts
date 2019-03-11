@@ -90,7 +90,7 @@ export class GameDetailPage {
   // 获取论坛中的游戏信息数据（评分、星级等）
   getForumGame() {
     this.logger.info("获取论坛中的游戏信息数据（评分、星级等）");
-    let url = `http://127.0.0.1:8081/gamegoldWeb/port/game/get?game.gameName=${this.cp.game.cp_name}`;
+    let url = `http://121.40.82.216:8081/gamegoldWeb/port/game/get?game.gameName=${this.cp.game.cp_name}`;
     this.http.get(url).subscribe(
       response => {
         this.logger.info("Get forumGameInfo: " + response);
@@ -118,7 +118,7 @@ export class GameDetailPage {
   // 获取论坛中的评价信息数据（评价、点赞数）
   getForumDiscuss() {
     this.logger.info("获取论坛中的评价信息数据（评价、点赞数）");
-    let url = `http://127.0.0.1:8081/gamegoldWeb/port/discuss/page?game.gameName=${this.cp.game.cp_name}`;
+    let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/page?game.gameName=${this.cp.game.cp_name}`;
     this.http.get(url).subscribe(
       response => {
         if (response == null) {

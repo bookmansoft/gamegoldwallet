@@ -67,7 +67,7 @@ export class GameDiscussPage {
     let userId = 4;
     let content = '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容';
     content = encodeURIComponent(encodeURIComponent(content));
-    let url = `http://127.0.0.1:8081/gamegoldWeb/port/discuss/save?gameName=${gameName}&score=${score}&userId=${userId}&content=${content}`;
+    let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/save?gameName=${gameName}&score=${score}&userId=${userId}&content=${content}`;
 
 
 
