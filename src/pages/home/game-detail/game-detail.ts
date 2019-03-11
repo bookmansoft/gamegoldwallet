@@ -228,7 +228,9 @@ export class GameDetailPage {
   gotoGameDiscuss(discussStar) {
     this.navCtrl.push(GameDiscussPage,
       {
-        'discussStar': discussStar
+        'discussStar': discussStar,
+        'gameName': this.cp.game.cp_name,
+        'userId': 4, // 暂定为4，以后根据登录信息来
       });
   }
 

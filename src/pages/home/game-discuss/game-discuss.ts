@@ -19,7 +19,10 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 })
 export class GameDiscussPage {
   discussStar: number;
-
+  gameName: string;
+  userId: number;
+  // 绑定的内容，用这个名字区别下
+  remark: string;
   // 构造器
   constructor(
     private navCtrl: NavController,
@@ -32,13 +35,9 @@ export class GameDiscussPage {
     private http: HttpClient
   ) {
     // 设置初始星数
-    // if (this.navParams.get("discussStar") == null) {
-    //   this.discussStar = 0;
-    // }
-    // else {
-    //   this.discussStar = this.navParams.get("discussStar");
-    // }
     this.discussStar = (this.navParams.get("discussStar") == null) ? 0 : this.navParams.get("discussStar");
+    this.gameName = this.navParams.get("gameName");
+    this.userId = this.navParams.get("userId");
   }
   ionViewWillEnter() {
     this.logger.info("进入游戏评论页");
@@ -49,12 +48,10 @@ export class GameDiscussPage {
    * 保存评论
    */
   saveDiscuss() {
-    let gameName = 'cp0311';
-    let score = 4;
     let userId = 4;
     let content = '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容';
     content = encodeURIComponent(encodeURIComponent(content));
-    let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/save?gameName=${gameName}&score=${score}&userId=${userId}&content=${content}`;
+    let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/save?gameName=${this.gameName}&score=${this.discussStar}&userId=${this.userId}&content=${this.remark}`;
 
 
 
