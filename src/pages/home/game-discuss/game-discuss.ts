@@ -18,29 +18,8 @@ import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
   templateUrl: 'game-discuss.html'
 })
 export class GameDiscussPage {
-  private cp: any;
-  private authoried: boolean;
-  private authoriedGames: any[];
-  private index: number = 1;
+  discussStar: number;
 
-
-  // 论坛的游戏和评论信息
-  private discussRowShow: number;
-  private forumGame: any;
-  private forumDiscuss: object;
-  private percent5: string;
-  private percent4: string;
-  private percent3: string;
-  private percent2: string;
-  private percent1: string;
-  private out_percent5: string;
-  private out_percent4: string;
-  private out_percent3: string;
-  private out_percent2: string;
-  private out_percent1: string;
-  private discussRowInfo: string;
-
-  private starArray: any;
   // 构造器
   constructor(
     private navCtrl: NavController,
@@ -52,10 +31,18 @@ export class GameDiscussPage {
     private alertCtrl: AlertController,
     private http: HttpClient
   ) {
-
+    // 设置初始星数
+    // if (this.navParams.get("discussStar") == null) {
+    //   this.discussStar = 0;
+    // }
+    // else {
+    //   this.discussStar = this.navParams.get("discussStar");
+    // }
+    this.discussStar = (this.navParams.get("discussStar") == null) ? 0 : this.navParams.get("discussStar");
   }
   ionViewWillEnter() {
     this.logger.info("进入游戏评论页");
+    this.logger.info(this.discussStar);
   }
 
   /**
@@ -83,5 +70,8 @@ export class GameDiscussPage {
       });
   }
 
-
+  // 展示对应的星星数
+  showGameDiscuss(discussStar) {
+    this.discussStar = discussStar;
+  }
 }

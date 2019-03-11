@@ -17,11 +17,17 @@
     <ion-row>
       <ion-col col-8 style="padding-left: 10px;padding-right: 10px; padding-top: 10px; padding-bottom: 10px">
         <div>
-          <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
-          <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
-          <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
-          <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
-          <img src='assets/img/u342.png' style='height:24px;width:24px' />&nbsp;
+
+          <img src="{{this.discussStar>=1?'assets/img/u379.png' :'assets/img/u342.png'}}" style='height:24px;width:24px'
+            (click)="showGameDiscuss(1)" />&nbsp;
+          <img src="{{this.discussStar>=2?'assets/img/u379.png' :'assets/img/u342.png'}}" style='height:24px;width:24px'
+            (click)="showGameDiscuss(2)" />&nbsp;
+          <img src="{{this.discussStar>=3?'assets/img/u379.png' :'assets/img/u342.png'}}" style='height:24px;width:24px'
+            (click)="showGameDiscuss(3)" />&nbsp;
+          <img src="{{this.discussStar>=4?'assets/img/u379.png' :'assets/img/u342.png'}}" style='height:24px;width:24px'
+            (click)="showGameDiscuss(4)" />&nbsp;
+          <img src="{{this.discussStar>=5?'assets/img/u379.png' :'assets/img/u342.png'}}" style='height:24px;width:24px'
+            (click)="showGameDiscuss(5)" />&nbsp;
           <div style='font-size:14px'>点击打分</div>
         </div>
       </ion-col>
