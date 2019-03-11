@@ -62,7 +62,7 @@ export class GameDiscussPage {
    * 保存评论
    */
   saveDiscuss() {
-    let gameName = 'cp0219';
+    let gameName = 'cp0311';
     let score = 4;
     let userId = 4;
     let content = '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容';
