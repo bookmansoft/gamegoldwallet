@@ -180,7 +180,11 @@ export class SpvNodeProvider {
       await this.node.open();
     }
     catch (e) {
-      this.logger.info('primary:' + e);
+      if (e.name === "AssertionError") {
+        this.logger.info('Assertion:' + JSON.stringify(e));
+        throw e;
+      }
+      this.logger.info('Open Error:' + JSON.stringify(e));
     }
     await this.node.connect();
     await this.node.startSync();
