@@ -31,7 +31,7 @@ export class GameDiscussPage {
     private events: Events,
     private spvNodeProvider: SpvNodeProvider,
     private storage: Storage,
-    private alertCtrl: AlertController,
+    private alertController: AlertController,
     private http: HttpClient
   ) {
     // 设置初始星数
@@ -44,10 +44,21 @@ export class GameDiscussPage {
     this.logger.info(this.discussStar);
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      title: '提示',
+      // subTitle: 'Subtitle',
+      message: '发表评论成功',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
   /**
    * 保存评论
    */
-  saveDiscuss() {
+  async saveDiscuss() {
     let userId = 4;
     let content = '评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容';
     content = encodeURIComponent(encodeURIComponent(content));
@@ -60,7 +71,7 @@ export class GameDiscussPage {
     this.http.get(url).subscribe(
       result => {
         this.logger.info("post discuss ok: " + JSON.stringify(result));
-
+        this.presentAlert();
       },
       error => {
         this.logger.error("post discuss error :" + JSON.stringify(error));
