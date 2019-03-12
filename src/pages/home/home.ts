@@ -3,6 +3,7 @@ import { Component, NgZone, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  AlertController,
   Events,
   ModalController,
   NavController,
@@ -87,6 +88,7 @@ export class HomePage {
 
   private cplist: any;
   private cps: any;
+  private nodeOpened: boolean;
   constructor(
     private plt: Platform,
     private navCtrl: NavController,
@@ -94,6 +96,7 @@ export class HomePage {
     private releaseProvider: ReleaseProvider,
     private walletProvider: WalletProvider,
     private errorProvider: ErrorProvider,
+    private alertCtrl: AlertController,
     private logger: Logger,
     private events: Events,
     private configProvider: ConfigProvider,
@@ -129,11 +132,9 @@ export class HomePage {
     //       this.storage.set('firstStart', 'false');
     //   }
     // });
-    // XXX:End
-    // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
-    this.spvNodeProvider.open().then(() => {
+    // XXX:End    
+    this.nodeOpened = false;
 
-    });
     // 设置默认费率
     this.storage.get('poundage').then(val => {
       if (val == null) {
@@ -167,9 +168,21 @@ export class HomePage {
   }
 
   // 先从链上获取cp列表,然后根据url
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.logger.info('ionViewWillEnter HomePage');
     this.recentTransactionsEnabled = this.configProvider.get().recentTransactions.enabled;
+
+    if (!this.nodeOpened) {
+      // 这里开启spv钱包,必须在进入app的主界面时执行,而且全局仅执行一次.
+      try {
+        await this.spvNodeProvider.open();
+        this.nodeOpened = true;
+      }
+      catch (error) {
+        this.showNetworkError();
+      }
+    }
+    // 注册获取cp的监听
     this.events.subscribe('node:cp.list', cps => {
       this.cps = cps;
       for (var i = 0; i < cps.list.length; i++) {
@@ -190,16 +203,20 @@ export class HomePage {
         }
       }
     });
-    setTimeout(() => {
-      // TODO:应该分页加载的,目前先只加载一页
-      this.cps = {};
-      this.cplist = [];
-      // 由于这里刚刚开启,需要等open之后才获取cpList
-      this.spvNodeProvider.getCpList(1);
-    }, 1200);
+    // 如果已经开启了节点,就获取cpList
+    if (this.nodeOpened) {
+      setTimeout(() => {
+        // TODO:应该分页加载的,目前先只加载一页
+        this.cps = {};
+        this.cplist = [];
+        // 由于这里刚刚开启,需要等open之后才获取cpList
+        this.spvNodeProvider.getCpList(1);
+      }, 1200);
+    }
 
     this.logger.info('ionViewWillEnter HomePage 完成');
   }
+
 
   ionViewDidEnter() {
     if (this.isNW) this.checkUpdate();
@@ -378,5 +395,19 @@ export class HomePage {
 
   gotoGameDetail(cpDeatail) {
     this.navCtrl.push(GameDetailPage, { cpDeatail });
+  }
+
+  showNetworkError() {
+    const confirm = this.alertCtrl.create({
+      title: '提示',
+      message: '无法连接网络,请检查网络连接!',
+      buttons: [
+        {
+          text: '确定',
+          handler: () => { }
+        }
+      ]
+    });
+    confirm.present();
   }
 }
