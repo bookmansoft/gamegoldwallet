@@ -12,6 +12,7 @@ import {
 import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
+import { LoginPage } from '../login/login';
 @Component({
   selector: 'page-mygame',
   templateUrl: './mygame.html'
@@ -36,5 +37,9 @@ export class MyGamePage {
         this.authoriedGames = val;
       }
     });   
+  }
+
+  openLoginPage() {
+    this.navCtrl.push(LoginPage, {});
   }
 }

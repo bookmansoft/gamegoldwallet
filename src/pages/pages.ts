@@ -81,6 +81,7 @@ import { MyWalletPage } from '../pages/mine/mywallet/mywallet';
 import { PaymentDetailsPage } from '../pages/mine/mywallet/paymentdetails/paymentdetails';
 import { SetPasswordPage } from '../pages/mine/setpassword/setpassword';
 import { PoundagePage } from '../pages/settings/poundage/poundage';
+import { LoginPage } from '../pages/mine/login/login';
 
 /* Wallet Settings */
 import { WalletColorPage } from '../pages/settings/wallet-settings/wallet-color/wallet-color';
@@ -215,5 +216,6 @@ export const PAGES = [
   WalletSelectorPage,
   CardItemPage,
   SlideToAcceptPage,
-  GameDiscussPage
+  GameDiscussPage,
+  LoginPage
 ];

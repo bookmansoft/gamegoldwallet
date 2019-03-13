@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content>
+    <ion-item no-lines detail-push (click)="openLoginPage()">
+        <img item-start src="assets/img/poundage.png">
+        <div style="margin-left: 8px;">登录入口</div>
+    </ion-item>
   <ion-item *ngFor="let cp of authoriedGames">
     <img item-start [src]="cp.game.icon_url">
     <div>
