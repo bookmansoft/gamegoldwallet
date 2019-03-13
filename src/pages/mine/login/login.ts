@@ -11,15 +11,12 @@ import { TouchIdProvider } from '../../../providers/touchid/touchid';
 import { WalletProvider } from '../../../providers/wallet/wallet';
 
 // pages
-import { BackupWarningPage } from '../../backup/backup-warning/backup-warning';
 import { AboutPage } from '../../settings/about/about';
 import { PoundagePage } from '../../settings/poundage/poundage';
-import { WalletColorPage } from './wallet-color/wallet-color';
-import { WalletNamePage } from './wallet-name/wallet-name';
-import { WalletSettingsAdvancedPage } from './wallet-settings-advanced/wallet-settings-advanced';
+
 
 @Component({
-  selector: 'page-login',
+  selector: 'page-login2',
   templateUrl: 'login.html'
 })
 export class LoginPage {
