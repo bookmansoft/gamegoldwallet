@@ -24,18 +24,8 @@
         </div>
       </ion-col>
     </ion-row>
-
-    <ion-item *ngFor="let cp of authoriedGames">
-      <img item-start [src]="cp.game.icon_url">
-      <div>
-        <div class="view-text">{{cp.game.cp_name}}</div>
-        <div style="font-size:13px;color: #999999;margin-top: 13px;">{{cp.game.provider}}</div>
-      </div>
-      <button item-end ion-button class="btn">进入</button>
-    </ion-item>
-
     <ion-list *ngSwitchCase="'1'">
-      <ion-item *ngFor="let prop of authoriedGames">
+      <ion-item *ngFor="let cp of authoriedGames">
         <img item-start [src]="cp.game.icon_url">
         <div>
           <div class="view-text">{{cp.game.cp_name}}</div>
