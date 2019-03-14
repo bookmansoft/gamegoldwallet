@@ -23,6 +23,7 @@ export class MyGamePage {
   private index: number = 1;
 
   private forumDiscuss: object; // 有用
+  private starArray: any;
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
@@ -46,6 +47,7 @@ export class MyGamePage {
 
   ionViewWillEnter() {
     this.logger.info("进入我的游戏");
+    this.starArray = new Array(5);
     this.getForumDiscuss();
 
   }
