@@ -17,8 +17,9 @@ import { LoginPage } from '../login/login';
   selector: 'page-mygame',
   templateUrl: './mygame.html'
 })
-export class MyGamePage { 
+export class MyGamePage {
   private authoriedGames: any;
+  private index: number = 1;
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
@@ -36,10 +37,15 @@ export class MyGamePage {
       else {
         this.authoriedGames = val;
       }
-    });   
+    });
   }
 
   openLoginPage() {
     this.navCtrl.push(LoginPage, {});
+  }
+
+  // 选项卡切换
+  onSelect(index) {
+    this.index = index;
   }
 }
