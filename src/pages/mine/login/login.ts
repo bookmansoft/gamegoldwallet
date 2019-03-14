@@ -1,14 +1,16 @@
+import { AlertController, Events, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Logger } from '../../../providers/logger/logger';
-import { AlertController, Events, NavController, NavParams, ViewController } from 'ionic-angular';
+
 // providers
 import { ConfigProvider } from '../../../providers/config/config';
 import { ExternalLinkProvider } from '../../../providers/external-link/external-link';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ProfileProvider } from '../../../providers/profile/profile';
 import { TouchIdProvider } from '../../../providers/touchid/touchid';
 import { WalletProvider } from '../../../providers/wallet/wallet';
-import { HttpClient, HttpParams } from '@angular/common/http';
+
 // pages
 import { AboutPage } from '../../settings/about/about';
 import { PoundagePage } from '../../settings/poundage/poundage';
@@ -69,12 +71,18 @@ export class LoginPage {
       this.alert('请输入6位短信验证码！');
       return;
     }
-    //调用登录接口
-    let url = `http://127.0.0.1:8081/gamegoldWeb/port/user/check?userName=${this.phone}&password=${this.password}`;
+    // 调用登录接口
+    let url = `http://121.40.82.216:8081/gamegoldWeb/port/user/login?userName=${this.phone}&password=${this.password}`;
     this.http.get(url).subscribe(
       result => {
         this.logger.info("post 登录 ok: " + JSON.stringify(result));
-        this.alert('登录成功');
+        if (result['code'] == 0) {
+          this.alert('登录成功');
+          this.navCtrl.pop();
+        }
+        else {
+          this.alert(result['msg']);
+        }
       },
       error => {
         this.logger.error("post 登录 error :" + JSON.stringify(error));
