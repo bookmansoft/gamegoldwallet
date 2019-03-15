@@ -221,7 +221,7 @@
         <ion-col col-3>
           <ion-row>
             <ion-col col-12 class="center" style="color:#18bb9a;font-size:36px;margin-top: 20px;margin-bottom: 10px">
-              {{forumGame!=null && forumGame.averageScore}}
+              {{forumGame!=null ? forumGame.averageScore : ""}}
             </ion-col>
           </ion-row>
           <ion-row>
