@@ -72,6 +72,7 @@ export class GameDiscussPage {
       result => {
         this.logger.info("post discuss ok: " + JSON.stringify(result));
         this.alert("发表评论成功");
+        this.navCtrl.pop();
       },
       error => {
         this.logger.error("post discuss error :" + JSON.stringify(error));
