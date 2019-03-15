@@ -64,7 +64,7 @@ export class GameDiscussPage {
       return;
     }
 
-    let userId = parseInt(sessionStorage.getItem("userId"));
+    let userId = parseInt(sessionStorage.getItem("userId"), 10);
     let content = encodeURIComponent(encodeURIComponent(this.remark));
     let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/save?gameName=${this.gameName}&score=${this.discussStar}&userId=${userId}&content=${content}`;
 
