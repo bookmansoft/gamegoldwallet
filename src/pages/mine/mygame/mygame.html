@@ -39,47 +39,52 @@
       <ion-row>
         <ion-col col-12 style="padding-left: 10px;padding-right: 10px; padding-top: 10px; padding-bottom: 10px">
           <div style="background-color:#f5f5f9">
-            <!-- 开始 -->
-            <ion-row *ngFor="let discuss of forumDiscuss.slice(0,discussRowShow)">
-              <ion-col col-12>
-                <ion-row>
-                  <ion-col col-2>
-                    <div style='float:right'><img src='http://121.40.82.216:8081/gamegoldWeb/upload/{{discuss.columns.PROFILE_PHOTO}}'
-                        mode='widthFix' /></div>
-                  </ion-col>
-                  <ion-col col-4>
-                    {{discuss.columns.USER_TEXT}}<br />
-                    <span *ngFor="let i of starArray.slice(0,discuss.columns.SCORE)">
-                      <img src='assets/img/u86.png' mode='widthFix' />
-                    </span>
-                  </ion-col>
-                  <ion-col col-2></ion-col>
-                  <ion-col col-4>
-                    <div style='float:right;padding-top: 10px;padding-right: 5px'><img src='assets/img/u114.png' style='width:16px;height:16px'
-                        mode='widthFix' />&nbsp;{{discuss.columns.DISCUSS_PRAISE}}</div>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col col-12>
-                    {{discuss.columns.DISCUSS_NAME}}
-                  </ion-col>
-                  <!-- <ion-col col-12 class='center'>
+            <ng-container *ngIf="forumDiscuss==null">
+              <span align="center">未登录账号，请先登录！</span>
+            </ng-container>
+            <ng-container *ngIf="forumDiscuss!=null">
+              <!-- 开始 -->
+              <ion-row *ngFor="let discuss of forumDiscuss.slice(0,discussRowShow)">
+                <ion-col col-12>
+                  <ion-row>
+                    <ion-col col-2>
+                      <div style='float:right'><img src='http://121.40.82.216:8081/gamegoldWeb/upload/{{discuss.columns.PROFILE_PHOTO}}'
+                          mode='widthFix' /></div>
+                    </ion-col>
+                    <ion-col col-4>
+                      {{discuss.columns.USER_TEXT}}<br />
+                      <span *ngFor="let i of starArray.slice(0,discuss.columns.SCORE)">
+                        <img src='assets/img/u86.png' mode='widthFix' />
+                      </span>
+                    </ion-col>
+                    <ion-col col-2></ion-col>
+                    <ion-col col-4>
+                      <div style='float:right;padding-top: 10px;padding-right: 5px'><img src='assets/img/u114.png'
+                          style='width:16px;height:16px' mode='widthFix' />&nbsp;{{discuss.columns.DISCUSS_PRAISE}}</div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-12>
+                      {{discuss.columns.DISCUSS_NAME}}
+                    </ion-col>
+                    <!-- <ion-col col-12 class='center'>
                     <span style='margin-top:3px;margin-left: 10px;font-size:14px;color:#18bb9a'>显示全部</span>
                   </ion-col> -->
-                </ion-row>
-                <ion-row>
-                  <ion-col col-12>
-                    <div style='border-bottom:1px #bbbbbb solid'></div>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-            <!-- 结束 -->
-            <ion-row id="rowMore" (click)="moreDiscuss()" [ngStyle]="{ display: discussRowShow < forumDiscuss.length ? 'block' : 'none' }">
-              <ion-col col-12 style="text-align:center">
-                <div>更多</div>
-              </ion-col>
-            </ion-row>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col col-12>
+                      <div style='border-bottom:1px #bbbbbb solid'></div>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+              <!-- 结束 -->
+              <ion-row id="rowMore" (click)="moreDiscuss()" [ngStyle]="{ display: discussRowShow < forumDiscuss.length ? 'block' : 'none' }">
+                <ion-col col-12 style="text-align:center">
+                  <div>更多</div>
+                </ion-col>
+              </ion-row>
+            </ng-container>
           </div>
         </ion-col>
       </ion-row>

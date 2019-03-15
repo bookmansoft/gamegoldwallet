@@ -77,6 +77,7 @@ export class LoginPage {
       result => {
         this.logger.info("post 登录 ok: " + JSON.stringify(result));
         if (result['code'] == 0) {
+          sessionStorage.setItem("userId", result['data']['userId'] + '');
           this.alert('登录成功');
           this.navCtrl.pop();
         }

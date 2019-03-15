@@ -48,7 +48,10 @@ export class MyGamePage {
   ionViewWillEnter() {
     this.logger.info("进入我的游戏");
     this.starArray = new Array(5);
-    this.getForumDiscuss();
+    if (sessionStorage.getItem("userId") != null) {
+      this.getForumDiscuss();
+    }
+
 
   }
 
@@ -63,14 +66,14 @@ export class MyGamePage {
 
   // 获取论坛中的评价信息数据（评价、点赞数）
   getForumDiscuss() {
-    this.logger.info("获取论坛中的评价信息数据（评价、点赞数）");
-    let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/page?game.gameName=cp0311`;
+    this.logger.info("获取论坛中的评价信息数据（评价、点赞数）" + sessionStorage.getItem("userId"));
+    let url = `http://121.40.82.216:8081/gamegoldWeb/port/discuss/page?user.userId=` + sessionStorage.getItem("userId"); // ?game.gameName=cp0311
     this.http.get(url).subscribe(
       response => {
         if (response == null) {
           return;
         }
-        this.logger.info("Get forumDiscussInfo: " + response);
+        this.logger.info("Get forumDiscussInfo: " + JSON.stringify(response));
         this.forumDiscuss = response['list']; // 跳到集合这一层
       },
       error => {
