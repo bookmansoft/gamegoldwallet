@@ -207,7 +207,7 @@ export class SpvNodeProvider {
     await this.getBalance();
     // this.getFirstAddress();
     // 最后置上打开状态,保证后续动作的可靠性.
-    await this.node.rpc.execute({ method: 'miner.setsync', params: [] });
+    await this.node.rpc.execute({ method: 'miner.setsync.admin', params: [] });
     this.nodeOpened = true;
   }
 
