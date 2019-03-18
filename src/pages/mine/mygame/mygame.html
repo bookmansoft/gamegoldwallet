@@ -5,6 +5,17 @@
 </ion-header>
 
 <ion-content>
+  <div>
+    <ng-container *ngIf="forumDiscuss==null">
+      <div align="center">
+        <br /><br />
+        <button item-end ion-button class="btn" (click)="openLoginPage()">登录</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="forumDiscuss!=null">
+      <span align="center">已登录</span>
+    </ng-container>
+  </div>
   <ion-item no-lines detail-push (click)="openLoginPage()">
     <img item-start src="assets/img/poundage.png">
     <div style="margin-left: 8px;">登录入口</div>

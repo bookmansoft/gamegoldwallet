@@ -165,7 +165,7 @@
     "cordova-plugin-x-toast": "2.6.2",
     "cordova-sqlite-storage": "^2.6.0",
     "es6-promise-plugin": "4.2.2",
-    "gamegold": "^1.5.1",
+    "gamegold": "^1.5.5",
     "gettext-parser": "^2.0.0",
     "ieee754": "^1.1.12",
     "ionic-angular": "3.9.2",
