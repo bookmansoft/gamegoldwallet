@@ -179,7 +179,7 @@ export class HomePage {
         this.nodeOpened = true;
       }
       catch (error) {
-        this.showNetworkError();
+        // this.showNetworkError();
       }
     }
     // 注册获取cp的监听
