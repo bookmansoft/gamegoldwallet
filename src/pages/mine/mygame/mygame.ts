@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  AlertController,
   Events,
   ModalController,
   Navbar,
@@ -24,6 +25,8 @@ export class MyGamePage {
 
   private forumDiscuss: object; // 有用
   private starArray: any;
+
+
   constructor(
     private navCtrl: NavController,
     private logger: Logger,
@@ -33,6 +36,8 @@ export class MyGamePage {
     private storage: Storage,
     public navParams: NavParams,
     private http: HttpClient,
+    private alertController: AlertController,
+
   ) {
     this.storage.get('authorizedGame').then(val => {
       if (val == null) {
@@ -54,6 +59,16 @@ export class MyGamePage {
 
 
   }
+
+  async alert(msg) {
+    const alert = await this.alertController.create({
+      title: '提示',
+      message: msg,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
 
   openLoginPage() {
     this.navCtrl.push(LoginPage, {});
@@ -81,4 +96,31 @@ export class MyGamePage {
       });
   }
 
+
+  // 打开App的方法，测试用途
+  openApp() {
+    try {
+      this.alert("101 openApp");
+      var sApp = (window as any).startApp.set("com.baidu.BaiduMap");
+      this.alert("103");
+      sApp.check(function (values) { /* success */
+        this.alert("check success")
+        console.log('check success', values);
+        sApp.start(function () { /* success */
+          console.log('start success');
+        }, function (error) { /* fail */
+          console.log('start fail', error)
+        });
+      }, function (error) { /* fail */
+        this.alert("115 error");
+        this.alert(JSON.stringify(error));
+        console.log('check fail', error)
+      });
+    }
+    catch (ex) {
+      this.alert("出错了:119");
+    }
+
+
+  }
 }
