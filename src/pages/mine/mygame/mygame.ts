@@ -101,21 +101,31 @@ export class MyGamePage {
   openApp() {
     try {
       this.alert("101 openApp");
-      var sApp = (window as any).startApp.set("com.baidu.BaiduMap");
+      var sApp = (window as any).startApp.set({ "application": "com.baidu.BaiduMap" });
       this.alert("103");
-      sApp.check(function (values) { /* success */
-        this.alert("check success")
-        console.log('check success', values);
-        sApp.start(function () { /* success */
-          console.log('start success');
-        }, function (error) { /* fail */
-          console.log('start fail', error)
-        });
-      }, function (error) { /* fail */
-        this.alert("115 error");
-        this.alert(JSON.stringify(error));
-        console.log('check fail', error)
+      this.alert(sApp == null);
+      sApp.start(function (compete) {
+        console.log(compete);
+        this.alert("start success");
+      }, function (error) {
+        console.error(error);
+        this.alert('start error');
       });
+      this.alert("114");
+
+      // sApp.check(function (values) { /* success */
+      //   this.alert("check success")
+      //   console.log('check success', values);
+      //   sApp.start(function () { /* success */
+      //     console.log('start success');
+      //   }, function (error) { /* fail */
+      //     console.log('start fail', error)
+      //   });
+      // }, function (error) { /* fail */
+      //   this.alert("115 error");
+      //   this.alert(JSON.stringify(error));
+      //   console.log('check fail', error)
+      // });
     }
     catch (ex) {
       this.alert("出错了:119");

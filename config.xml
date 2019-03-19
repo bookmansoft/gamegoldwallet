@@ -107,6 +107,7 @@
         <splash density="port-xhdpi" src="resources/ggwallet/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/ggwallet/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/ggwallet/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <allow-intent href="bdapp://*/*" />
     </platform>
     <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
     <plugin name="com.lampa.startapp" spec="https://github.com/lampaa/com.lampa.startapp.git" />
