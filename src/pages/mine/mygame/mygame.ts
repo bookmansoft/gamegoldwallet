@@ -15,6 +15,9 @@ import { from } from 'rxjs/observable/from';
 import { Logger } from '../../../providers/logger/logger';
 import { SpvNodeProvider } from '../../../providers/spvnode/spvnode';
 import { LoginPage } from '../login/login';
+import { AppAvailability } from '@ionic-native/app-availability/ngx';
+
+
 @Component({
   selector: 'page-mygame',
   templateUrl: './mygame.html'
@@ -37,7 +40,7 @@ export class MyGamePage {
     public navParams: NavParams,
     private http: HttpClient,
     private alertController: AlertController,
-
+    private appAvailability: AppAvailability,
   ) {
     this.storage.get('authorizedGame').then(val => {
       if (val == null) {
@@ -98,37 +101,41 @@ export class MyGamePage {
 
 
   // 打开App的方法，测试用途
-  openApp() {
+  async openApp() {
     try {
       this.alert("101 openApp");
-      var sApp = (window as any).startApp.set({ "application": "com.baidu.BaiduMap" });
-      this.alert("103");
-      this.alert(sApp == null);
-      sApp.start(function (compete) {
-        console.log(compete);
-        this.alert("start success");
-      }, function (error) {
-        console.error(error);
-        this.alert('start error');
-      });
-      this.alert("114");
+      this.alert(this.appAvailability);
+      this.appAvailability.check("com.baidu.BaiduMap")
+        .then(
+          (yes: boolean) => {
+            this.alert('app is available')
+            var sApp = (window as any).startApp.set({ "application": "com.baidu.BaiduMap" });
+            sApp.start(function (compete) {
+              console.log(compete);
+              this.alert("start success");
+            }, function (error) {
+              console.error(error);
+              this.alert('start error');
+            });
+          },
+          (no: boolean) => this.alert('未安装')
+        );
 
-      // sApp.check(function (values) { /* success */
-      //   this.alert("check success")
-      //   console.log('check success', values);
-      //   sApp.start(function () { /* success */
-      //     console.log('start success');
-      //   }, function (error) { /* fail */
-      //     console.log('start fail', error)
-      //   });
-      // }, function (error) { /* fail */
-      //   this.alert("115 error");
-      //   this.alert(JSON.stringify(error));
-      //   console.log('check fail', error)
+      this.alert("119");
+
+      // this.alert("114");
+      // sApp.start(function (compete) {
+      //   console.log(compete);
+      //   this.alert("start success");
+      // }, function (error) {
+      //   console.error(error);
+      //   this.alert('start error');
       // });
+
     }
     catch (ex) {
-      this.alert("出错了:119");
+      console.log(ex);
+      this.alert(ex);
     }
 
 

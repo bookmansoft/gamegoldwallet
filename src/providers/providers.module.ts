@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { DecimalPipe } from '@angular/common';
-
+import { AppAvailability } from '@ionic-native/app-availability/ngx';
 import {
   AddressBookProvider,
   AddressProvider,
@@ -58,6 +58,7 @@ import {
     AddressProvider,
     AddressBookProvider,
     AndroidFingerprintAuth,
+    AppAvailability,
     AppProvider,
     AppIdentityProvider,
     BackupProvider,
@@ -110,4 +111,4 @@ import {
     File
   ]
 })
-export class ProvidersModule {}
+export class ProvidersModule { }
