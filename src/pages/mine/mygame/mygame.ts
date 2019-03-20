@@ -103,34 +103,44 @@ export class MyGamePage {
   // 打开App的方法，测试用途
   async openApp() {
     try {
+      var sApp = (window as any).startApp.set({ "application": "com.baidu.BaiduMap" });
+      sApp.start(function (compete) {
+        console.log(compete);
+        this.alert("start success");
+      }, function (error) {
+        console.error(error);
+        this.alert('start error');
+      });
       this.alert("101 openApp");
-      this.alert(this.appAvailability);
+      // this.alert(this.appAvailability);
+      // this.alert(this.appAvailability.check);
+      // let isFunc = typeof this.appAvailability.check === 'function';
+      // console.log(isFunc);
+      // let prom = this.appAvailability.check("com.baidu.BaiduMap");
+      // let isFunc1 = typeof prom === 'function';
+
+      // console.log(isFunc, isFunc1);
       this.appAvailability.check("com.baidu.BaiduMap")
         .then(
-          (yes: boolean) => {
-            this.alert('app is available')
-            var sApp = (window as any).startApp.set({ "application": "com.baidu.BaiduMap" });
-            sApp.start(function (compete) {
-              console.log(compete);
-              this.alert("start success");
-            }, function (error) {
-              console.error(error);
-              this.alert('start error');
-            });
-          },
-          (no: boolean) => this.alert('未安装')
+          (yes: boolean) => console.log(' is available'),
+          (no: boolean) => console.log(' is NOT available')
         );
+      // .then(
+      //   (yes: boolean) => {
+      //     this.alert('app is available')
+      //     var sApp = (window as any).startApp.set({ "application": "com.baidu.BaiduMap" });
+      //     sApp.start(function (compete) {
+      //       console.log(compete);
+      //       this.alert("start success");
+      //     }, function (error) {
+      //       console.error(error);
+      //       this.alert('start error');
+      //     });
+      //   },
+      //   (no: boolean) => this.alert('未安装')
+      // );
 
-      this.alert("119");
 
-      // this.alert("114");
-      // sApp.start(function (compete) {
-      //   console.log(compete);
-      //   this.alert("start success");
-      // }, function (error) {
-      //   console.error(error);
-      //   this.alert('start error');
-      // });
 
     }
     catch (ex) {
