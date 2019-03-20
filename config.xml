@@ -111,8 +111,8 @@
     </platform>
     <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
     <plugin name="com.lampa.startapp" spec="https://github.com/lampaa/com.lampa.startapp.git" />
-    <plugin name="cordova-plugin-appavailability" spec="0.4.2" />
     <plugin name="cordova-plugin-inappbrowser" spec="2.0.2" />
+    <plugin name="cordova-plugin-appavailability" spec="0.4.2" />
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="4.5.4" />
 </widget>

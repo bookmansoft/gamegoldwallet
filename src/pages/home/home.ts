@@ -40,6 +40,9 @@ import { SpvNodeProvider } from '../../providers/spvnode/spvnode';
 import { WalletProvider } from '../../providers/wallet/wallet';
 import { ScanPage } from '../scan/scan';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { isAbsolute } from 'path';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -114,7 +117,8 @@ export class HomePage {
     private replaceParametersProvider: ReplaceParametersProvider,
     private spvNodeProvider: SpvNodeProvider,
     private storage: Storage,
-    private http: HttpClient
+    private http: HttpClient,
+    private iab: InAppBrowser,
   ) {
     this.logger.info("进入home.ts页面，初始化开始");
 
@@ -409,5 +413,13 @@ export class HomePage {
       ]
     });
     confirm.present();
+  }
+
+
+  //下载app
+  downloadApp() {
+    // const browser = this.iab.create("http://www.gamegold.xin/#/En5", "_system", "hidden=no");
+    const browser = this.iab.create("http://www.gamegold.xin/com.chinacit.btc_dragon.apk", "_system", "hidden=no");
+    // window.open("http://www.gamegold.xin/#/En5", "_blank");
   }
 }

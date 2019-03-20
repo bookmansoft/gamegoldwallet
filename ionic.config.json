@@ -1,16 +1,16 @@
 {
-  "//-": "Changes to this file will be overwritten.",
-  "//--": "Modify it's template in the app-template directory.",
   "name": "gamegoldwallet",
-  "app_id": "com.bookman.ggwallet",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   },
+  "type": "ionic-angular",
+  "//-": "Changes to this file will be overwritten.",
+  "//--": "Modify it's template in the app-template directory.",
   "proxies": [
     {
       "path": "/mock",
       "proxyUrl": "http://40.73.119.183:7555"
     }
-  ]
+  ],
+  "id": "com.bookman.ggwallet"
 }

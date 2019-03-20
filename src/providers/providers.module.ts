@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { DecimalPipe } from '@angular/common';
 import { AppAvailability } from '@ionic-native/app-availability/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import {
   AddressBookProvider,
   AddressProvider,
@@ -74,6 +75,7 @@ import {
     FeedbackProvider,
     FeeProvider,
 
+    InAppBrowser,
     IncomingDataProvider,
     LanguageProvider,
     Logger,

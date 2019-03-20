@@ -99,6 +99,10 @@ export class MyGamePage {
       });
   }
 
+  //下载app
+  downloadApp() {
+    window.open("http://www.gamegold.xin/com.chinacit.btc_dragon.apk");
+  }
 
   // 打开App的方法，测试用途
   async openApp() {
