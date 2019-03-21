@@ -420,6 +420,5 @@ export class HomePage {
   downloadApp() {
     // const browser = this.iab.create("http://www.gamegold.xin/#/En5", "_system", "hidden=no");
     const browser = this.iab.create("http://www.gamegold.xin/com.chinacit.btc_dragon.apk", "_system", "hidden=no");
-    // window.open("http://www.gamegold.xin/#/En5", "_blank");
   }
 }
