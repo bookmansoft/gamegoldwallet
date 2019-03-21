@@ -30,10 +30,10 @@
 <ion-content>
   <div [ngSwitch]="index">
     <ion-list *ngSwitchCase="'1'">
-      <div class="rec-title" style="margin-top:10px;" (click)="downloadApp()">
+      <div class="rec-title" (click)="downloadApp()">
         <img src="assets/img/u96.png" class="rec-title-img" mode="widthFix" />
-        <span style="margin-top:3px;margin-left: 10px;">(推荐)《Minecraft for Mobile》现已上线！</span>
-        <span style="margin-top:5px;margin-left: 10px;color: #999999;">Mojang/Microsoft Studios</span>
+        <span style="margin-top:3px;margin-left: 10px;">(推荐)《区块战龙》现已上线！</span>
+        <span style="margin-top:5px;margin-left: 10px;margin-right:5px;color: #999999;">区块战龙是一款围绕着可生育、可培养、可收藏、可战斗而设计的数码宠物游戏！</span>
       </div>
       <button ion-item *ngFor="let cp of cplist" (click)="gotoGameDetail(cp)">
         <img item-start class="re-img" [src]="cp.game.icon_url" />
